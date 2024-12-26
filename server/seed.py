@@ -5,7 +5,7 @@ from datetime import date
 
 import os 
 
-from models import SignUpContainer, Continents, Country, CountriesContinent, States
+from models import SignUpContainer, Continents, Country, CountriesContinent, States, Cities, Travelers
 
 from dotenv import load_dotenv 
 load_dotenv()
@@ -64,9 +64,34 @@ if __name__ == "__main__":
         tokyo=States(
             name="Tokyo",
             image="https://assets.editorial.aetnd.com/uploads/2013/07/gettyimages-1390815938.jpg",
-            # country_id=1
+            country_id=1
         )
         db.session.add_all([tokyo])
+        db.session.commit()
+
+        print("Seeding cities")
+        tokyo_cities=Cities(
+            name="Tokyo",
+            image="https://assets.editorial.aetnd.com/uploads/2013/07/gettyimages-1390815938.jpg",
+            country_capital=True,
+            state_capital=True,
+            states_id=1
+        )
+        db.session.add_all([tokyo_cities])
+        db.session.commit()
+
+        print("Seeding all travelers")
+        kaan_buke=Travelers(
+            email="kabuke13@gmail.com",
+            account_type="Admin",
+            first_name="Kaan",
+            last_name="Buke",
+            origin_country="UK",
+            origin_city="London"
+        )
+        kaan_buke.password_hash=os.environ.get("kaan_password")
+        
+        db.session.add_all([kaan_buke])
         db.session.commit()
 
         print("Finished seeding")

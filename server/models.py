@@ -79,16 +79,103 @@ class States(db.Model, SerializerMixin):
 
     #Set up relations 
     country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
+    cities = db.relationship("Cities", backref="state")
 
     serialize_rules=(
-        "-country",
+        "-country.states",
+
+        "-cities.state",
     )
     
     
 
 #Cities Model - cities belong to a state
+class Cities(db.Model, SerializerMixin):
+    __tablename__="cities"
+
+    id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String, nullable=False)
+    image=db.Column(db.String, nullable=False)
+    country_capital=db.Column(db.Boolean, nullable=False)
+    state_capital=db.Column(db.Boolean, nullable=False)
+
+    #Set up relations
+    states_id=db.Column(db.Integer, db.ForeignKey("states.id"))
+
+    serialize_rules=(
+        "-state.cities",
+    )
 
 #Users Model - can have either user or business
+class Users(db.Model, SerializerMixin):
+    __tablename__="users"
+
+    id=db.Column(db.Integer, primary_key=True)
+    email=db.Column(db.String, nullable=False)
+    _password_hash=db.Column(db.String, nullable=False)
+    account_type=db.Column(db.String, nullable=False)
+    intro=db.Column(db.String, nullable=True)
+
+    #Password hasing and authentication
+    @hybrid_property
+    def password_hash(self):
+        raise AttributeError("password: write only attribute")
+    
+    @password_hash.setter 
+    def password_hash(self, password):
+        self._password_hash=bcrypt.generate_password_hash(password).decode('utf-8')
+    
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self._password_hash, password)
+    
+    #Set up validations
+    @validates("email")
+    def validate_email(self, key, value):
+        if '@' and '.' not in value:
+            raise ValueError("Please enter a valid email address")
+        return value
+    
+    ALLOWED_USERS=["Admin", "Traveler", "Local Business"]
+    @validates("account_type")
+    def validate_user_type(self, key, account_type):
+        if account_type in self.ALLOWED_USERS:
+            return account_type 
+        raise ValueError(f"The account type must be one of {', '.join(self.ALLOWED_USERS)}")
+    
+    #Set up polymorphic identity
+    type=db.Column(db.String(50))
+
+    __mapper_args__={
+        "polymorphic_on": type,
+        "polymorphic_identity": "user" 
+    }
+
+class Travelers(Users):
+    __tablename__="travelers"
+
+    @declared_attr
+    def id(cls):
+        return db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    
+    first_name=db.Column(db.String, nullable=False)
+    last_name=db.Column(db.String, nullable=True)
+    origin_country=db.Column(db.String, nullable=True)
+    origin_city=db.Column(db.String, nullable=True)
+    dob=db.Column(db.DateTime, nullable=True)
+
+    __mapper_args__={
+        "polymorphic_identity": "Travelers"
+    }
+
+# class Businesses(Users):
+#     __tablename__="businesses"
+
+#     @declared_attr
+#     def id(cls):
+#         return db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
+    
+
+
 
 #User Country Wishlist Model
 
@@ -99,4 +186,6 @@ class States(db.Model, SerializerMixin):
 #User City Visit Model
 
 #Pictures Model
+
+#Review Categories Model 
 
