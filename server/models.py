@@ -28,6 +28,7 @@ class Continents(db.Model, SerializerMixin):
 
     serialize_rules=(
         "-countries.continent",
+        "-countries.country",
     )
 
 #Countries Model - countries belong to a continent
@@ -49,9 +50,14 @@ class Country(db.Model, SerializerMixin):
 
     #Set up relations
     continents = db.relationship("CountriesContinent", backref="country")
+    states = db.relationship("States", backref="country")
 
     serialize_rules=(
-        "-continents. ",
+        "-continents.country",
+        "-continents.continent",
+        "-continents.country_id",
+
+        "-states.country",
     )
 
 #Countries Continents Model - set up model that shows which continent(s) a country belongs
@@ -70,6 +76,14 @@ class States(db.Model, SerializerMixin):
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String, nullable=False)
     image=db.Column(db.String, nullable=False)
+
+    #Set up relations 
+    country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
+
+    serialize_rules=(
+        "-country",
+    )
+    
     
 
 #Cities Model - cities belong to a state

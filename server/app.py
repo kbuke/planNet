@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 from flask import url_for, send_from_directory
 
-from models import SignUpContainer, Continents, Country, CountriesContinent
+from models import SignUpContainer, Continents, Country, CountriesContinent, States
 
 from datetime import datetime
 
@@ -17,7 +17,21 @@ class AllContinents(Resource):
         continents=[continent.to_dict() for continent in Continents.query.all()]
         return continents, 200 
 
+class AllCountries(Resource):
+    def get(self):
+        countries=[country.to_dict() for country in Country.query.all()]
+        return countries, 200
+
+class AllStates(Resource):
+    def get(self):
+        states = [state.to_dict() for state in States.query.all()]
+        return states, 200
+
 api.add_resource(AllContinents, '/continents')
+
+api.add_resource(AllCountries, '/countries')
+
+api.add_resource(AllStates, '/states')
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
