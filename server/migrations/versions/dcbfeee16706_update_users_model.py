@@ -1,8 +1,8 @@
-"""renew initialization
+"""update users model
 
-Revision ID: 44619529a985
+Revision ID: dcbfeee16706
 Revises: 
-Create Date: 2024-12-28 00:37:34.069674
+Create Date: 2025-01-01 20:28:41.227653
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '44619529a985'
+revision = 'dcbfeee16706'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,18 +43,18 @@ def upgrade():
     )
     op.create_table('sign_up_containers',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('background_colour', sa.String(), nullable=True),
-    sa.Column('background_image', sa.String(), nullable=False),
+    sa.Column('background_image', sa.String(), nullable=True),
+    sa.Column('tex_background_colour', sa.String(), server_default='', nullable=False),
+    sa.Column('title', sa.String(), server_default='', nullable=False),
     sa.Column('text', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('users',
+    op.create_table('container_polaroids',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('email', sa.String(), nullable=False),
-    sa.Column('_password_hash', sa.String(), nullable=False),
-    sa.Column('account_type', sa.String(), nullable=False),
-    sa.Column('intro', sa.String(), nullable=True),
-    sa.Column('type', sa.String(length=50), nullable=True),
+    sa.Column('polaroid_picture', sa.String(), nullable=False),
+    sa.Column('polaroid_text', sa.String(), nullable=False),
+    sa.Column('container_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['container_id'], ['sign_up_containers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('countries_continents',
@@ -72,16 +72,6 @@ def upgrade():
     sa.Column('intro', sa.String(), server_default='', nullable=False),
     sa.Column('country_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['country_id'], ['countries.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('travelers',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('first_name', sa.String(), nullable=False),
-    sa.Column('last_name', sa.String(), nullable=True),
-    sa.Column('origin_country', sa.String(), nullable=True),
-    sa.Column('origin_city', sa.String(), nullable=True),
-    sa.Column('dob', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('cities',
@@ -113,6 +103,25 @@ def upgrade():
     sa.ForeignKeyConstraint(['boroughs_id'], ['boroughs.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('users',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('email', sa.String(), nullable=False),
+    sa.Column('_password_hash', sa.String(), nullable=False),
+    sa.Column('account_type', sa.String(), nullable=False),
+    sa.Column('intro', sa.String(), nullable=True),
+    sa.Column('country_id', sa.Integer(), nullable=True),
+    sa.Column('state_id', sa.Integer(), nullable=True),
+    sa.Column('cities_id', sa.Integer(), nullable=True),
+    sa.Column('boroughs_id', sa.Integer(), nullable=True),
+    sa.Column('neighbourhoods_id', sa.Integer(), nullable=True),
+    sa.Column('type', sa.String(length=50), nullable=True),
+    sa.ForeignKeyConstraint(['boroughs_id'], ['boroughs.id'], ),
+    sa.ForeignKeyConstraint(['cities_id'], ['cities.id'], ),
+    sa.ForeignKeyConstraint(['country_id'], ['countries.id'], ),
+    sa.ForeignKeyConstraint(['neighbourhoods_id'], ['neighbourhoods.id'], ),
+    sa.ForeignKeyConstraint(['state_id'], ['states.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('businesses',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('business_name', sa.String(), nullable=False),
@@ -122,17 +131,15 @@ def upgrade():
     sa.Column('building_number', sa.String(), nullable=False),
     sa.Column('street_name', sa.String(), server_default='', nullable=False),
     sa.Column('post_code', sa.String(), nullable=False),
-    sa.Column('country_id', sa.Integer(), nullable=True),
-    sa.Column('state_id', sa.Integer(), nullable=True),
-    sa.Column('cities_id', sa.Integer(), nullable=True),
-    sa.Column('boroughs_id', sa.Integer(), nullable=True),
-    sa.Column('neighbourhoods_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['boroughs_id'], ['boroughs.id'], ),
-    sa.ForeignKeyConstraint(['cities_id'], ['cities.id'], ),
-    sa.ForeignKeyConstraint(['country_id'], ['countries.id'], ),
     sa.ForeignKeyConstraint(['id'], ['users.id'], ),
-    sa.ForeignKeyConstraint(['neighbourhoods_id'], ['neighbourhoods.id'], ),
-    sa.ForeignKeyConstraint(['state_id'], ['states.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('travelers',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('first_name', sa.String(), nullable=False),
+    sa.Column('last_name', sa.String(), nullable=True),
+    sa.Column('dob', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('business_industries',
@@ -149,14 +156,15 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('business_industries')
+    op.drop_table('travelers')
     op.drop_table('businesses')
+    op.drop_table('users')
     op.drop_table('neighbourhoods')
     op.drop_table('boroughs')
     op.drop_table('cities')
-    op.drop_table('travelers')
     op.drop_table('states')
     op.drop_table('countries_continents')
-    op.drop_table('users')
+    op.drop_table('container_polaroids')
     op.drop_table('sign_up_containers')
     op.drop_table('industries')
     op.drop_table('countries')

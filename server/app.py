@@ -8,9 +8,19 @@ from werkzeug.utils import secure_filename
 
 from flask import url_for, send_from_directory
 
-from models import SignUpContainer, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries
+from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries
 
 from datetime import datetime
+
+class AllContainers(Resource):
+    def get(self):
+        containers=[container.to_dict() for container in SignUpContainer.query.all()]
+        return containers, 200
+
+class AllContainerPolaroids(Resource):
+    def get(self):
+        polaroids=[polaroid.to_dict() for polaroid in SignUpContainerPolaroid.query.all()]
+        return polaroids, 200
 
 class AllContinents(Resource):
     def get(self):
@@ -86,6 +96,29 @@ class AllTravelers(Resource):
     def get(self):
         travelers=[traveler.to_dict() for traveler in Travelers.query.all()]
         return travelers, 200
+    
+    def post(self):
+        json=request.get_json()
+        try:
+            new_traveler = Travelers(
+                email = json.get("email"),
+                account_type = json.get("accountType"),
+                intro = json.get("intro"),
+                country_id = int(json.get("countryId")),
+                state_id = int(json.get("stateId")),
+                cities_id = int(json.get("cityId")),
+                boroughs_id = int(json.get("boroughId")),
+                neighbourhoods_id = int(json.get("neighbourhoodId")),
+                first_name = json.get("firstName"),
+                last_name = json.get("lastName"),
+                dob = json.get("dob")
+            )
+            new_traveler.password_hash = json.get("password")
+            db.session.add(new_traveler)
+            db.session.commit()
+            return new_traveler.to_dict(), 201
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
 
 class AllBusinesses(Resource):
     def get(self):
@@ -101,6 +134,10 @@ class AllBusinessesIndustries(Resource):
     def get(self):
         businesses_industries=[business_industry.to_dict() for business_industry in BusinessesIndustries.query.all()]
         return businesses_industries, 200
+
+api.add_resource(AllContainers, '/containers')
+
+api.add_resource(AllContainerPolaroids, '/containerpolaroids')
 
 api.add_resource(AllContinents, '/continents')
 

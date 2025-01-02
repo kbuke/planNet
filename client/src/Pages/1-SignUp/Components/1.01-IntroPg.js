@@ -3,7 +3,9 @@ import coverPhoto from "../../../assets/planNet.png"
 import "./1.01-IntroPg.css"
 
 export default function IntroPg({
-    planNetLogo
+    logInSignUp,
+    toggleArrows,
+    renderLogo
 }){
     return(
         <div
@@ -12,11 +14,11 @@ export default function IntroPg({
                 backgroundImage: `url(${coverPhoto})`
             }}
         >
-            <img 
-                src={planNetLogo}
-                alt="planNetLogo"
-                className="signUpLogo"
-            />
+            {renderLogo()}
+
+            {logInSignUp()}
+
+            {toggleArrows()}
         </div>
     )
 }

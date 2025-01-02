@@ -11,9 +11,28 @@ class SignUpContainer(db.Model, SerializerMixin):
     __tablename__="sign_up_containers"
 
     id=db.Column(db.Integer, primary_key=True)
-    background_colour=db.Column(db.String, nullable=True)
-    background_image=db.Column(db.String, nullable=False)
+    background_image=db.Column(db.String, nullable=True)
+    tex_background_colour=db.Column(db.String, nullable=False, server_default="")
+    title=db.Column(db.String, nullable=False, server_default="")
     text=db.Column(db.String, nullable=False)
+
+    #Set up relations
+    polaroids = db.relationship("SignUpContainerPolaroid", backref="containers")
+
+    serialize_rules=(
+        "-polaroids.containers",
+    )
+
+#Polaroid pictures on sign up containers
+class SignUpContainerPolaroid(db.Model, SerializerMixin):
+    __tablename__="container_polaroids"
+
+    id=db.Column(db.Integer, primary_key=True)
+    polaroid_picture=db.Column(db.String, nullable=False)
+    polaroid_text=db.Column(db.String, nullable=False)
+
+    #Set up relations
+    container_id=db.Column(db.Integer, db.ForeignKey("sign_up_containers.id"))
 
 #Continent Model
 class Continents(db.Model, SerializerMixin):
@@ -55,7 +74,8 @@ class Country(db.Model, SerializerMixin):
     #Set up relations
     continents = db.relationship("CountriesContinent", backref="country")
     states = db.relationship("States", backref="country")
-    businesses=db.relationship("Businesses", backref="country")
+    # businesses=db.relationship("Businesses", backref="country")
+    users=db.relationship("Users", backref="country")
 
     serialize_rules=(
         "-continents.country",
@@ -65,12 +85,18 @@ class Country(db.Model, SerializerMixin):
         "-states.country",
         "-states.businesses",
         "-states.cities",
+        "-states.users",
 
-        "-businesses.country",
-        "-businesses.states",
-        "-businesses.cities",
-        "-businesses.borough",
-        "-businesses.neighbourhood",
+        # "-users.country",
+        # "-users.state",
+        # "-users.cities",
+        # "-users.borough",
+        # "-users.neighbourhood",
+        # "-users._password_hash",
+        # "-users.boroughs_id",
+        # "-users.street_name",
+        # "-users.state_id",
+        "-users",
     )
 
 #Countries Continents Model - set up model that shows which continent(s) a country belongs
@@ -94,7 +120,8 @@ class States(db.Model, SerializerMixin):
     #Set up relations 
     country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
     cities = db.relationship("Cities", backref="state")
-    businesses=db.relationship("Businesses", backref="states")
+    # businesses=db.relationship("Businesses", backref="states")
+    users=db.relationship("Users", backref="state")
 
     serialize_rules=(
         "-country.states",
@@ -105,11 +132,11 @@ class States(db.Model, SerializerMixin):
         "-cities.boroughs",
         "-cities.businesses",
 
-        "-businesses.states",
-        "-businesses.country",
-        "-businesses.cities",
-        "-businesses.borough",
-        "-businesses.neighbourhood",
+        "-users.state",
+        "-users.country",
+        "-users.cities",
+        "-users.borough",
+        "-users.neighbourhood",
     )
     
     
@@ -128,7 +155,8 @@ class Cities(db.Model, SerializerMixin):
     #Set up relations
     states_id=db.Column(db.Integer, db.ForeignKey("states.id"))
     boroughs = db.relationship("Boroughs", backref="city")
-    businesses=db.relationship("Businesses", backref="cities")
+    # businesses=db.relationship("Businesses", backref="cities")
+    users=db.relationship("Users", backref="cities")
 
     serialize_rules=(
         "-state.cities",
@@ -144,17 +172,17 @@ class Cities(db.Model, SerializerMixin):
         "-boroughs.neighbourhoods",
         "-boroughs.businesses",
 
-        "-businesses.cities",
-        "-businesses.states",
-        "-businesses.country",
-        "-businesses.borough",
-        "-businesses.neighbourhood",
-        "-businesses.email",
-        "-businesses.boroughs_id",
-        "-businesses.neighbourhoods_id",
-        "-businesses._password_hash",
-        "-businesses.country_id",
-        "-businesses.state_id",
+        "-users.cities",
+        "-users.state",
+        "-users.country",
+        "-users.borough",
+        "-users.neighbourhood",
+        "-users.email",
+        "-users.boroughs_id",
+        "-users.neighbourhoods_id",
+        "-users._password_hash",
+        "-users.country_id",
+        "-users.state_id",
     )
 
 #Towns Model - towns belong in a city
@@ -169,7 +197,8 @@ class Boroughs(db.Model, SerializerMixin):
     #Set up relations
     cities_id=db.Column(db.Integer, db.ForeignKey("cities.id"))
     neighbourhoods = db.relationship("Neighbourhoods", backref="borough")
-    businesses=db.relationship("Businesses", backref="borough")
+    # businesses=db.relationship("Businesses", backref="borough")
+    users=db.relationship("Users", backref="borough")
 
     serialize_rules=(
         "-city.boroughs",
@@ -178,11 +207,11 @@ class Boroughs(db.Model, SerializerMixin):
         "-neighbourhoods.borough",
         "-neighbourhoods.businesses",
 
-        "-businesses.borough",
-        "-businesses.states",
-        "-businesses.country",
-        "-businesses.cities",
-        "-businesses.neighbourhood",
+        "-users.borough",
+        "-users.state",
+        "-users.country",
+        "-users.cities",
+        "-users.neighbourhood",
     )
 
 #Neighbourhoods Model - Neighbourhoods belong to Boroughs
@@ -196,28 +225,56 @@ class Neighbourhoods(db.Model, SerializerMixin):
 
     #Set up relations
     boroughs_id=db.Column(db.Integer, db.ForeignKey("boroughs.id"))
-    businesses=db.relationship("Businesses", backref="neighbourhood")
+    # businesses=db.relationship("Businesses", backref="neighbourhood")
+    users=db.relationship("Users", backref="neighbourhood")
 
     serialize_rules=(
         "-borough.neighbourhoods",
         "-borough.businesses",
 
-        "-businesses.neighbourhood",
-        "-businesses.borough",
-        "-businesses.states",
-        "-businesses.country",
-        "-businesses.cities",
+        "-users.neighbourhood",
+        "-users.borough",
+        "-users.state",
+        "-users.country",
+        "-users.cities",
     )
 
 #Users Model - can have either user or business
 class Users(db.Model, SerializerMixin):
-    __tablename__="users"
+    __tablename__ = "users"
 
-    id=db.Column(db.Integer, primary_key=True)
-    email=db.Column(db.String, nullable=False)
-    _password_hash=db.Column(db.String, nullable=False)
-    account_type=db.Column(db.String, nullable=False)
-    intro=db.Column(db.String, nullable=True)
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String, nullable=False)
+    account_type = db.Column(db.String, nullable=False)
+    intro = db.Column(db.String, nullable=True)
+
+    country_id = db.Column(db.Integer, db.ForeignKey("countries.id"), nullable=True)
+    state_id = db.Column(db.Integer, db.ForeignKey("states.id"), nullable=True)
+    cities_id = db.Column(db.Integer, db.ForeignKey("cities.id"), nullable=True)
+    boroughs_id = db.Column(db.Integer, db.ForeignKey("boroughs.id"), nullable=True)
+    neighbourhoods_id = db.Column(db.Integer, db.ForeignKey("neighbourhoods.id"), nullable=True)
+
+    serialize_rules=(
+        "-country.users",
+        "-country.continents",
+        "-country.states",
+
+        "-state.users",
+        "-state.cities",
+        "-state.country",
+    
+        "-cities.users",
+        "-cities.boroughs",
+        "-cities.state",
+
+        "-borough.users",
+        "-borough.neighbourhoods",
+        "-borough.city",
+
+        "-neighbourhood.users",
+        "-neighbourhood.borough",
+    )
 
     #Password hasing and authentication
     @hybrid_property
@@ -237,21 +294,40 @@ class Users(db.Model, SerializerMixin):
         if '@' and '.' not in value:
             raise ValueError("Please enter a valid email address")
         return value
-    
-    ALLOWED_USERS=["Admin", "Traveler", "Business"]
+
+    type = db.Column(db.String(50))
+    __mapper_args__ = {
+        "polymorphic_on": type,
+        "polymorphic_identity": "user"
+    }
+
+    ALLOWED_USERS = ["Admin", "Traveler", "Business"]
+
     @validates("account_type")
     def validate_user_type(self, key, account_type):
-        if account_type in self.ALLOWED_USERS:
-            return account_type 
-        raise ValueError(f"The account type must be one of {', '.join(self.ALLOWED_USERS)}")
-    
-    #Set up polymorphic identity
-    type=db.Column(db.String(50))
+        if account_type not in self.ALLOWED_USERS:
+            raise ValueError(f"The account type must be one of {', '.join(self.ALLOWED_USERS)}")
+        return account_type
 
-    __mapper_args__={
-        "polymorphic_on": type,
-        "polymorphic_identity": "user" 
-    }
+    @staticmethod
+    def validate_location_fields(account_type, **kwargs):
+        if account_type != "Traveler":
+            for field, value in kwargs.items():
+                if value is None:
+                    raise ValueError(f"{field} must not be null for account type {account_type}")
+        return True
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Validate location fields based on account_type
+        self.validate_location_fields(
+            self.account_type,
+            country_id=kwargs.get("country_id"),
+            state_id=kwargs.get("state_id"),
+            cities_id=kwargs.get("cities_id"),
+            boroughs_id=kwargs.get("boroughs_id"),
+            neighbourhoods_id=kwargs.get("neighbourhoods_id"),
+        )
 
 #Set up traveler model
 class Travelers(Users):
@@ -263,8 +339,6 @@ class Travelers(Users):
     
     first_name=db.Column(db.String, nullable=False)
     last_name=db.Column(db.String, nullable=True)
-    origin_country=db.Column(db.String, nullable=True)
-    origin_city=db.Column(db.String, nullable=True)
     dob=db.Column(db.DateTime, nullable=True)
 
     __mapper_args__={
@@ -288,11 +362,11 @@ class Businesses(Users):
     post_code=db.Column(db.String, nullable=False)
 
     #Set up relations
-    country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
-    state_id=db.Column(db.Integer, db.ForeignKey("states.id"))
-    cities_id=db.Column(db.Integer, db.ForeignKey("cities.id"))
-    boroughs_id=db.Column(db.Integer, db.ForeignKey("boroughs.id"))
-    neighbourhoods_id=db.Column(db.Integer, db.ForeignKey("neighbourhoods.id"))
+    # country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
+    # state_id=db.Column(db.Integer, db.ForeignKey("states.id"))
+    # cities_id=db.Column(db.Integer, db.ForeignKey("cities.id"))
+    # boroughs_id=db.Column(db.Integer, db.ForeignKey("boroughs.id"))
+    # neighbourhoods_id=db.Column(db.Integer, db.ForeignKey("neighbourhoods.id"))
     industries=db.relationship("BusinessesIndustries", backref="business")
 
     serialize_rules = (

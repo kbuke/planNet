@@ -1,0 +1,29 @@
+#signUpLogInContainer,
+#toggleSignUpArrowsContainer{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    right: 10px;
+    gap: 40px;
+}
+
+#signUpLogInContainer{
+    top: 10px;
+}
+
+#toggleSignUpArrowsContainer{
+    bottom: 10px;
+}
+
+.signUpPgIcons{
+    height: 40px;
+    width: 40px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+
+.signUpPgIconText{
+    margin-top: 0px;
+    font-weight: 600;
+}
+
