@@ -98,7 +98,7 @@ export default function TravelerSignUp({
         <form
             onSubmit={(e) => handleNewTraveler(e)}
         >
-            <p>Hey fellow Traveler, please enter your information</p>
+            <p>Hey!!! fellow Traveler, please enter your information</p>
             {newUserInputs("Please enter your email address", setEmail)}
             {newUserInputs("Please enter your password", setPassword)}
             {newUserInputs("Please enter your first name", setFirstName)}

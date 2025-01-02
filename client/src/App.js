@@ -14,6 +14,9 @@ function App() {
   const [allNeighbourhoods, setAllNeighbourhoods] = useState([])
 
   const [allTravelers, setAllTravelers] = useState([])
+  const [allBusinesses, setAllBusinesses] = useState([])
+
+  const [allIndustries, setAllIndustries] = useState([])
 
   //Fetch logged user
   useEffect(() => {
@@ -119,6 +122,32 @@ function App() {
     })
   }, [])
 
+  //Fetch all businesses 
+  useEffect(() => {
+    fetch("/businesses")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(businesses => {
+          setAllBusinesses(businesses)
+        })
+      }
+    })
+  }, [])
+
+  //Fetch all industries
+  useEffect(() => {
+    fetch("/industries")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(industries => {
+          setAllIndustries(industries)
+        })
+      }
+    })
+  }, [])
+
   console.log(allTravelers)
 
   return (
@@ -140,7 +169,12 @@ function App() {
           allNeighbourhoods: allNeighbourhoods,
 
           allTravelers: allTravelers,
-          setAllTravelers: setAllTravelers
+          setAllTravelers: setAllTravelers,
+
+          allBusinesses: allBusinesses,
+          setAllBusinesses: setAllBusinesses,
+
+          allIndustries: allIndustries
         }}
       />
     </div>

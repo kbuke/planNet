@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import "./1.03-SignUpContainer.css"
+
 import TravelerSignUp from "./1.04-TravelerSignUp"
+import BusinessSignUp from "./1.05-BusinessSignUp"
 
 export default function SignUpForm({
     toggleArrows,
@@ -16,17 +18,7 @@ export default function SignUpForm({
     const [stateId, setStateId] = useState()
     const [cityId, setCityId] = useState()
     const [boroughId, setBoroughId] = useState()
-
-    //States for businesses
-    const [businessName, setBusinessName] = useState()
-    const [openingTime, setOpeningTime] = useState()
-    const [closingTime, setClosingTime] = useState()
-    const [phoneNumber, setPhoneNumber] = useState()
-    const [buildingNumber, setBuildingNumber] = useState()
-    const [streetName, setStreetName] = useState()
-    const [postCode, setPostCode] = useState()
     const [neighbourhoodId, setNeighbourhoodId] = useState()
-    const [industries, setIndustries] = useState([])
 
     //Other states
     const [sortCountries, setSortCountries] = useState([])
@@ -150,7 +142,9 @@ export default function SignUpForm({
             {logInSignUp()}
 
             {newSignUp ?
-                <div>
+                <div
+                    id="signUpConfirmedContainer"
+                >
                     <h2>You have signed up</h2>
                 </div>
                 :
@@ -158,7 +152,9 @@ export default function SignUpForm({
                 <div
                     id={accountType ? "signUpForm" : "unChosenSignUpForm"}
                 >
-                    <h2>Sign Up to Plan-Net</h2>
+                    <h2
+                        style={{color: "white", marginBottom: "0px"}}
+                    >Sign Up to Plan-Net</h2>
 
                     {!accountType ?
                         <>
@@ -200,7 +196,33 @@ export default function SignUpForm({
                                 setNewSignUp={setNewSignUp}
                             />
                         :
-                        null 
+                            <BusinessSignUp 
+                                email={email}
+                                setEmail={setEmail}
+                                password={password}
+                                setPassword={setPassword}
+                                accountType={accountType}
+                                setAccountType={setAccountType}
+                                countryId={countryId}
+                                setCountryId={setCountryId}
+                                stateId={stateId}
+                                setStateId={setStateId}
+                                cityId={cityId}
+                                setCityId={setCityId}
+                                boroughId={boroughId}
+                                setBoroughId={setBoroughId}
+                                neighbourhoodId={neighbourhoodId}
+                                setNeighbourhoodId={setNeighbourhoodId}
+                                setNewSignUp={setNewSignUp}
+                                sortCountries={sortCountries}
+                                filteredStates={filteredStates}
+                                filteredCities={filteredCities}
+                                filteredBoroughs={filteredBoroughs}
+                                filteredNeighbourhoods={filteredNeighbourhoods}
+                                locationInputs={locationInputs}
+                                newUserInputs={newUserInputs}
+                                appData={appData}
+                            /> 
                     }
                 </div>
             }

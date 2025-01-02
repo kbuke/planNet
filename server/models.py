@@ -244,7 +244,7 @@ class Users(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
     _password_hash = db.Column(db.String, nullable=False)
     account_type = db.Column(db.String, nullable=False)
     intro = db.Column(db.String, nullable=True)
@@ -362,16 +362,19 @@ class Businesses(Users):
     post_code=db.Column(db.String, nullable=False)
 
     #Set up relations
-    # country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
-    # state_id=db.Column(db.Integer, db.ForeignKey("states.id"))
-    # cities_id=db.Column(db.Integer, db.ForeignKey("cities.id"))
-    # boroughs_id=db.Column(db.Integer, db.ForeignKey("boroughs.id"))
-    # neighbourhoods_id=db.Column(db.Integer, db.ForeignKey("neighbourhoods.id"))
     industries=db.relationship("BusinessesIndustries", backref="business")
 
     serialize_rules = (
         "-industries.business",
         "-industries.industry",
+
+        "-borough.neighbourhoods.users",
+        "-borough.users",
+        "-borough.city.users",
+
+        "-country.continents",
+
+        "-state.users",
     )
 
     #Handle polymorphic relation

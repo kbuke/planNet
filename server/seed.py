@@ -215,7 +215,10 @@ if __name__ == "__main__":
         hotel=Industry(
             industry="Hotel"
         )
-        db.session.add_all([hotel])
+        restaraunt=Industry(
+            industry="Restaraunt"
+        )
+        db.session.add_all([hotel, restaraunt])
         db.session.commit()
 
         print("Seeding businesses industries")

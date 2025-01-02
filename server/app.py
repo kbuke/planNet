@@ -124,6 +124,34 @@ class AllBusinesses(Resource):
     def get(self):
         businesses=[business.to_dict() for business in Businesses.query.all()]
         return businesses, 200
+    
+    def post(self):
+        json=request.get_json()
+        # breakpoint()
+        try:
+            new_business = Businesses(
+                email=json.get("email"),
+                account_type=json.get("accountType"),
+                intro=json.get("intro"),
+                country_id=json.get("countryId"),
+                state_id=json.get("stateId"),
+                cities_id=json.get("cityId"),
+                boroughs_id=json.get("boroughId"),
+                neighbourhoods_id=json.get("neighbourhoodId"),
+                business_name=json.get("businessName"),
+                opening_time=datetime.strptime(json.get("openingTime"), "%H:%M").time(),
+                closing_time=datetime.strptime(json.get("closingTime"), "%H:%M").time(),
+                phone_number=json.get("phoneNumber"),
+                building_number=json.get("buildingNumber"),
+                street_name=json.get("streetName"),
+                post_code=json.get("postCode")
+            )
+            new_business.password_hash=json.get("password")
+            db.session.add(new_business)
+            db.session.commit()
+            return new_business.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
 
 class AllIndustries(Resource):
     def get(self):

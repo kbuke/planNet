@@ -1,0 +1,16 @@
+#businessOperatingTimeContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    justify-content: center;
+    border-bottom: solid;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.operatingTimeInput{
+    height: 30px;
+    width: 140px;
+    text-align: center;
+    margin-bottom: 10px;
+}
