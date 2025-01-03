@@ -156,6 +156,8 @@ function App() {
         context={{
           logo: logo,
 
+          setLoggedUser: setLoggedUser,
+
           signUpContainer: signUpContainer,
 
           allCountries: allCountries,

@@ -368,13 +368,27 @@ class Businesses(Users):
         "-industries.business",
         "-industries.industry",
 
-        "-borough.neighbourhoods.users",
+        "-borough.neighbourhoods",
         "-borough.users",
-        "-borough.city.users",
+        "-borough.city",
 
         "-country.continents",
+        "-country.states",
 
         "-state.users",
+        "-state.cities",
+        "-state.cities",
+        "-state.country",
+
+        "-neighbourhood.borough",
+        "-neighbourhood.users",
+        "-neighbourhood.borough",
+
+        "-cities.users",
+        "-cities.state",
+        "-cities.boroughs",
+
+        "-_password_hash",
     )
 
     #Handle polymorphic relation

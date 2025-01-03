@@ -60,8 +60,8 @@ class AllUsers(Resource):
 class Login(Resource):
     def post(self):
         json = request.get_json()
-        email = json.get("email").strip()
-        password = json.get("password")
+        email = json.get("userEmail").strip()
+        password = json.get("userPassword")
 
         if not email or not password:
             return {"error": "Email and Password required"}, 400

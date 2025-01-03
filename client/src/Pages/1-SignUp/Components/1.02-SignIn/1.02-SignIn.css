@@ -1,0 +1,44 @@
+#popUpBackground {
+    position: fixed;
+    z-index: 3;
+    background-color: rgba(1, 1, 1, 0.6);
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#popUpContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 600px;
+    text-align: center;
+}
+
+#signUpInputContainer{
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    margin-bottom: 20px;
+}
+
+#signInButtonContainer{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.signInButtons{
+    border: none;
+    width: 80px;
+    border-radius: 24px;
+    height: 30px;
+    background-color: rgb(17, 154, 49);
+    color: white;
+    cursor: pointer;
+}
