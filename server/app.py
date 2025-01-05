@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 from flask import url_for, send_from_directory
 
-from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries
+from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry
 
 from datetime import datetime
 
@@ -163,6 +163,24 @@ class AllBusinessesIndustries(Resource):
         businesses_industries=[business_industry.to_dict() for business_industry in BusinessesIndustries.query.all()]
         return businesses_industries, 200
 
+class VisitedCountries(Resource):
+    def get(self):
+        visited_countries=[visited_country.to_dict() for visited_country in UserVisitedCountry.query.all()]
+        return visited_countries, 200
+    
+    def post(self):
+        json=request.get_json()
+        try:
+            new_visit = UserVisitedCountry(
+                user_id=json.get("userId"),
+                country_id=json.get("countryId")
+            )
+            db.session.add(new_visit)
+            db.session.commit()
+            return new_visit.to_dict(), 201
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
+
 api.add_resource(AllContainers, '/containers')
 
 api.add_resource(AllContainerPolaroids, '/containerpolaroids')
@@ -194,6 +212,8 @@ api.add_resource(AllBusinesses, '/businesses')
 api.add_resource(AllIndustries, '/industries')
 
 api.add_resource(AllBusinessesIndustries, '/businessesindustries')
+
+api.add_resource(VisitedCountries, '/visitedcountries')
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

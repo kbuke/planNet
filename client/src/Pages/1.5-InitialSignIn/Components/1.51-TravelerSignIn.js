@@ -1,0 +1,111 @@
+
+import { useEffect, useState } from "react"
+import "./1.51-TravelerSignIn.css"
+
+export default function TravelerSignIn({
+    appData,
+    loggedUser
+}){
+    const [sortCountries, setSortCountries] = useState([])
+    const [hoverCountryId, setHoverCountryId] = useState()
+    const [allVisitedCountries, setAllVisitedCountries] = useState([])
+
+    const userId = loggedUser.id
+
+    //Get all countries
+    const allCountries = appData.allCountries
+
+    //Get all visited countries 
+    const visitedCountries = appData.visitedCountries
+    const setVisitedCountries = appData.setVisitedCountries
+
+    useEffect(() => {
+        setSortCountries(allCountries.sort((a, b) => a.name - b.name))
+    }, [allCountries])
+
+    useEffect(() => {
+        setAllVisitedCountries(visitedCountries.filter(visit => userId === visit.user_id ))
+    }, [visitedCountries])
+
+    console.log(allVisitedCountries)
+
+    //Handle logic for adding a new country to users visited list 
+    const handleNewVisit = (e, countryId) => {
+        e.preventDefault()
+        console.log("I did visit this country")
+        const jsonData = {
+            countryId, 
+            userId
+        }
+        fetch("/visitedcountries", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(r => r.json())
+        .then(newVisit => {
+            setVisitedCountries([...visitedCountries, newVisit])
+        })
+    }
+
+    const handleDeleteVisit = (e) => {
+        e.preventDefault()
+        console.log("I did not actually visit this countru")
+    }
+
+    const renderCountries = sortCountries.map((country, index) => {
+        // Check if the country is visited
+        const isVisited = allVisitedCountries.some(
+            (visit) => visit.country_id === country.id
+        );
+    
+        return (
+            <div
+                key={index}
+                id="countryVisitContainer"
+                style={{
+                    backgroundImage: `url(${country.image})`
+                }}
+                onMouseEnter={() => setHoverCountryId(country.id)}
+                onMouseLeave={() => setHoverCountryId()}
+                onClick={!isVisited ? 
+                    (e) => handleNewVisit(e, country.id)
+                    :
+                    (e) => handleDeleteVisit(e)
+                }
+            >
+                {hoverCountryId === country.id && !isVisited ? (
+                    <div className="initialCountryNameCover">
+                        <h1>{country.name}</h1>
+                    </div>
+                ) : isVisited ? (
+                    <div>
+                        <img
+                            src={country.passport_stamp}
+                            id="countryContainerPassportStamp"
+                            alt={`${country.name} Passport Stamp`}
+                        />
+                    </div>
+                ) : null}
+            </div>
+        );
+    });
+    
+
+    console.log(sortCountries)
+    return(
+        <div
+            id="userInitialInfoContainer"
+        >
+            <h1>Please Select Countries You Have Visited</h1>
+
+            <div
+                id="initialCountryVisitContainer"
+            >
+                {renderCountries}
+            </div>
+        </div>
+    )
+}

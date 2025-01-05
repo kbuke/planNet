@@ -1,0 +1,11 @@
+#initialSignInContainer{
+    background-position: center;
+    height: 100vh;
+    background-repeat: no-repeat;
+    width: 100%;
+    border: solid;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

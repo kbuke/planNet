@@ -6,7 +6,7 @@ from datetime import time
 
 import os 
 
-from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Travelers, Businesses, Industry, BusinessesIndustries
+from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry
 
 from dotenv import load_dotenv 
 load_dotenv()
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             safety_level="Safe",
             intro="Land of the rising sun, and home of the fierce warriors the Samurai",
             flag="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg",
-            passport_stamp="https://i.etsystatic.com/8157817/r/il/8a171c/2370221133/il_570xN.2370221133_jdr9.jpg"
+            passport_stamp="https://i.ibb.co/kM70FNB/Japan.png"
         )
         turkey=Country(
             name="Turkey",
@@ -70,11 +70,11 @@ if __name__ == "__main__":
             safety_level="Safe",
             intro="Home of the Ottoman Empire, and some of the oldest architecture in the world.",
             flag="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/800px-Flag_of_Turkey.svg.png",
-            passport_stamp="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4OTu3RuSRlm5jPYfAIhbctCoPS31q2RWG1w&s"
+            passport_stamp="https://i.ibb.co/pjsW5vQ/Turkey.png"
         )
         uk=Country(
             name="UK",
-            image="https://www.travelandleisure.com/thmb/aU-uN5KmNaSwwLEXStXHGYY8Lwk=/1500x0/filters:no_upscale():max_bytes(200000):strip_icc()/london-cityscape-UKESSAY1222-3c3b4b23062f410080b77839b31243a6.jpg",
+            image="https://news.virginia.edu/sites/default/files/article_image/brexit_header.jpg",
             safety_level="Safe",
             intro="The UK is made up of four countries; England, Northern Ireland, Scotland, and Wales. It is the home of fry-ups and fish and chips.",
             flag="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1200px-Flag_of_the_United_Kingdom_%281-2%29.svg.png",
@@ -227,6 +227,18 @@ if __name__ == "__main__":
             industry_id = 1
         )
         db.session.add_all([millenial_hotel])
+        db.session.commit()
+
+        print("Seeding users visited countries")
+        user1_japan = UserVisitedCountry(
+            user_id=1,
+            country_id=1
+        )
+        user1_turkey = UserVisitedCountry(
+            user_id=1,
+            country_id=2
+        )
+        db.session.add_all([user1_japan, user1_turkey])
         db.session.commit()
 
         print("Finished seeding")

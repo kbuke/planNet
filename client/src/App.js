@@ -18,6 +18,8 @@ function App() {
 
   const [allIndustries, setAllIndustries] = useState([])
 
+  const [visitedCountries, setVisitedCountries] = useState([])
+
   //Fetch logged user
   useEffect(() => {
     fetch("/check_session")
@@ -148,6 +150,19 @@ function App() {
     })
   }, [])
 
+  //Fetch all visited countries
+  useEffect(() => {
+    fetch("/visitedcountries")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(visitedCountry => {
+          setVisitedCountries(visitedCountry)
+        })
+      }
+    })
+  }, [])
+
   console.log(allTravelers)
 
   return (
@@ -156,6 +171,7 @@ function App() {
         context={{
           logo: logo,
 
+          loggedUser: loggedUser,
           setLoggedUser: setLoggedUser,
 
           signUpContainer: signUpContainer,
@@ -176,7 +192,10 @@ function App() {
           allBusinesses: allBusinesses,
           setAllBusinesses: setAllBusinesses,
 
-          allIndustries: allIndustries
+          allIndustries: allIndustries,
+
+          visitedCountries: visitedCountries,
+          setVisitedCountries: setVisitedCountries
         }}
       />
     </div>
