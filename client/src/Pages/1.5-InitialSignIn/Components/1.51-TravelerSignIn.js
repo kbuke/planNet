@@ -50,9 +50,27 @@ export default function TravelerSignIn({
         })
     }
 
-    const handleDeleteVisit = (e) => {
+    //Handle deleted visit
+    const handleDeleteVisit = (e, countryId) => {
         e.preventDefault()
-        console.log("I did not actually visit this countru")
+        console.log("I did not actually visit this country")
+        const userCountryRelation = allVisitedCountries.find(
+            relation => relation.country_id === countryId && relation.user_id === userId
+        )
+
+        console.log(userCountryRelation)
+
+        if (userCountryRelation){
+            const relationId = userCountryRelation.id 
+            fetch(`/visitedcountries/${relationId}`, {
+                method: "DELETE"
+            })
+            .then(r => {
+                if(r.ok){
+                    setVisitedCountries(countries => countries.filter(country => country.id !== relationId))
+                }
+            })
+        }
     }
 
     const renderCountries = sortCountries.map((country, index) => {
@@ -73,7 +91,7 @@ export default function TravelerSignIn({
                 onClick={!isVisited ? 
                     (e) => handleNewVisit(e, country.id)
                     :
-                    (e) => handleDeleteVisit(e)
+                    (e) => handleDeleteVisit(e, country.id)
                 }
             >
                 {hoverCountryId === country.id && !isVisited ? (

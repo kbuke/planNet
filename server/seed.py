@@ -78,7 +78,7 @@ if __name__ == "__main__":
             safety_level="Safe",
             intro="The UK is made up of four countries; England, Northern Ireland, Scotland, and Wales. It is the home of fry-ups and fish and chips.",
             flag="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1200px-Flag_of_the_United_Kingdom_%281-2%29.svg.png",
-            passport_stamp="https://www.shutterstock.com/image-illustration/uk-passport-stamp-united-kingdom-260nw-1616834101.jpg"
+            passport_stamp="https://i.ibb.co/KKPfkXD/UK.png"
         )
         db.session.add_all([japan, turkey, uk])
         db.session.commit()

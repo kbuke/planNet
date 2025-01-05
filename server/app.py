@@ -181,6 +181,25 @@ class VisitedCountries(Resource):
         except ValueError as e:
             return {"error": [str(e)]}, 400
 
+class VisitedCountriesId(Resource):
+    def get(self, id):
+        visitied_countries = UserVisitedCountry.query.filter(UserVisitedCountry.id==id).first()
+        if visited_countries:
+            return make_response(visited_countries.to_dict(), 201)
+        return {"error": "Relationship not found"}
+    
+    def delete(self, id):
+        visited_country=UserVisitedCountry.query.filter(UserVisitedCountry.id==id).first()
+        if visited_country:
+            db.session.delete(visited_country)
+            db.session.commit()
+            return{
+                "message": "Country visited deleted"
+            }, 200 
+        return {
+            "error": "Relationship not found"
+        }, 404
+
 api.add_resource(AllContainers, '/containers')
 
 api.add_resource(AllContainerPolaroids, '/containerpolaroids')
@@ -214,6 +233,7 @@ api.add_resource(AllIndustries, '/industries')
 api.add_resource(AllBusinessesIndustries, '/businessesindustries')
 
 api.add_resource(VisitedCountries, '/visitedcountries')
+api.add_resource(VisitedCountriesId, '/visitedcountries/<int:id>')
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
