@@ -26,7 +26,7 @@ export default function TravelerVisitedCountries({
     }, [allCountries])
 
     useEffect(() => {
-        setAllVisitedCountries(visitedCountries.filter(visit => userId === visit.user_id ))
+        setAllVisitedCountries(visitedCountries.filter(visit => userId === visit.user_id))
     }, [visitedCountries])
 
     //Handle logic for adding a new country to users visited list 

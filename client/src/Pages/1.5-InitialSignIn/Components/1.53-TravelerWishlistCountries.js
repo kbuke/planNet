@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 
 
 export default function TravelerWishlistCountries({
@@ -9,9 +10,14 @@ export default function TravelerWishlistCountries({
     appData,
     userId
 }) {
+    const [allCountriesWishList, setAllCountriesWishList] = useState([])
     //Show all wishlist countries
     const countriesWishlist = appData.countriesWishlist
     const setCountriesWishlist = appData.setCountriesWishlist
+
+    useEffect(() => {
+        setAllCountriesWishList(countriesWishlist.filter(wishList => wishList.user_id === userId))
+    }, [countriesWishlist])
 
     // Extract all visited country IDs for easy lookup
     const visitedCountryIds = new Set(allVisitedCountries.map(visit => visit.country_id));
@@ -44,8 +50,23 @@ export default function TravelerWishlistCountries({
         })
     }
 
-    const handleDeleteCountryWishList = (e) => {
+    const handleDeleteCountryWishList = (e, countryId) => {
         e.preventDefault()
+        const userCountryWishlist = allCountriesWishList.find(
+            relation => relation.country_id === countryId && relation.user_id === userId
+        )
+
+        if(userCountryWishlist){
+            const relationId = userCountryWishlist.id
+            fetch(`/countrieswishlist/${relationId}`, {
+                method: "DELETE"
+            })
+            .then(r => {
+                if(r.ok){
+                    setCountriesWishlist(countries => countries.filter(country => country.id !== relationId))
+                }
+            })
+        }
     }
 
     const renderCountries = unvisitedCountries.map((country, index) => {
