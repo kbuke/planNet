@@ -8,7 +8,6 @@ export default function Route(){
     //See if there is a logged in user
     const loggedUser = appData.loggedUser
 
-    console.log(loggedUser)
     return(
         <>
             {!loggedUser ?

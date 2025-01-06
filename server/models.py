@@ -74,9 +74,9 @@ class Country(db.Model, SerializerMixin):
     #Set up relations
     continents = db.relationship("CountriesContinent", backref="country")
     states = db.relationship("States", backref="country")
-    # businesses=db.relationship("Businesses", backref="country")
     users=db.relationship("Users", backref="country")
     visited_users=db.relationship("UserVisitedCountry", backref="country")
+    user_wishlist=db.relationship("UserWishListCountry", backref="country")
 
     serialize_rules=(
         "-continents.country",
@@ -92,6 +92,9 @@ class Country(db.Model, SerializerMixin):
 
         "-visited_users.country",
         "-visited_users.user",
+
+        "-user_wishlist.country",
+        "-user_wishlist.user",
     )
 
 #Countries Continents Model - set up model that shows which continent(s) a country belongs
@@ -115,8 +118,8 @@ class States(db.Model, SerializerMixin):
     #Set up relations 
     country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
     cities = db.relationship("Cities", backref="state")
-    # businesses=db.relationship("Businesses", backref="states")
     users=db.relationship("Users", backref="state")
+    visited_users=db.relationship("UserVisitedState", backref="state")
 
     serialize_rules=(
         "-country.states",
@@ -132,6 +135,9 @@ class States(db.Model, SerializerMixin):
         "-users.cities",
         "-users.borough",
         "-users.neighbourhood",
+
+        "-visited_users.state",
+        "-visited_users.user",
     )
     
     
@@ -251,6 +257,8 @@ class Users(db.Model, SerializerMixin):
     boroughs_id = db.Column(db.Integer, db.ForeignKey("boroughs.id"), nullable=True)
     neighbourhoods_id = db.Column(db.Integer, db.ForeignKey("neighbourhoods.id"), nullable=True)
     visited_countries = db.relationship("UserVisitedCountry", backref="user")
+    countries_wishlist = db.relationship("UserWishListCountry", backref="user")
+    visited_states = db.relationship("UserVisitedState", backref="user")
 
     serialize_rules=(
         "-country.users",
@@ -275,6 +283,12 @@ class Users(db.Model, SerializerMixin):
 
         "-visited_countries.user",
         "-visited_countries.country",
+
+        "-countries_wishlist.user",
+        "-countries_wishlist.country",
+
+        "-visited_states.user",
+        "-visited_states.state",
     )
 
     #Password hasing and authentication
@@ -432,6 +446,12 @@ class BusinessesIndustries(db.Model, SerializerMixin):
 
 
 #User Country Wishlist Model
+class UserWishListCountry(db.Model, SerializerMixin):
+    __tablename__="country_wishlist"
+
+    id=db.Column(db.Integer, primary_key=True)
+    user_id=db.Column(db.Integer, db.ForeignKey("users.id"))
+    country_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
 
 #User Country Visit Model
 class UserVisitedCountry(db.Model, SerializerMixin):
@@ -448,7 +468,13 @@ class UserVisitedCountry(db.Model, SerializerMixin):
 
 #User City Wishlist Model
 
-#User City Visit Model
+#User State Visit Model
+class UserVisitedState(db.Model, SerializerMixin):
+    __tablename__="visited_cities"
+
+    id=db.Column(db.Integer, primary_key=True)
+    user_id=db.Column(db.Integer, db.ForeignKey("users.id"))
+    state_id=db.Column(db.Integer, db.ForeignKey("states.id"))
 
 #Pictures Model
 

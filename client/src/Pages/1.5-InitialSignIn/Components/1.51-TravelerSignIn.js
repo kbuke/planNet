@@ -2,128 +2,79 @@
 import { useEffect, useState } from "react"
 import "./1.51-TravelerSignIn.css"
 
+import TravelerVisitedCountries from "./1.52-TravelerVisitedCountries"
+import TravelerWishlistCountries from "./1.53-TravelerWishlistCountries";
+
+import { FaArrowCircleRight } from "react-icons/fa";
+import { FaArrowCircleLeft } from "react-icons/fa";
+
 export default function TravelerSignIn({
     appData,
     loggedUser
 }){
+    const [travelerPg, setTravelerPg] = useState(0)
     const [sortCountries, setSortCountries] = useState([])
-    const [hoverCountryId, setHoverCountryId] = useState()
     const [allVisitedCountries, setAllVisitedCountries] = useState([])
+    const [hoverCountryId, setHoverCountryId] = useState()
 
+    //Get userId
     const userId = loggedUser.id
 
-    //Get all countries
-    const allCountries = appData.allCountries
-
-    //Get all visited countries 
-    const visitedCountries = appData.visitedCountries
-    const setVisitedCountries = appData.setVisitedCountries
-
-    useEffect(() => {
-        setSortCountries(allCountries.sort((a, b) => a.name - b.name))
-    }, [allCountries])
-
-    useEffect(() => {
-        setAllVisitedCountries(visitedCountries.filter(visit => userId === visit.user_id ))
-    }, [visitedCountries])
-
-    console.log(allVisitedCountries)
-
-    //Handle logic for adding a new country to users visited list 
-    const handleNewVisit = (e, countryId) => {
-        e.preventDefault()
-        console.log("I did visit this country")
-        const jsonData = {
-            countryId, 
-            userId
-        }
-        fetch("/visitedcountries", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(jsonData)
-        })
-        .then(r => r.json())
-        .then(newVisit => {
-            setVisitedCountries([...visitedCountries, newVisit])
-        })
-    }
-
-    //Handle deleted visit
-    const handleDeleteVisit = (e, countryId) => {
-        e.preventDefault()
-        console.log("I did not actually visit this country")
-        const userCountryRelation = allVisitedCountries.find(
-            relation => relation.country_id === countryId && relation.user_id === userId
-        )
-
-        console.log(userCountryRelation)
-
-        if (userCountryRelation){
-            const relationId = userCountryRelation.id 
-            fetch(`/visitedcountries/${relationId}`, {
-                method: "DELETE"
-            })
-            .then(r => {
-                if(r.ok){
-                    setVisitedCountries(countries => countries.filter(country => country.id !== relationId))
-                }
-            })
-        }
-    }
-
-    const renderCountries = sortCountries.map((country, index) => {
-        // Check if the country is visited
-        const isVisited = allVisitedCountries.some(
-            (visit) => visit.country_id === country.id
-        );
-    
-        return (
+    //Create page navigation buttons
+    const travelerButtons = () => {
+        return(
             <div
-                key={index}
-                id="countryVisitContainer"
-                style={{
-                    backgroundImage: `url(${country.image})`
-                }}
-                onMouseEnter={() => setHoverCountryId(country.id)}
-                onMouseLeave={() => setHoverCountryId()}
-                onClick={!isVisited ? 
-                    (e) => handleNewVisit(e, country.id)
-                    :
-                    (e) => handleDeleteVisit(e, country.id)
-                }
+                id="travelButtonContainer"
             >
-                {hoverCountryId === country.id && !isVisited ? (
-                    <div className="initialCountryNameCover">
-                        <h1>{country.name}</h1>
-                    </div>
-                ) : isVisited ? (
-                    <div>
-                        <img
-                            src={country.passport_stamp}
-                            id="countryContainerPassportStamp"
-                            alt={`${country.name} Passport Stamp`}
-                        />
-                    </div>
-                ) : null}
-            </div>
-        );
-    });
-    
+                {travelerPg !== 0 ?
+                    <FaArrowCircleLeft 
+                        onClick={() => setTravelerPg(travelerPg - 1)}
+                        className="travelerArrow"
+                    />
+                    :
+                    null 
+                }
 
-    console.log(sortCountries)
+                <FaArrowCircleRight 
+                    onClick={() => setTravelerPg(travelerPg + 1)}
+                    className="travelerArrow"
+                />
+            </div>
+        )
+    }
+
     return(
         <div
             id="userInitialInfoContainer"
         >
-            <h1>Please Select Countries You Have Visited</h1>
-
-            <div
-                id="initialCountryVisitContainer"
-            >
-                {renderCountries}
-            </div>
+            {travelerPg === 0 ?
+                <TravelerVisitedCountries 
+                    appData={appData}
+                    loggedUser={loggedUser}
+                    travelerButtons={travelerButtons}
+                    sortCountries={sortCountries}
+                    setSortCountries={setSortCountries}
+                    allVisitedCountries={allVisitedCountries}
+                    setAllVisitedCountries={setAllVisitedCountries}
+                    userId={userId}
+                    hoverCountryId={hoverCountryId}
+                    setHoverCountryId={setHoverCountryId}
+                />
+                :
+                travelerPg === 1 ?
+                    <TravelerWishlistCountries 
+                        sortCountries={sortCountries}
+                        loggedUser={loggedUser}
+                        allVisitedCountries={allVisitedCountries}
+                        travelerButtons={travelerButtons}
+                        hoverCountryId={hoverCountryId}
+                        setHoverCountryId={setHoverCountryId}
+                        appData={appData}
+                        userId={userId}
+                    />
+                :
+                null
+            }
         </div>
     )
 }

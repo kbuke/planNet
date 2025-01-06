@@ -19,6 +19,7 @@ function App() {
   const [allIndustries, setAllIndustries] = useState([])
 
   const [visitedCountries, setVisitedCountries] = useState([])
+  const [countriesWishlist, setCountriesWishlist] = useState([])
 
   //Fetch logged user
   useEffect(() => {
@@ -163,7 +164,19 @@ function App() {
     })
   }, [])
 
-  console.log(allTravelers)
+  //Fetch all countries wishlist
+  useEffect(() => {
+    fetch("/countrieswishlist")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(wishlistCountry => {
+          setCountriesWishlist(wishlistCountry)
+        })
+      }
+    })
+  }, [])
+
 
   return (
     <div className="App">
@@ -195,7 +208,10 @@ function App() {
           allIndustries: allIndustries,
 
           visitedCountries: visitedCountries,
-          setVisitedCountries: setVisitedCountries
+          setVisitedCountries: setVisitedCountries,
+
+          countriesWishlist: countriesWishlist,
+          setCountriesWishlist: setCountriesWishlist
         }}
       />
     </div>

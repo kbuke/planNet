@@ -80,7 +80,58 @@ if __name__ == "__main__":
             flag="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg/1200px-Flag_of_the_United_Kingdom_%281-2%29.svg.png",
             passport_stamp="https://i.ibb.co/KKPfkXD/UK.png"
         )
-        db.session.add_all([japan, turkey, uk])
+        italy=Country(
+            name="Italy",
+            image="https://assets.voxcity.com/uploads/blog_images/Iconic%20Landmarks%20in%20Rome_original.jpg",
+            safety_level="Safe",
+            intro="Home of the Roman Empire, as well as some of the best food in the world.",
+            flag="https://content.app-sources.com/s/39330979433008693/uploads/Country_Flags/Flag_of_Italy.svg-0896525.png?format=webp",
+            passport_stamp="https://i.ibb.co/0rzhQWS/10.png"
+        )
+        netherlands=Country(
+            name="Netherlands",
+            image="https://www.lelongweekend.com/wp-content/uploads/2023/10/LLW-Amsterdam-scaled.jpeg",
+            safety_level="Safe",
+            intro="Land of windmills and tulips",
+            flag="https://myflag.com.au/wp-content/uploads/netherlands-national-flag.jpg",
+            passport_stamp="https://i.ibb.co/mbfdtdL/13.png"
+        )
+        macedonia=Country(
+            name="North Macedonia",
+            image="https://www.belmondo-travel.com/upld/xl/761/north-macedonia-tours-jovan-kaneo-church-in-ohrid-in-a-beautiful-summer-day.webp",
+            safety_level="Safe",
+            intro="Home of Alexander the Great.",
+            flag="https://cdn.britannica.com/08/6208-050-930F76BA/Flag-North-Macedonia.jpg",
+            passport_stamp="https://i.ibb.co/yp6FJKD/18.png"
+        )
+        argentina=Country(
+            name="Argentina",
+            image="https://vamospanish.com/wp-content/uploads//live-in-buenos-aires.jpg",
+            safety_level="Safe",
+            intro="Known for its beef, and football legends.",
+            flag="https://blueflag.co.za/cdn/shop/products/Argentina_1_1200x1200.jpg?v=1667253522",
+            passport_stamp="https://i.ibb.co/47Y6tsY/argentina.png"
+        )
+        china=Country(
+            name="China",
+            image="https://www.state.gov/wp-content/uploads/2023/07/shutterstock_245773270v2.jpg",
+            safety_level="Safe",
+            intro="One of the oldest cultures in the world, China really stands the test of time.",
+            flag="https://cdn.britannica.com/90/7490-004-BAD4AA72/Flag-China.jpg",
+            passport_stamp="https://i.ibb.co/jfswdLk/china.png"
+        )
+        south_korea=Country(
+            name="South Korea",
+            image="https://www.agoda.com/wp-content/uploads/2024/08/Namsan-Tower-during-autumn-in-Seoul-South-Korea.jpg",
+            safety_level="Safe",
+            intro="A country with a sad history, it has reinvented itself with its television and music.",
+            flag="https://static3.depositphotos.com/1003711/191/i/950/depositphotos_1919144-stock-photo-flag-of-south-korea.jpg",
+            passport_stamp="https://i.ibb.co/VjqCcmS/South-Korea.png"
+        )
+        db.session.add_all([japan, turkey, uk, italy,
+            netherlands, macedonia, argentina, china,
+            south_korea
+        ])
         db.session.commit()
 
         print("Start seeding continents countries")

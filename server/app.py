@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 from flask import url_for, send_from_directory
 
-from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry
+from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry, UserVisitedState, UserWishListCountry
 
 from datetime import datetime
 
@@ -200,6 +200,80 @@ class VisitedCountriesId(Resource):
             "error": "Relationship not found"
         }, 404
 
+class CountriesWishlist(Resource):
+    def get(self):
+        wishlist_countries=[wishlist_country.to_dict() for wishlist_country in UserWishListCountry.query.all()]
+        return wishlist_countries, 200 
+    
+    def post(self):
+        json=request.get_json()
+        try:
+            new_wishlist = UserWishListCountry(
+                user_id=json.get("userId"),
+                country_id=json.get("countryId")
+            )
+            db.session.add(new_wishlist)
+            db.session.commit()
+            return new_wishlist.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
+
+class CountriesWishlistId(Resource):
+    def get(self, id):
+        wishlist_country=UserWishListCountry.query.filter(UserWishListCountry.id==id).first()
+        if wishlist_country:
+            return make_response(wishlist_country.to_dict(), 201)
+        return {"error": "Relationship not found"}
+    
+    def delete(self, id):
+        wishlist_country=UserWishListCountry.query.filter(UserWishListCountry.id==id).first()
+        if wishlist_country:
+            db.session.delete(wishlist_country)
+            db.session.commit()
+            return{
+                "message": "Country wishlist deleted"
+            }, 200 
+        return {
+            "error": "Relationship not found"
+        }, 404
+
+class VisitedStates(Resource):
+    def get(self):
+        visited_states=[visited_state.to_dict() for visited_state in UserVisitedState.query.all()]
+        return visited_states, 200
+    
+    def post(self):
+        json=request.get_json()
+        try:
+            new_visit = UserVisitedState(
+                user_id=json.get("userId"),
+                state_id=json.get("stateId")
+            )
+            db.session.add(new_visit)
+            db.session.commit()
+            return new_visit.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
+
+class VisitedStatesId(Resource):
+    def get(self, id):
+        visited_states=UserVisitedState.query.filter(UserVisitedState.id==id).first()
+        if visited_states:
+            return make_response(visited_states.to_dict(), 201)
+        return {"error": "Relationship not found"}
+    
+    def delete(self, id):
+        visited_states=UserVisitedState.query.filter(UserVisitedState.id==id).first()
+        if visited_states:
+            db.session.delete(visited_states)
+            db.session.commit()
+            return {
+                "message": "State visited deleted"
+            }, 200
+        return {
+            "error": "Relationship not found"
+        }, 404
+
 api.add_resource(AllContainers, '/containers')
 
 api.add_resource(AllContainerPolaroids, '/containerpolaroids')
@@ -234,6 +308,12 @@ api.add_resource(AllBusinessesIndustries, '/businessesindustries')
 
 api.add_resource(VisitedCountries, '/visitedcountries')
 api.add_resource(VisitedCountriesId, '/visitedcountries/<int:id>')
+
+api.add_resource(CountriesWishlist, '/countrieswishlist')
+api.add_resource(CountriesWishlistId, '/countrieswishlist/<int:id>')
+
+api.add_resource(VisitedStates, '/visitedstates')
+api.add_resource(VisitedStatesId, '/visitedstates/<int:id>')
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)
