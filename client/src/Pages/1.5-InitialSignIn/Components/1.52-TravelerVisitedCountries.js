@@ -121,7 +121,7 @@ export default function TravelerVisitedCountries({
                 {renderCountries}
             </div>
 
-            {travelerButtons()}
+            {travelerButtons(3)}
         </div>
     )
 }

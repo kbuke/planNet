@@ -259,6 +259,7 @@ class Users(db.Model, SerializerMixin):
     visited_countries = db.relationship("UserVisitedCountry", backref="user")
     countries_wishlist = db.relationship("UserWishListCountry", backref="user")
     visited_states = db.relationship("UserVisitedState", backref="user")
+    profile_picture = db.relationship("ProfilePictures", backref="user", uselist=False)
 
     serialize_rules=(
         "-country.users",
@@ -289,6 +290,8 @@ class Users(db.Model, SerializerMixin):
 
         "-visited_states.user",
         "-visited_states.state",
+
+        "-profile_picture.user",
     )
 
     #Password hasing and authentication
@@ -334,6 +337,7 @@ class Users(db.Model, SerializerMixin):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+    
         # Validate location fields based on account_type
         self.validate_location_fields(
             self.account_type,
@@ -343,6 +347,15 @@ class Users(db.Model, SerializerMixin):
             boroughs_id=kwargs.get("boroughs_id"),
             neighbourhoods_id=kwargs.get("neighbourhoods_id"),
         )
+    
+        # Set up default profile picture if not provided
+        if not self.profile_picture:
+            default_picture = ProfilePictures(
+                picture_route="https://static.vecteezy.com/system/resources/thumbnails/008/442/086/small/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
+            )
+            self.profile_picture = default_picture
+            db.session.add(default_picture)  # Add the default picture to the session
+
 
 #Set up traveler model
 class Travelers(Users):
@@ -477,6 +490,19 @@ class UserVisitedState(db.Model, SerializerMixin):
     state_id=db.Column(db.Integer, db.ForeignKey("states.id"))
 
 #Pictures Model
+class ProfilePictures(db.Model, SerializerMixin):
+    __tablename__="profile_pictures"
+
+    id=db.Column(db.Integer, primary_key=True)
+
+    picture_route=db.Column(db.String, nullable=False, server_default="https://static.vecteezy.com/system/resources/thumbnails/008/442/086/small/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg")
+
+    #Add relations
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+
+    serialize_rules=(
+        "-user.profile_picture",
+    )
 
 #Review Categories Model 
 

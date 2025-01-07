@@ -13,6 +13,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact=False 
 app.secret_key = os.environ.get("secret_key")
 
+# Add upload folder configuration
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'uploads')
+
+# Create the upload folder if it doesn't exist
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
+
 db=SQLAlchemy()
 migrate = Migrate(app, db)
 db.init_app(app)

@@ -116,7 +116,7 @@ export default function TravelerWishlistCountries({
                 {renderCountries}
             </div>
           
-            {travelerButtons()}
+            {travelerButtons(3)}
         </div>
     );
 }

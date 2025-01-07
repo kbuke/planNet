@@ -4,9 +4,11 @@ import "./1.51-TravelerSignIn.css"
 
 import TravelerVisitedCountries from "./1.52-TravelerVisitedCountries"
 import TravelerWishlistCountries from "./1.53-TravelerWishlistCountries";
+import TravelerInfoPicture from "./1.54-TravelerIntroPicture";
 
 import { FaArrowCircleRight } from "react-icons/fa";
 import { FaArrowCircleLeft } from "react-icons/fa";
+
 
 export default function TravelerSignIn({
     appData,
@@ -21,7 +23,7 @@ export default function TravelerSignIn({
     const userId = loggedUser.id
 
     //Create page navigation buttons
-    const travelerButtons = () => {
+    const travelerButtons = (maxDepth) => {
         return(
             <div
                 id="travelButtonContainer"
@@ -35,10 +37,13 @@ export default function TravelerSignIn({
                     null 
                 }
 
-                <FaArrowCircleRight 
-                    onClick={() => setTravelerPg(travelerPg + 1)}
-                    className="travelerArrow"
-                />
+                {travelerPg === maxDepth ?
+                    null
+                    :
+                    <FaArrowCircleRight 
+                        onClick={() => setTravelerPg(travelerPg + 1)}
+                        className="travelerArrow"
+                    />}
             </div>
         )
     }
@@ -60,21 +65,26 @@ export default function TravelerSignIn({
                     hoverCountryId={hoverCountryId}
                     setHoverCountryId={setHoverCountryId}
                 />
-                :
-                travelerPg === 1 ?
-                    <TravelerWishlistCountries 
-                        sortCountries={sortCountries}
-                        loggedUser={loggedUser}
-                        allVisitedCountries={allVisitedCountries}
-                        travelerButtons={travelerButtons}
-                        hoverCountryId={hoverCountryId}
-                        setHoverCountryId={setHoverCountryId}
-                        appData={appData}
-                        userId={userId}
-                    />
-                :
-                null
-            }
+            :
+            travelerPg === 1 ?
+                <TravelerWishlistCountries 
+                    sortCountries={sortCountries}
+                    loggedUser={loggedUser}
+                    allVisitedCountries={allVisitedCountries}
+                    travelerButtons={travelerButtons}
+                    hoverCountryId={hoverCountryId}
+                    setHoverCountryId={setHoverCountryId}
+                    appData={appData}
+                    userId={userId}
+                />
+            :
+            travelerPg === 2 ?
+                <TravelerInfoPicture 
+                    travelerButtons={travelerButtons}
+                    loggedUser={loggedUser}
+                    appData={appData}
+                />
+            :null}
         </div>
     )
 }

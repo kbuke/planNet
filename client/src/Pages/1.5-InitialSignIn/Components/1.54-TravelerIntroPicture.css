@@ -1,0 +1,10 @@
+#completeSignInButton{
+    background-color: rgb(13, 134, 4);
+    color: white;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

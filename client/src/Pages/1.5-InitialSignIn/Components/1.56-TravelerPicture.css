@@ -1,0 +1,22 @@
+#initialProfilePicContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+#signUpPicContainer{
+    height: 160px;
+    border: solid;
+    width: 160px;
+    border-radius: 50%;
+    display: flex;
+    justify-self: center;
+    overflow: hidden;
+}
+
+#initialProfilePicTest{
+    height: 100%;
+    width: 100%;
+}

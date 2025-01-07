@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(null)
+  const [allUsers, setAllUsers] = useState([])
 
   const [signUpContainer, setSignUpContainer] = useState([])
   const [allCountries, setAllCountries] = useState([])
@@ -21,6 +22,8 @@ function App() {
   const [visitedCountries, setVisitedCountries] = useState([])
   const [countriesWishlist, setCountriesWishlist] = useState([])
 
+  const [allProfilePictures, setAllProfilePictures] = useState([])
+
   //Fetch logged user
   useEffect(() => {
     fetch("/check_session")
@@ -29,6 +32,19 @@ function App() {
         return r.json()
         .then(loggedUser => {
           setLoggedUser(loggedUser)
+        })
+      }
+    })
+  }, [])
+
+  //Fetch all users 
+  useEffect(() => {
+    fetch("/users")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(users => {
+          setAllUsers(users)
         })
       }
     })
@@ -177,6 +193,19 @@ function App() {
     })
   }, [])
 
+  //Fetch all profile pics
+  useEffect(() => {
+    fetch("/profilepics")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(profilePic => {
+          setAllProfilePictures(profilePic)
+        })
+      }
+    })
+  }, [])
+
 
   return (
     <div className="App">
@@ -186,6 +215,9 @@ function App() {
 
           loggedUser: loggedUser,
           setLoggedUser: setLoggedUser,
+
+          allUsers: allUsers,
+          setAllUsers: setAllUsers,
 
           signUpContainer: signUpContainer,
 
@@ -211,7 +243,10 @@ function App() {
           setVisitedCountries: setVisitedCountries,
 
           countriesWishlist: countriesWishlist,
-          setCountriesWishlist: setCountriesWishlist
+          setCountriesWishlist: setCountriesWishlist,
+
+          allProfilePictures: allProfilePictures,
+          setAllProfilePictures: setAllProfilePictures
         }}
       />
     </div>

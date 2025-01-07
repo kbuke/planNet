@@ -128,9 +128,206 @@ if __name__ == "__main__":
             flag="https://static3.depositphotos.com/1003711/191/i/950/depositphotos_1919144-stock-photo-flag-of-south-korea.jpg",
             passport_stamp="https://i.ibb.co/VjqCcmS/South-Korea.png"
         )
-        db.session.add_all([japan, turkey, uk, italy,
-            netherlands, macedonia, argentina, china,
-            south_korea
+        australia=Country(
+            name="Australia",
+            image="https://greatbarrierreefliveaboards.com/files/2013/11/great-barrier-reef-coral-turtles-1.jpg",
+            safety_level="Safe",
+            intro="The land down under, with very diverse wildlife, and some of the best surfing spots",
+            flag="https://cdn.britannica.com/78/6078-050-18D5DEFE/Flag-Australia.jpg",
+            passport_stamp="https://i.ibb.co/ggJxdQ6/australia.png"
+        )
+        botswana=Country(
+            name="Botswana",
+            image="https://ik.imgkit.net/3vlqs5axxjf/TAW/uploadedImages/All_Destinations/AFME/Africa_-_Middle_East/botswanasafarichobe.jpg?tr=w-1200%2Cfo-auto",
+            safety_level="Safe",
+            intro="Home to the Okavanga Delta, and Chobe Park.",
+            flag="https://cdn11.bigcommerce.com/s-hhbbk/products/181/images/35976/BOTS0001__06068.1580483000.500.750.png?c=2",
+            passport_stamp="https://i.ibb.co/Vt8rTvW/Botswana.png"
+        )
+        brazil=Country(
+            name="Brazil",
+            image="https://www.thetimes.com/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2Fc0bdc5e1-c684-446b-8e0d-876c6756da27.jpg?crop=2531%2C1687%2C235%2C0",
+            safety_level="Use Caution",
+            intro="Famous for its street party Carnival, as well as one of the seven wonders of the world.",
+            flag="https://cdn.britannica.com/47/6847-004-7D668BB0/Flag-Brazil.jpg",
+            passport_stamp="https://i.ibb.co/Qv7jppT/Brazil.png"
+        )
+        columbia=Country(
+            name="Columbia",
+            image="https://www.colombia-travels.com/wp-content/uploads/adobestock-266299444-1-1280x800.jpeg",
+            safety_level="Use Caution",
+            intro="Large country",
+            flag="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/2560px-Flag_of_Colombia.svg.png",
+            passport_stamp="https://i.ibb.co/PZK9Lgr/Columbia.png"
+        )
+        denmark=Country(
+            name="Denmark",
+            image="https://imageio.forbes.com/specials-images/imageserve/64845748e7473b7e3c750fc7/0x0.jpg?format=jpg&height=900&width=1600&fit=bounds",
+            safety_level="Safe",
+            intro="Home of Lego",
+            flag="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMD7mUigrxGB7pF8MTxdTQGr2qwLLjUlFj9Q&s",
+            passport_stamp="https://i.ibb.co/Yy5dVd4/Denmark.png"
+        )
+        egypt=Country(
+            name="Egypt",
+            image="https://image.jimcdn.com/app/cms/image/transf/dimension=1040x10000:format=jpg/path/s2217cd0bb1220415/image/i0aa51da086cc095c/version/1695120184/a-towering-view-of-the-great-pyramid-of-giza-with-a-silhouette-of-a-camel-and-its-rider-in-the-foreground.jpg",
+            safety_level="Use Caution",
+            intro="Home of pyramids, deserts and the nile river.",
+            flag="https://cdn.britannica.com/85/185-050-6A8E2E8A/Flag-Egypt.jpg",
+            passport_stamp="https://i.ibb.co/BCMNjDj/Egypt.png"
+        )
+        france=Country(
+            name="France",
+            image="https://www.state.gov/wp-content/uploads/2023/07/shutterstock_667548661v2.jpg",
+            safety_level="Safe",
+            intro="Landmarks, and food",
+            flag="https://cdn.britannica.com/82/682-004-F0B47FCB/Flag-France.jpg",
+            passport_stamp="https://i.ibb.co/1LHrXTL/France.png"
+        )
+        germany=Country(
+            name="Germany",
+            image="https://internationalliving.com/_next/image/?url=https%3A%2F%2Fimages.ctfassets.net%2Fwv75stsetqy3%2F5SLxbxZ11GmYsjFHSL5kWC%2F42cee1a3d15cfb3851f20e2e057583bf%2FGermany_Country_Guide.jpg%3Fq%3D60%26fit%3Dfill%26fm%3Dwebp&w=3840&q=60",
+            safety_level="Safe",
+            intro="A country of varied history, and beautiful landscapes.",
+            flag="https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/800px-Flag_of_Germany.svg.png",
+            passport_stamp="https://i.ibb.co/ftZNRYM/Germany.png"
+        )
+        hungary=Country(
+            name="Hungary",
+            image="https://lp-cms-production.imgix.net/2023-03/GettyRF_473481530.jpg",
+            safety_level="Safe",
+            intro="A very nice country",
+            flag="https://cdn.britannica.com/55/1455-004-5897143C/Flag-Hungary.jpg",
+            passport_stamp="https://i.ibb.co/rFpRL09/Hungary.png"
+        )
+        india=Country(
+            name="India",
+            image="https://www.onthegotours.com/repository/The-Taj-Mahal-with-brightly-coloured-women-looking-over-the-water-90851274464192.jpg",
+            safety_level="Use Caution",
+            intro="Second most populated coubtry.",
+            flag="https://cdn.vectorstock.com/i/500p/45/74/national-flag-of-india-vector-1434574.jpg",
+            passport_stamp="https://i.ibb.co/R7VKMCk/India.png"
+        )
+        indonesia=Country(
+            name="Indonesia",
+            image="https://www.rjtravelagency.com/wp-content/uploads/2023/09/Indonesia.jpg",
+            safety_level="Use Caution",
+            intro="Some of the oldest records of humanity",
+            flag="https://cdn.britannica.com/48/1648-050-9C1F365D/Flag-Indonesia.jpg",
+            passport_stamp="https://i.ibb.co/4VPzwKK/Indonesia.png"
+        )
+        ireland=Country(
+            name="Ireland",
+            image="https://i.natgeofe.com/n/c13339d3-0faf-4297-81d0-424c19e80096/rock-of-cashel-ireland_3x2.jpg",
+            safety_level="Safe",
+            intro="Home of mythical tales and creatures, and a good pint of Guiness",
+            flag="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQly-3QFvlB8KrWezMv7bjpnybHxbxLdJCv4Q&s",
+            passport_stamp="https://i.ibb.co/BZLydyw/Ireland.png"
+        )
+        kenya=Country(
+            name="Kenya",
+            image="https://ajkenyasafaris.com/wp-content/uploads/2023/05/kenya-cultures-and-traditions-bg1.webp",
+            safety_level="Safe",
+            intro="Home to the Masai Marai.",
+            flag="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhuI6mlma4zg1WO0_yHsdYJUZG-6TFbH-5lQ&s",
+            passport_stamp="https://i.ibb.co/djv5r3G/Kenya.png"
+        )
+        mongolia=Country(
+            name="Mongolia",
+            image="https://nomadsland.travel/sites/default/files/styles/hero_full_width/public/2024-04/fadhil-abhimantra-uuw3cwv5op0-unsplash.jpg.webp?itok=Ua23b0Yr",
+            safety_level="Safe",
+            intro="Home to furious warriors.",
+            flag="https://cdn.britannica.com/56/2756-050-31955A5E/Flag-Mongolia.jpg",
+            passport_stamp="https://i.ibb.co/2q1DQ21/Mongolia.png"
+        )
+        new_zealand=Country(
+            name="New Zealand",
+            image="https://cdn.britannica.com/68/179868-138-F4FC616A/Overview-discussion-Southern-Alps-warming-New-Zealand.jpg?w=800&h=450&c=crop",
+            safety_level="Safe",
+            intro="The filming location of Lord of the Rings.",
+            flag="https://cdn.britannica.com/17/3017-050-CD9032F3/Flag-New-Zealand.jpg",
+            passport_stamp="https://i.ibb.co/KqqVwMr/New-Zealand.png"
+        )
+        peru=Country(
+            name="Peru",
+            image="https://cdn.britannica.com/78/189878-050-D673E81F/llama-ruins-Peru-Machu-Picchu.jpg",
+            safety_level="Safe",
+            intro="Home of Machu Pichu",
+            flag="https://cdn.britannica.com/48/3448-050-1EFC8CF3/Flag-Peru.jpg",
+            passport_stamp="https://i.ibb.co/9q5fDPL/Peru.png"
+        )
+        poland=Country(
+            name="Poland",
+            image="https://lp-cms-production.imgix.net/2022-08/poland-iStock-498559006-RFC.jpeg?fit=crop&w=3840&auto=format&q=75",
+            safety_level="Safe",
+            intro="A rich history of resiliance",
+            flag="https://upload.wikimedia.org/wikipedia/en/1/12/Flag_of_Poland.svg",
+            passport_stamp="https://i.ibb.co/6twT2HC/Poland.png"
+        )
+        south_africa=Country(
+            name="South Africa",
+            image="https://www.cchotels.co.za/wp-content/uploads/2024/10/city-with-mountain-background-city-background-1100x733.jpg",
+            safety_level="Use Caution",
+            intro="The rainbow nation, where this app was made.",
+            flag="https://cdn.britannica.com/27/4227-050-00DBD10A/Flag-South-Africa.jpg",
+            passport_stamp="https://i.ibb.co/s6zQGhQ/South-Africa.png"
+        )
+        spain=Country(
+            name="Spain",
+            image="https://entiretravel.imgix.net/getmedia/22c335e1-f6ff-41f0-8972-15c8d9b711ad/Spain-842x469.jpg?auto=format",
+            safety_level="Safe",
+            intro="A nice country",
+            flag="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS87zGBZeO3uhPHKetXvPlTQAn37b_u-RvZOA&s",
+            passport_stamp="https://i.ibb.co/HKpJDhK/Spain.png"
+        )
+        tanzania=Country(
+            name="Tanzania",
+            image="https://cdn.britannica.com/34/153434-050-863E8023/Mount-Kilimanjaro-Tanzania.jpg",
+            safety_level="Safe",
+            intro="Home of Kilimanjaro",
+            flag="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5Z_zh2x8VI5KGYeJ0fOMewhOqohKxBoPi9g&s",
+            passport_stamp="https://i.ibb.co/kypt7Xc/Tanzania.png"
+        )
+        thailand=Country(
+            name="Thailand",
+            image="https://images.ctfassets.net/wv75stsetqy3/DaKdXY2tkQGWeVQiCbSx7/ac01166282697e4e0cafb99180d35cd1/Thailand_Featured.jpg?q=60&fit=fill&fm=webp",
+            safety_level="Use Caution",
+            intro="Very beautiful",
+            flag="https://cdn.britannica.com/38/4038-050-BDDBA6AB/Flag-Thailand.jpg",
+            passport_stamp="https://i.ibb.co/kypt7Xc/Tanzania.png"
+        )
+        uganda=Country(
+            name="Uganda",
+            image="https://i.ibb.co/VQYN7x4/KDB7619-1-min.jpg",
+            safety_level="Use Caution",
+            intro="Primates galore",
+            flag="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfeM8N_Lm2G5_Duk-2Pef78qfA4I3JnL7aAA&s",
+            passport_stamp="https://i.ibb.co/YD1X1FL/Uganda.png"
+        )
+        usa=Country(
+            name="USA",
+            image="https://www.worldatlas.com/r/w1300/upload/f4/d8/7b/shutterstock-1397031029.jpg",
+            safety_level="Use Caution",
+            intro="Monuments everywhere",
+            flag="https://cdn.britannica.com/33/4833-050-F6E415FE/Flag-United-States-of-America.jpg",
+            passport_stamp="https://i.ibb.co/Jp9GP5V/USA.png"
+        )
+        vietnam=Country(
+            name="Vietnam",
+            image="https://www.thebrenthurstfoundation.org/uploads/0f39e8a2-9148-4623-896c-10adb7c4cc92.jpg",
+            safety_level="Safe",
+            intro="A country with cool history",
+            flag="https://cdn.britannica.com/41/4041-004-D051B135/Flag-Vietnam.jpg",
+            passport_stamp="https://i.ibb.co/jzzbtf3/Vietnam.png"
+        )
+        db.session.add_all([
+            japan, turkey, uk, italy, netherlands, 
+            macedonia, argentina, china,
+            south_korea, australia, botswana, brazil,
+            columbia, denmark, egypt, france, germany,
+            hungary, india, indonesia, ireland, kenya,
+            mongolia, new_zealand, peru, poland, south_africa,
+            spain, tanzania, thailand, uganda, usa, vietnam
         ])
         db.session.commit()
 

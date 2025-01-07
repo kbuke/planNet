@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 from flask import url_for, send_from_directory
 
-from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry, UserVisitedState, UserWishListCountry
+from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry, UserVisitedState, UserWishListCountry, ProfilePictures
 
 from datetime import datetime
 
@@ -56,6 +56,33 @@ class AllUsers(Resource):
     def get(self):
         users=[user.to_dict() for user in Users.query.all()]
         return users, 200 
+
+class AllUserId(Resource):
+    def get(self, id):
+        user_info = Users.query.filter(Users.id==id).first()
+        if user_info:
+            return user_info.to_dict(), 201 
+        return {
+            "error": "user not found"
+        }
+    
+    def patch(self, id):
+        data=request.get_json()
+        user_info = Users.query.filter(Users.id==id).first()
+        if user_info:
+            try: 
+                for attr in data:
+                    setattr(user_info, attr, data[attr])
+                db.session.add(user_info)
+                db.session.commit()
+                return make_response(user_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation Error"]
+                }, 400
+        return {
+            "error": "User not found"
+        }, 404
 
 class Login(Resource):
     def post(self):
@@ -274,6 +301,50 @@ class VisitedStatesId(Resource):
             "error": "Relationship not found"
         }, 404
 
+class ProfilePics(Resource):
+    def get(self):
+        profile_pic_info = [picture.to_dict() for picture in ProfilePictures.query.all()]
+        return profile_pic_info, 200
+    
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'avif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+class ProfilePicsId(Resource):
+    def patch(self, id):
+        profile_pic_info = ProfilePictures.query.filter(ProfilePictures.id == id).first()
+        if not profile_pic_info:
+            return {"error": "Profile picture not found"}, 404
+        
+        # Check if a file is in the request
+        if "image" not in request.files:
+            return {"message": "No file part"}, 400
+
+        file = request.files["image"]
+        if file.filename == "":
+            return {"message": "No selected file"}, 400
+
+        # Check file extension
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            file.save(file_path)
+
+            # Update picture_route in database with the new file URL
+            file_url = url_for('uploaded_file', filename=filename, _external=True)
+            profile_pic_info.picture_route = file_url
+
+            db.session.commit()
+            return profile_pic_info.to_dict(), 200
+        else:
+            return {"message": "File type not allowed"}, 400
+
+# Add the route to serve the uploaded files
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 api.add_resource(AllContainers, '/containers')
 
 api.add_resource(AllContainerPolaroids, '/containerpolaroids')
@@ -291,6 +362,7 @@ api.add_resource(AllBoroughs, '/boroughs')
 api.add_resource(AllNeighbourhoods, '/neighbourhoods')
 
 api.add_resource(AllUsers, '/users')
+api.add_resource(AllUserId, '/users/<int:id>')
 
 api.add_resource(Login, '/login')
 
@@ -314,6 +386,9 @@ api.add_resource(CountriesWishlistId, '/countrieswishlist/<int:id>')
 
 api.add_resource(VisitedStates, '/visitedstates')
 api.add_resource(VisitedStatesId, '/visitedstates/<int:id>')
+
+api.add_resource(ProfilePics, '/profilepics')
+api.add_resource(ProfilePicsId, '/profilepics/<int:id>')
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

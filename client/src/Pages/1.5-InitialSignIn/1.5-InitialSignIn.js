@@ -7,6 +7,7 @@ import TravelerSignIn from "./Components/1.51-TravelerSignIn"
 export default function InitialSignIn({
     loggedUser
 }){
+    console.log(loggedUser)
     const appData = useOutletContext()
 
     return(
