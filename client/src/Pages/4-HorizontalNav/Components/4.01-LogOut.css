@@ -1,0 +1,23 @@
+#signOutContainer{
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#signOutButtonContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.signOutButton{
+    background-color: rgb(0, 134, 31);
+    border: none;
+    color: white;
+    height: 30px;
+    width: 80px;
+    border-radius: 24px;
+    cursor: pointer;
+}

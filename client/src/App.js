@@ -3,6 +3,8 @@ import './App.css';
 import { Outlet } from 'react-router-dom';
 import { useEffect, useState } from "react";
 
+ import HorizontalNav from "./Pages/4-HorizontalNav/4-HorizontalNav";
+
 function App() {
   const [loggedUser, setLoggedUser] = useState(null)
   const [allUsers, setAllUsers] = useState([])
@@ -35,7 +37,7 @@ function App() {
         })
       }
     })
-  }, [])
+  }, [allUsers])
 
   //Fetch all users 
   useEffect(() => {
@@ -193,6 +195,8 @@ function App() {
     })
   }, [])
 
+  console.log(loggedUser)
+
   //Fetch all profile pics
   useEffect(() => {
     fetch("/profilepics")
@@ -209,6 +213,16 @@ function App() {
 
   return (
     <div className="App">
+
+      {loggedUser?.initial_signin?
+        <HorizontalNav 
+          loggedUser={loggedUser}
+          setLoggedUser={setLoggedUser}
+        />
+        :
+        null
+      }
+
       <Outlet 
         context={{
           logo: logo,

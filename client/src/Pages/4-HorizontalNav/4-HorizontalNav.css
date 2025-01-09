@@ -1,0 +1,55 @@
+#horizontalNavBar{
+    width: 100%;
+    height: 90px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.signedLogo{
+    height: 80px;
+    cursor: pointer;
+}
+
+.navIconContainer,
+.hoveredMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-left: 60px;
+    justify-content: center;
+    width: 90px;
+    border-radius: 20px;
+    height: 40px;
+    cursor: pointer;
+    transition: width 0.3s ease-in-out; /* Smooth transition for width */
+}
+
+#activeSearch {
+    background-color: rgb(206, 202, 202);
+    width: 380px; /* Target expanded width */
+    justify-content: flex-start;
+    overflow: hidden;
+    transition: width 0.3s ease-in-out; /* Smooth transition for width */
+}
+
+.navSearchBar {
+    height: 100%;
+    background-color: rgb(206, 202, 202);
+    border: none;
+    width: 100%;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease-in-out; /* Smooth fade-in and fade-out */
+}
+
+#activeSearch .navSearchBar {
+    opacity: 1; /* Fully visible when search is active */
+}
+
+.hoveredMenu{
+    background-color: rgb(206, 202, 202);
+    color: white;
+}
