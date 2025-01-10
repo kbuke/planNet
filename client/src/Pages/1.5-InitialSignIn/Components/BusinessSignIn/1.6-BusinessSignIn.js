@@ -7,7 +7,6 @@ export default function BusinessSignIn({
     appData,
 }){
     const allUsers = appData.allUsers
-    console.log(allUsers)
     return(
         <div
             id="userInitialInfoContainer"

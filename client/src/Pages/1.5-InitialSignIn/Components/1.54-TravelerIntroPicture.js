@@ -54,8 +54,6 @@ export default function TravelerInfoPicture({
     const allProfilePictures = appData.allProfilePictures
     const setAllProfilePictures = appData.setAllProfilePictures
 
-    console.log(loggedUser)
-
     const handleUpdatePic = (e) => {
         const file = e.target.files[0]
         setNewPic(file)

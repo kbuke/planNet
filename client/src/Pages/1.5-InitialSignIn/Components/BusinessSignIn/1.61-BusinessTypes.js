@@ -43,9 +43,27 @@ export default function BusinessTypes({
         })
     }
 
-    const handleDeleteIndustry = (e) => {
+    const handleDeleteIndustry = (e, industryId) => {
         e.preventDefault()
         console.log("hi")
+        console.log(`I, user ${businessId} am trying to delete industry ${industryId}`)
+        console.log(businessIndustries)
+        const businessIndustryRelation = businessIndustries.find(
+            relation => relation.industry_id === industryId && relation.business_id=== businessId
+        )
+        console.log(businessIndustryRelation)
+
+        if(businessIndustryRelation){
+            const relationId = businessIndustryRelation.id 
+            fetch(`/businessesindustries/${relationId}`, {
+                method: "DELETE"
+            })
+            .then(r => {
+                if(r.ok){
+                    setBusinessIndustries(industries => industries.filter(industry => industry.id !== relationId))
+                }
+            })
+        }
     }
 
     const renderIndustries = sortIndustires.map((industry, index) => {
@@ -60,7 +78,7 @@ export default function BusinessTypes({
                 key={index}
                 id={isIndustry ? "relevantIndustry" : ""}
                 onClick={isIndustry ? 
-                    (e) => handleDeleteIndustry(e) 
+                    (e) => handleDeleteIndustry(e, industry.id) 
                     :
                     (e) => handleNewIndustry(e, industry.id)
                 }
