@@ -137,7 +137,11 @@ export default function TravelerInfoPicture({
                 Complete Initial Sign In
             </button>
 
-            {travelerButtons(2)}
+            {loggedUser.account_type === "Business" ? 
+                null 
+                :
+                travelerButtons(2)
+            }
         </div>
     )
 }

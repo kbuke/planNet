@@ -20,6 +20,7 @@ function App() {
   const [allBusinesses, setAllBusinesses] = useState([])
 
   const [allIndustries, setAllIndustries] = useState([])
+  const [businessIndustries, setBusinessIndustries] = useState([])
 
   const [visitedCountries, setVisitedCountries] = useState([])
   const [countriesWishlist, setCountriesWishlist] = useState([])
@@ -169,6 +170,19 @@ function App() {
     })
   }, [])
 
+  //Fetch all businesses industries
+  useEffect(() => {
+    fetch("/businessesindustries")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(businessIndustries => {
+          setBusinessIndustries(businessIndustries)
+        })
+      }
+    })
+  }, [])
+
   //Fetch all visited countries
   useEffect(() => {
     fetch("/visitedcountries")
@@ -252,6 +266,10 @@ function App() {
           setAllBusinesses: setAllBusinesses,
 
           allIndustries: allIndustries,
+          setAllIndustries: setAllIndustries,
+
+          businessIndustries: businessIndustries,
+          setBusinessIndustries: setBusinessIndustries,
 
           visitedCountries: visitedCountries,
           setVisitedCountries: setVisitedCountries,

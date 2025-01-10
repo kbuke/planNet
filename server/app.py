@@ -189,6 +189,38 @@ class AllBusinessesIndustries(Resource):
     def get(self):
         businesses_industries=[business_industry.to_dict() for business_industry in BusinessesIndustries.query.all()]
         return businesses_industries, 200
+    
+    def post(self):
+        json=request.get_json()
+        try:
+            new_industry = BusinessesIndustries(
+                business_id=json.get("businessId"),
+                industry_id=json.get("industryId")
+            )
+            db.session.add(new_industry)
+            db.session.commit()
+            return new_industry.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
+
+class AllBusinessesIndustriesId(Resource):
+    def get(self, id):
+        business_industry = BusinessesIndustries.query.filter(BusinessesIndustries.id==id).first()
+        if business_industry:
+            return make_response(business_industry.to_dict(), 201)
+        return {"error": "Relationship not found"}
+    
+    def delete(self, id):
+        business_industry = BusinessesIndustries.query.filter(BusinessesIndustries.id==id).first()
+        if business_industry:
+            db.session.delete(business_industry)
+            db.session.commit()
+            return{
+                "message": "Businesses industry deleted"
+            }, 200 
+        return {
+            "error": "Relationship not found"
+        }, 404
 
 class VisitedCountries(Resource):
     def get(self):
@@ -377,6 +409,7 @@ api.add_resource(AllBusinesses, '/businesses')
 api.add_resource(AllIndustries, '/industries')
 
 api.add_resource(AllBusinessesIndustries, '/businessesindustries')
+api.add_resource(AllBusinessesIndustriesId, '/businessesindustries/<int:id>')
 
 api.add_resource(VisitedCountries, '/visitedcountries')
 api.add_resource(VisitedCountriesId, '/visitedcountries/<int:id>')

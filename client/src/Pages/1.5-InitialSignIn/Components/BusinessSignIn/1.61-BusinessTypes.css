@@ -1,0 +1,25 @@
+#industrySignInWheel{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: solid;
+}
+
+.industryContainer{
+    display: flex;
+    border-radius: 24px;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#relevantIndustry{
+    background-color: rgb(10, 144, 6);
+}

@@ -12,9 +12,12 @@ import { FaArrowCircleLeft } from "react-icons/fa";
 
 export default function TravelerSignIn({
     appData,
-    loggedUser
+    loggedUser,
+    travelerButtons,
+    travelerPg, 
+    setTravelerPg
 }){
-    const [travelerPg, setTravelerPg] = useState(0)
+    // const [travelerPg, setTravelerPg] = useState(0)
     const [sortCountries, setSortCountries] = useState([])
     const [allVisitedCountries, setAllVisitedCountries] = useState([])
     const [hoverCountryId, setHoverCountryId] = useState()
@@ -23,30 +26,30 @@ export default function TravelerSignIn({
     const userId = loggedUser.id
 
     //Create page navigation buttons
-    const travelerButtons = (maxDepth) => {
-        return(
-            <div
-                id="travelButtonContainer"
-            >
-                {travelerPg !== 0 ?
-                    <FaArrowCircleLeft 
-                        onClick={() => setTravelerPg(travelerPg - 1)}
-                        className="travelerArrow"
-                    />
-                    :
-                    null 
-                }
+    // const travelerButtons = (maxDepth) => {
+    //     return(
+    //         <div
+    //             id="travelButtonContainer"
+    //         >
+    //             {travelerPg !== 0 ?
+    //                 <FaArrowCircleLeft 
+    //                     onClick={() => setTravelerPg(travelerPg - 1)}
+    //                     className="travelerArrow"
+    //                 />
+    //                 :
+    //                 null 
+    //             }
 
-                {travelerPg === maxDepth ?
-                    null
-                    :
-                    <FaArrowCircleRight 
-                        onClick={() => setTravelerPg(travelerPg + 1)}
-                        className="travelerArrow"
-                    />}
-            </div>
-        )
-    }
+    //             {travelerPg === maxDepth ?
+    //                 null
+    //                 :
+    //                 <FaArrowCircleRight 
+    //                     onClick={() => setTravelerPg(travelerPg + 1)}
+    //                     className="travelerArrow"
+    //                 />}
+    //         </div>
+    //     )
+    // }
 
     return(
         <div
