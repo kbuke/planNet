@@ -26,6 +26,21 @@ class AllContinents(Resource):
     def get(self):
         continents=[continent.to_dict() for continent in Continents.query.all()]
         return continents, 200 
+    
+    def post(self):
+        json = request.get_json()
+        try:
+            new_continent = Continents(
+                name = json.get("newContinent"),
+                image = json.get("newContinentImg"),
+                intro = json.get("newContinentInfo")
+            )
+            db.session.add(new_continent)
+            db.session.commit()
+            return new_continent.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
+
 
 class AllCountries(Resource):
     def get(self):

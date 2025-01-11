@@ -13,6 +13,7 @@ import { FaSearch } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 
 import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 export default function HorizontalNav({
     loggedUser,
@@ -34,18 +35,18 @@ export default function HorizontalNav({
         )
     }
 
-    console.log(`I am searching? ${searching}`)
+    console.log(loggedUser)
 
-    const navIcons = (icon, containerText, search, loggingOut) => {
+    const navIcons = (icon, containerText, search, loggingOut, linkAddress) => {
         return (
             search ? (
-                <div
+                <Link
                     className= {hoverMenu === containerText ?
                         "hoveredMenu"
                         :
                         "navIconContainer"
                     }
-                    // "navIconContainer"
+                    to={linkAddress}
                     onClick={() => setSearching(true)}
                     id={searching ? "activeSearch" : ""}
                     onMouseEnter={() => setHoverMenu(containerText)}
@@ -73,10 +74,10 @@ export default function HorizontalNav({
                             <p>{containerText}</p>
                         </>
                     )}
-                </div>
+                </Link>
             ) : (
                 loggingOut ?
-                    <div
+                    <Link
                         className={hoverMenu === containerText ?
                             "hoveredMenu"
                             :
@@ -88,20 +89,21 @@ export default function HorizontalNav({
                     >
                         {icon}
                         <p>{containerText}</p>
-                    </div>
+                    </Link>
                 :
-                <div 
+                <NavLink
                     className= {hoverMenu === containerText ?
                         "hoveredMenu"
                         :
                         "navIconContainer"
                     }
+                    to={linkAddress}
                     onMouseEnter={() => setHoverMenu(containerText)}
                     onMouseLeave={() => setHoverMenu("")}
                 >
                     {icon}
                     <p>{containerText}</p>
-                </div>
+                </NavLink>
             )
         );
     };
@@ -113,19 +115,24 @@ export default function HorizontalNav({
         >
             {planNetLogo()}
 
-            {navIcons(<IoHomeOutline/>, "Home", false)}
+            {navIcons(<IoHomeOutline/>, "Home", false, false)}
 
-            {navIcons(<GiWorld />, "World", false)}
+            {navIcons(<GiWorld />, "World", false, false)}
 
-            {navIcons(<FaUsers />, "Users", false)}
+            {navIcons(<FaUsers />, "Users", false, false)}
 
             {loggedUser.account_type === "Admin"? 
-                navIcons(<GrUserAdmin />, "Admin", false)
+                navIcons(<GrUserAdmin />, "Admin", false, false, "admin")
                 :
                 null
             }
 
-            {navIcons(<FaSearch />, "Search", true)}
+            {navIcons(<FaSearch />, "Search", true, false)}
+
+            <img 
+                src={loggedUser.profile_picture.picture_route}
+                id="navProfilePic"
+            />
 
             {navIcons(<CiLogout />, "LogOut", false, true)}
 

@@ -10,6 +10,7 @@ function App() {
   const [allUsers, setAllUsers] = useState([])
 
   const [signUpContainer, setSignUpContainer] = useState([])
+  const [allContinents, setAllContinents] = useState([])
   const [allCountries, setAllCountries] = useState([])
   const [allStates, setAllStates] = useState([])
   const [allCities, setAllCities] = useState([])
@@ -61,6 +62,19 @@ function App() {
         return r.json()
         .then(containers => {
           setSignUpContainer(containers)
+        })
+      }
+    })
+  }, [])
+
+  //Fetch all continents
+  useEffect(() => {
+    fetch("/continents")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(continents => {
+          setAllContinents(continents)
         })
       }
     })
@@ -209,8 +223,6 @@ function App() {
     })
   }, [])
 
-  console.log(loggedUser)
-
   //Fetch all profile pics
   useEffect(() => {
     fetch("/profilepics")
@@ -248,6 +260,9 @@ function App() {
           setAllUsers: setAllUsers,
 
           signUpContainer: signUpContainer,
+
+          allContinents: allContinents,
+          setAllContinents: setAllContinents,
 
           allCountries: allCountries,
 

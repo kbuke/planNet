@@ -44,7 +44,7 @@ if __name__ == "__main__":
         print("Start seeding Continents")
         asia=Continents(
             name="Asia",
-            image="https://www.tripsavvy.com/thmb/S6Daq_joeyN3xU0Bz3Qt7QGe0YM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-654013042-28f42fc82c544a9fb0f74458b85de713.jpg",
+            image="https://globalhelpswap.com/wp-content/uploads/2020/05/Asia-Travel-Guide-1024x677.jpg",
             intro="The larges and most populated continent in the world."
         )
         europe=Continents(

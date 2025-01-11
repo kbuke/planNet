@@ -26,6 +26,8 @@
     height: 40px;
     cursor: pointer;
     transition: width 0.3s ease-in-out; /* Smooth transition for width */
+    text-decoration: none;
+    color: black;
 }
 
 #activeSearch {
@@ -52,4 +54,12 @@
 .hoveredMenu{
     background-color: rgb(206, 202, 202);
     color: white;
+}
+
+#navProfilePic{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-left: 60px;
+    cursor: pointer;
 }

@@ -25,32 +25,6 @@ export default function TravelerSignIn({
     //Get userId
     const userId = loggedUser.id
 
-    //Create page navigation buttons
-    // const travelerButtons = (maxDepth) => {
-    //     return(
-    //         <div
-    //             id="travelButtonContainer"
-    //         >
-    //             {travelerPg !== 0 ?
-    //                 <FaArrowCircleLeft 
-    //                     onClick={() => setTravelerPg(travelerPg - 1)}
-    //                     className="travelerArrow"
-    //                 />
-    //                 :
-    //                 null 
-    //             }
-
-    //             {travelerPg === maxDepth ?
-    //                 null
-    //                 :
-    //                 <FaArrowCircleRight 
-    //                     onClick={() => setTravelerPg(travelerPg + 1)}
-    //                     className="travelerArrow"
-    //                 />}
-    //         </div>
-    //     )
-    // }
-
     return(
         <div
             id="userInitialInfoContainer"

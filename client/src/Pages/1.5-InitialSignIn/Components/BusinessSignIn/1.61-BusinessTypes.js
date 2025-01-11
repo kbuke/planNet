@@ -45,13 +45,9 @@ export default function BusinessTypes({
 
     const handleDeleteIndustry = (e, industryId) => {
         e.preventDefault()
-        console.log("hi")
-        console.log(`I, user ${businessId} am trying to delete industry ${industryId}`)
-        console.log(businessIndustries)
         const businessIndustryRelation = businessIndustries.find(
             relation => relation.industry_id === industryId && relation.business_id=== businessId
         )
-        console.log(businessIndustryRelation)
 
         if(businessIndustryRelation){
             const relationId = businessIndustryRelation.id 
