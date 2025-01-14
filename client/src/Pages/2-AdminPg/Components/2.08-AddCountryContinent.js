@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 
 export default function AddCountryContinent({
-    appData
+    appData,
+    setAddCountryPg
 }){
     const continentsCountries = appData.continentsCountries
     const setContinentsCountries = appData.setContinentsCountries
@@ -11,24 +12,49 @@ export default function AddCountryContinent({
     console.log(allCountries)
 
     const [countriesContinent, setCountriesContinent] = useState()
-    const [latestCountryId, setLatestCountryId] = useState()
+    const [newCountryId, setNewCountryId] = useState()
 
     //Find most recent country added
     useEffect(() => {
         if (allCountries.length > 0) {
             const highestId = Math.max(...allCountries.map(country => country.id))
-            setLatestCountryId(highestId)
+            setNewCountryId(highestId)
         }
     })
 
-    console.log(`The most recent country is ${latestCountryId}`)
+    console.log(`The most recent country is ${newCountryId}`)
+
+    const handleContinentNewCountry = (e) => {
+        e.preventDefault()
+
+        console.log(`Adding country ${newCountryId} and ${countriesContinent}`)
+
+        const jsonData = {
+            newCountryId,
+            countriesContinent
+        }
+
+        fetch("/continentscountries", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then((r) => r.json())
+            .then((continentNewCountry) => {
+                setContinentsCountries([...continentsCountries, continentNewCountry])
+                setAddCountryPg(false)
+            })
+    }
 
     return(
         <div
             id="popUpBackground"
         >
-            <div
+            <form
                 id="addNewCountry"
+                onSubmit={(e) => handleContinentNewCountry(e)}
             >
                 <select
                     value={countriesContinent}
@@ -51,8 +77,12 @@ export default function AddCountryContinent({
                     ))}
                 </select>
 
-                <button>Create New Country</button>
-            </div>
+                <button
+                    type="submit"
+                >
+                    Create New Country
+                </button>
+            </form>
         </div>
     )
 }

@@ -90,7 +90,6 @@ class AllContinentsCountries(Resource):
 
     def post(self):
         json = request.get_json()
-        breakpoint()
         try:
             new_continent_country = CountriesContinent(
                 country_id = int(json.get("newCountryId")),
