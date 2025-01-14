@@ -41,11 +41,66 @@ class AllContinents(Resource):
         except ValueError as e:
             return {"error": [str(e)]}, 400
 
+class ContinentId(Resource):
+    def get(self, id):
+        continents = Continents.query.filter(Continents.id == id).first()
+        if continents:
+            return make_response(continents.to_dict(), 201)
+        return {"error": "Continent not found"}
+    
+    def delete(self, id):
+        continents = Continents.query.filter(Continents.id == id).first()
+        if continents:
+            db.session.delete(continents)
+            db.session.commit()
+            return{
+                "message": "Continent deleted"
+            }, 200 
+        return {
+            "error": "Continent not found"
+        }, 404
+
 
 class AllCountries(Resource):
     def get(self):
         countries=[country.to_dict() for country in Country.query.all()]
         return countries, 200
+
+    def post(self):
+        json = request.get_json()
+        try:
+            new_country = Country(
+                name = json.get("countryName"),
+                image = json.get("countryImg"),
+                safety_level = json.get("countrySafety"),
+                intro = json.get("countryInfo"),
+                flag = json.get("countryFlag"),
+                passport_stamp = json.get("countryPassport")
+            )
+            db.session.add(new_country)
+            db.session.commit()
+            return new_country.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
+
+class AllContinentsCountries(Resource):
+    def get(self):
+        countries = [country.to_dict() for country in CountriesContinent.query.all()]
+        return countries, 200
+
+    def post(self):
+        json = request.get_json()
+        breakpoint()
+        try:
+            new_continent_country = CountriesContinent(
+                country_id = int(json.get("newCountryId")),
+                continent_id = int(json.get("countriesContinent"))
+            )
+            db.session.add(new_continent_country)
+            db.session.commit()
+            return new_continent_country.to_dict(), 201
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
 
 class AllStates(Resource):
     def get(self):
@@ -397,8 +452,11 @@ api.add_resource(AllContainers, '/containers')
 api.add_resource(AllContainerPolaroids, '/containerpolaroids')
 
 api.add_resource(AllContinents, '/continents')
+api.add_resource(ContinentId, '/continents/<int:id>')
 
 api.add_resource(AllCountries, '/countries')
+
+api.add_resource(AllContinentsCountries, '/continentscountries')
 
 api.add_resource(AllStates, '/states')
 

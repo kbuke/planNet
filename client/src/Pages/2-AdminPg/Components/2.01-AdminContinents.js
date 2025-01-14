@@ -3,21 +3,26 @@ import { useEffect, useState } from "react"
 import "./2.01-AdminContinents.css"
 
 import AddContinent from "./2.02-AddContinent";
+import EditContinent from "./2.03-EditContinent";
+import AdminCountry from "./2.06-AdminCountry";
 
 import { CiCirclePlus } from "react-icons/ci";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import { CiCircleChevDown } from "react-icons/ci";
 
 export default function AdminContinents({
-    appData
+    appData,
+    setContinentId,
+    allContinents,
+    setAllContinents
 }){
     const [sortContinents, setSortContinents] = useState([])
     const [hoveredContinent, setHoveredContinent] = useState()
     const [addContinent, setAddContinent] = useState(false)
-
-    const allContinents = appData.allContinents
-    const setAllContinents = appData.setAllContinents
+    const [editContinent, setEditContinent] = useState(false)
+    const [continentsCountries, setContinentsCountries] = useState()
 
     console.log(allContinents)
 
@@ -60,6 +65,7 @@ export default function AdminContinents({
             >
                 <CiEdit 
                     className="editDeleteContinent"
+                    onClick={() => setEditContinent(true)}
                 />
 
                 <MdDeleteOutline 
@@ -68,6 +74,11 @@ export default function AdminContinents({
 
                 <IoIosInformationCircleOutline 
                     className="editDeleteContinent"
+                />
+
+                <CiCircleChevDown 
+                    className="editDeleteContinent"
+                    onClick={() => setContinentsCountries(continent.id)}
                 />
             </div>
         </div>
@@ -92,6 +103,14 @@ export default function AdminContinents({
                     allContinents={allContinents}
                     setAllContinents={setAllContinents}
                     setAddContinent={setAddContinent}
+                />
+                :
+                null
+            }
+
+            {editContinent ?
+                <EditContinent 
+                    setEditContinent={setEditContinent}
                 />
                 :
                 null

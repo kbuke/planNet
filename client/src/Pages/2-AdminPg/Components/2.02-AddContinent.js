@@ -2,6 +2,7 @@
 import { useState } from "react"
 import "./2.02-AddContinent.css"
 
+
 export default function AddContinent({
     allContinents,
     setAllContinents, 
@@ -10,6 +11,7 @@ export default function AddContinent({
     const [newContinent, setNewContinent] = useState("")
     const [newContinentImg, setNewContinentImg] = useState("")
     const [newContinentInfo, setNewContinentInfo] = useState("")
+    
 
     const handleNewContinent = (e) => {
         e.preventDefault()

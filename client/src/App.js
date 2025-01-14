@@ -12,6 +12,7 @@ function App() {
   const [signUpContainer, setSignUpContainer] = useState([])
   const [allContinents, setAllContinents] = useState([])
   const [allCountries, setAllCountries] = useState([])
+  const [continentsCountries, setContinentsCountries] = useState([])
   const [allStates, setAllStates] = useState([])
   const [allCities, setAllCities] = useState([])
   const [allBoroughs, setAllBoroughs] = useState([])
@@ -88,6 +89,19 @@ function App() {
         return r.json()
         .then(countries => {
           setAllCountries(countries)
+        })
+      }
+    })
+  }, [])
+
+  //Fetch continent countries
+  useEffect(() => {
+    fetch("/continentscountries")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(countries => {
+          setContinentsCountries(countries)
         })
       }
     })
@@ -265,6 +279,10 @@ function App() {
           setAllContinents: setAllContinents,
 
           allCountries: allCountries,
+          setAllCountries: setAllCountries,
+
+          continentsCountries: continentsCountries,
+          setContinentsCountries: setContinentsCountries,
 
           allStates: allStates,
 
