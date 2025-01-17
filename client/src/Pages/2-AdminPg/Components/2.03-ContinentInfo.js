@@ -61,7 +61,13 @@ export default function ContinentInfo({
                             </div>
 
                             <div>
-                                <p>{continentIntro}</p>
+                                {continentIntro ? (
+                                    continentIntro.split("\n").map((line, index) => (
+                                        <p key={index}>{line}</p>
+                                    ))
+                                ) : (
+                                    <p>Loading intro...</p>
+                                )}
 
                                 <div
                                     id="adminEditLocationButtonContainer"

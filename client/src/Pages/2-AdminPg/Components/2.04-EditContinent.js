@@ -45,7 +45,7 @@ export default function EditContinent({
             body: JSON.stringify({
                 name: continentName,
                 image: continentImg,
-                intro: continentImg
+                intro: continentIntro
             })
         })
         .then((r) => {
@@ -99,15 +99,20 @@ export default function EditContinent({
                     />
                 </div>
 
-                <div>
+                <div
+                    className="editContinentButtonsContainer"
+                >
                     <button
                         onClick={(e) => handleEditContinent(e)}
+                        className="adminEditLocationButton"
                     >
                         Submit Edits
                     </button>
 
                     <button
                         onClick={() => setEditContinent(false)}
+                        className="adminEditLocationButton"
+                        style={{backgroundColor: "red"}}
                     >
                         Cancel Edits
                     </button>

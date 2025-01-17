@@ -1,0 +1,64 @@
+#adminCountryInfoContainer{
+    width: 80%;
+    height: 80%;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#adminEditCountryContainer{
+    height: 75%;
+    width: 80%;
+    background-color: rgb(54, 53, 53);
+    justify-self: center;
+    align-self: center;
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    overflow: hidden;
+    color: white;
+}
+
+#adminCountryImgContainer{
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    overflow: hidden;
+}
+
+.adminCountryPassportStamp{
+    height: 200px;
+    justify-self: flex-start;
+}
+
+#adminSpecificCountryInfo{
+    overflow-y: auto;
+}
+
+#adminCountryFlag{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+}
+
+.adminCountryFlag{
+    height: 55px;
+    margin-top: 5px;
+}
+
+#adminCountrySafetyContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px
+}
+
+#adminCountrySafetyHeader{
+    font-weight: bolder;
+    margin-left: 5px;
+}
+

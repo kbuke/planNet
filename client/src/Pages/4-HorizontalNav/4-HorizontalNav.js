@@ -11,6 +11,7 @@ import { GrUserAdmin } from "react-icons/gr";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
+import { FaPlaneCircleCheck } from "react-icons/fa6";
 
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
@@ -118,6 +119,8 @@ export default function HorizontalNav({
             {navIcons(<GiWorld />, "World", false, false)}
 
             {navIcons(<FaUsers />, "Users", false, false)}
+
+            {navIcons(<FaPlaneCircleCheck />, "Itineraries", false, false)}
 
             {loggedUser.account_type === "Admin"? 
                 navIcons(<GrUserAdmin />, "Admin", false, false, "admin")

@@ -10,6 +10,7 @@ import AddCountry from "./2.07-AddCountry";
 import AddCountryContinent from "./2.08-AddCountryContinent";
 
 import "./2.06-AdminCountry.css"
+import AdminCountryInfo from "./2.09-AdminCountryInfo";
 
 export default function AdminCountry({
     appData,
@@ -22,6 +23,7 @@ export default function AdminCountry({
     const [addCountryPg, setAddCountryPg] = useState(1)
     const [countinentName, setContinentName] = useState()
     const [filterCountries, setFilterCountries] = useState()
+    const [countryId, setCountryId] = useState()
 
     const allCountries = appData.allCountries
     const setAllCountries = appData.setAllCountries
@@ -88,9 +90,6 @@ export default function AdminCountry({
             <div
                 id="editDeleteContinentContainer"
             >
-                <CiEdit 
-                    className="editDeleteContinent"
-                />
 
                 <MdDeleteOutline 
                     className="editDeleteContinent"
@@ -98,6 +97,7 @@ export default function AdminCountry({
 
                 <IoIosInformationCircleOutline 
                     className="editDeleteContinent"
+                    onClick={() => setCountryId(country.id)}
                 />
 
                 <CiCircleChevDown 
@@ -149,13 +149,24 @@ export default function AdminCountry({
                 }
 
                 {addCountry && addCountryPg===2 ?
-                <AddCountryContinent 
-                    appData={appData}
-                    setAddCountryPg={setAddCountryPg}
-                />
-                :
-                null
-            }
+                    <AddCountryContinent 
+                        appData={appData}
+                        setAddCountryPg={setAddCountryPg}
+                    />
+                    :
+                    null
+                }
+
+                {countryId ?
+                    <AdminCountryInfo 
+                        countryId={countryId}
+                        setCountryId={setCountryId}
+                        allCountries={allCountries}
+                        setAllCountries={setAllCountries}
+                    />
+                    :
+                    null
+                }
         </div>
         </div>
     )

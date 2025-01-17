@@ -101,6 +101,31 @@ class AllCountries(Resource):
         except ValueError as e:
             return {"error": [str(e)]}, 400
 
+class CountriesId(Resource):
+    def get(self, id):
+        country = Country.query.filter(Country.id == id).first()
+        if country:
+            return make_response(country.to_dict(), 201)
+        return {"error": "Country not found"}
+    
+    def patch(self, id):
+        data = request.get_json()
+        country_info = Country.query.filter(Country.id==id).first()
+        if country_info:
+            try:
+                for attr in data:
+                    setattr(country_info, attr, data[attr])
+                db.session.add(country_info)
+                db.session.commit()
+                return make_response(country_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation Error"]
+                }, 400 
+        return {
+            "error": "Country not found"
+        }, 404
+
 class AllContinentsCountries(Resource):
     def get(self):
         countries = [country.to_dict() for country in CountriesContinent.query.all()]
@@ -472,6 +497,7 @@ api.add_resource(AllContinents, '/continents')
 api.add_resource(ContinentId, '/continents/<int:id>')
 
 api.add_resource(AllCountries, '/countries')
+api.add_resource(CountriesId, '/countries/<int:id>')
 
 api.add_resource(AllContinentsCountries, '/continentscountries')
 
