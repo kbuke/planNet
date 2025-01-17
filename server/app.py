@@ -48,6 +48,24 @@ class ContinentId(Resource):
             return make_response(continents.to_dict(), 201)
         return {"error": "Continent not found"}
     
+    def patch(self, id):
+        data=request.get_json()
+        continent_info = Continents.query.filter(Continents.id==id).first()
+        if continent_info:
+            try:
+                for attr in data:
+                    setattr(continent_info, attr, data[attr])
+                db.session.add(continent_info)
+                db.session.commit()
+                return make_response(continent_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation Error"]
+                }, 400 
+        return {
+            "error": "Continent not found"
+        }, 404
+    
     def delete(self, id):
         continents = Continents.query.filter(Continents.id == id).first()
         if continents:

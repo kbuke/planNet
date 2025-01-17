@@ -14,13 +14,21 @@ export default function AdminPg(){
     const setAllContinents = appData.setAllContinents
 
     const [continentId, setContinentId] = useState()
+
+    const wallpaper = "https://i.ibb.co/pn8Vz09/Untitled-design-2.png"
     
     return(
-        <div>
+        <div
+            style={{
+                marginTop: "100px",
+                backgroundImage: `url(${wallpaper})`
+            }}
+        >
             <h1>Admin Page</h1>
 
             <AdminContinents 
                 appData={appData}
+                continentId={continentId}
                 setContinentId={setContinentId}
                 allContinents={allContinents}
                 setAllContinents={setAllContinents}
@@ -29,6 +37,7 @@ export default function AdminPg(){
             <AdminCountry 
                 appData={appData}
                 allContinents={allContinents}
+                continentId={continentId}
             />
         </div>
     )

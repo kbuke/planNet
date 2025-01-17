@@ -1,8 +1,4 @@
-#continentsContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
+
 
 #adminContinentContainer {
     display: flex; /* Switch to flexbox for horizontal layout */
@@ -11,12 +7,16 @@
     padding: 20px;
     align-items: center; /* Vertically align items */
     white-space: nowrap; /* Prevent items from wrapping to the next row */
+    border-bottom: solid;
+    color: white;
 }
 
 #addNewContinent {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     cursor: pointer;
+    background-color: white;
+    border-radius: 50%;
 }
 
 #specificAdminContinentContainer {
@@ -28,7 +28,6 @@
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 24px;
-    border: solid;
     background-color: black;
 }
 

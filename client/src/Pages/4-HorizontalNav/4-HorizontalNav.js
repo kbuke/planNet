@@ -35,8 +35,6 @@ export default function HorizontalNav({
         )
     }
 
-    console.log(loggedUser)
-
     const navIcons = (icon, containerText, search, loggingOut, linkAddress) => {
         return (
             search ? (

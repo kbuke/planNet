@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import "./2.01-AdminContinents.css"
 
 import AddContinent from "./2.02-AddContinent";
-import EditContinent from "./2.03-EditContinent";
+import ContinentInfo from "./2.03-ContinentInfo";
 import AdminCountry from "./2.06-AdminCountry";
 
 import { CiCirclePlus } from "react-icons/ci";
@@ -11,9 +11,11 @@ import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import { CiCircleChevDown } from "react-icons/ci";
+import { CiCircleChevUp } from "react-icons/ci";
 
 export default function AdminContinents({
     appData,
+    continentId,
     setContinentId,
     allContinents,
     setAllContinents
@@ -21,10 +23,8 @@ export default function AdminContinents({
     const [sortContinents, setSortContinents] = useState([])
     const [hoveredContinent, setHoveredContinent] = useState()
     const [addContinent, setAddContinent] = useState(false)
-    const [editContinent, setEditContinent] = useState(false)
-    const [continentsCountries, setContinentsCountries] = useState()
-
-    console.log(allContinents)
+    const [selectContinentId, setSelectContinentId] = useState()
+    // const [continentsCountries, setContinentsCountries] = useState()
 
     useEffect(() => {
         setSortContinents(allContinents.sort((a, b) => a.name.localeCompare(b.name)))
@@ -63,10 +63,6 @@ export default function AdminContinents({
             <div
                 id="editDeleteContinentContainer"
             >
-                <CiEdit 
-                    className="editDeleteContinent"
-                    onClick={() => setEditContinent(true)}
-                />
 
                 <MdDeleteOutline 
                     className="editDeleteContinent"
@@ -74,12 +70,22 @@ export default function AdminContinents({
 
                 <IoIosInformationCircleOutline 
                     className="editDeleteContinent"
+                    onClick={() => setSelectContinentId(continent.id)}
                 />
 
-                <CiCircleChevDown 
-                    className="editDeleteContinent"
-                    onClick={() => setContinentsCountries(continent.id)}
-                />
+                {continent.id === continentId ?
+                    <CiCircleChevUp 
+                        className="editDeleteContinent"
+                        onClick={() => setContinentId()}
+                        style={{backgroundColor: "red", color: "white"}}
+                    />
+                    :
+                    <CiCircleChevDown 
+                        className="editDeleteContinent"
+                        onClick={() => setContinentId(continent.id)}
+                        style={{backgroundColor: "green", color: "white"}}
+                    />
+                }
             </div>
         </div>
     ))
@@ -108,9 +114,12 @@ export default function AdminContinents({
                 null
             }
 
-            {editContinent ?
-                <EditContinent 
-                    setEditContinent={setEditContinent}
+            {selectContinentId ?
+                <ContinentInfo 
+                    setSelectContinentId={setSelectContinentId}
+                    selectContinentId={selectContinentId}
+                    allContinents={allContinents}
+                    setAllContinents={setAllContinents}
                 />
                 :
                 null

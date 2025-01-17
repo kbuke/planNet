@@ -348,7 +348,30 @@ if __name__ == "__main__":
             country_id=3,
             continent_id=2
         )
-        db.session.add_all([japanAsia, turkeyAsia, turkeyEurope, ukEurope])
+        italyEurope=CountriesContinent(
+            country_id=3,
+            continent_id=2
+        )
+        netherlandsEurope=CountriesContinent(
+            country_id=5,
+            continent_id=2
+        )
+        macedoniaEurope=CountriesContinent(
+            country_id=6,
+            continent_id=2
+        )
+        chinaAsia=CountriesContinent(
+            country_id=8,
+            continent_id=1
+        )
+        koreaAsia=CountriesContinent(
+            country_id=9,
+            continent_id=1
+        )
+        db.session.add_all([
+            japanAsia, turkeyAsia, turkeyEurope, ukEurope, italyEurope,
+            netherlandsEurope, macedoniaEurope, chinaAsia, koreaAsia
+        ])
         db.session.commit()
 
         print("Seeding states")
