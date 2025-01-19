@@ -217,19 +217,30 @@ export default function AdminPg(){
                         <textarea 
                             placeholder={`Enter an introduction for ${locationName}`}
                             onChange={(e) => setLocationIntro(e.target.value)}
+                            className="adminLocationTextArea"
                         />
                     </div>
                     :
-                    <p>{`Please enter the name of your new ${locationType}`}</p>
+                    <p
+                        style={{color: "red"}}
+                    >
+                        {`Please enter the name of your new ${locationType}`}
+                    </p>
                 }
 
-                <div>
-                    <button>
+                <div
+                    className="adminAddLocationButtonContainer"
+                >
+                    <button
+                        className="adminAddLocationButtons"
+                    >
                         Create New {locationType}
                     </button>
 
                     <button
                         onClick={() => setAddLocationType(false)} 
+                        className="adminAddLocationButtons"
+                        style={{backgroundColor: "red"}}
                     >
                         Cancel
                     </button>
@@ -328,6 +339,7 @@ export default function AdminPg(){
                     setNeighbourhoodId={setNeighbourhoodId}
                     neighbourhoodInfo={neighbourhoodInfo}
                     setNeighbourhoodInfo={setNeighbourhoodInfo}
+                    addStateBoroughNeighbourhood={addStateBoroughNeighbourhood}
                 />
                 :
                 null

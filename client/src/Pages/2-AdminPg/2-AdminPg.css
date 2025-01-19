@@ -98,3 +98,39 @@
     font-weight: 260;
     text-decoration: underline;
 }
+
+#adminAddLocationContainer{
+    height: auto;
+    width: 70%;
+    background-color: rgb(52, 47, 47);
+    color: white;
+}
+
+.adminAddStateBoroughNeigbourhoodInput{
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+.adminLocationTextArea{
+    width: 80%;
+    height: 90px;
+    margin-bottom: 20px;
+}
+
+.adminAddLocationButtonContainer{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.adminAddLocationButtons{
+    border-radius: 24px;
+    background-color: rgb(20, 129, 3);
+    color: white;
+    border: none;
+    cursor: pointer;
+    height: 30px;
+}

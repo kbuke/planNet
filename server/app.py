@@ -173,6 +173,24 @@ class AllCities(Resource):
             "-users",
         )) for city in Cities.query.all()]
         return cities, 200
+    
+    def post(self):
+        json=request.get_json()
+        breakpoint()
+        try:
+            new_city = Cities(
+                name=json.get("cityName"),
+                image=json.get("cityImg"),
+                intro=json.get("cityIntro"),
+                country_capital=json.get("countryCapital"),
+                state_capital=json.get("stateCapital"),
+                states_id=json.get("stateId")
+            )
+            db.session.add(new_city)
+            db.session.commit()
+            return new_city.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
 
 class AllBoroughs(Resource):
     def get(self):
@@ -200,6 +218,21 @@ class AllNeighbourhoods(Resource):
     def get(self):
         neighbourhoods = [neighbourhood.to_dict() for neighbourhood in Neighbourhoods.query.all()]
         return neighbourhoods, 200
+
+    def post(self):
+        json=request.get_json()
+        try:
+            new_neighbourhood = Neighbourhoods(
+                name=json.get("locationName"),
+                image=json.get("locationImg"),
+                intro=json.get("locationIntro"),
+                boroughs_id=json.get("relationId")
+            )
+            db.session.add(new_neighbourhood)
+            db.session.commit()
+            return new_neighbourhood.to_dict(), 201 
+        except ValueError as e:
+            return {"error": [str(e)]}, 400
 
 class AllUsers(Resource):
     def get(self):

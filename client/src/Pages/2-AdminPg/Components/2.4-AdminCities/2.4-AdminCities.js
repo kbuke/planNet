@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import AddCities from "./2.41-AddCities";
 
 export default function AdminCities({
     appData,
@@ -51,6 +52,17 @@ export default function AdminCities({
                     setHoveredCityId, hoveredCityId, setCitiesId, citiesId, setCityInfo,
                     cityInfo, setAddCity, setBoroughId
                 )
+            }
+
+            {addCity ?
+                <AddCities 
+                    setAddCity={setAddCity}
+                    stateId={stateId}
+                    allCities={allCities}
+                    setAllCities={setAllCities}
+                />
+                :
+                null
             }
         </div>
     )

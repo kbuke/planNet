@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import AdminAddNeighbourhood from "./2.61-AdminAddNeighbourhood";
 
 export default function AdminNeighbourhoods({
     appData,
@@ -9,7 +10,8 @@ export default function AdminNeighbourhoods({
     neighbourhoodId,
     setNeighbourhoodId,
     neighbourhoodInfo,
-    setNeighbourhoodInfo
+    setNeighbourhoodInfo,
+    addStateBoroughNeighbourhood
 }){
     const [sortNeighbourhoods, setSortNeighbourhoods] = useState()
     const [hoveredNeighbourhoodId, setHoveredNeighbourhoodId] = useState()
@@ -47,9 +49,23 @@ export default function AdminNeighbourhoods({
                 locationReelContainer(
                     `Neighbourhoods in ${boroughName}`, `Search Neighbourhoods in ${boroughName}`,
                     setSearchNeighbourhood, renderLocationContainers, sortNeighbourhoods,
-                    setHoveredNeighbourhoodId, hoveredNeighbourhoodId, setNeighbourhoodId, neighbourhoodId, 
+                    setHoveredNeighbourhoodId, hoveredNeighbourhoodId, setNeighbourhoodId, neighbourhoodId, setNeighbourhoodId, 
                     neighbourhoodInfo, setAddNeighbourhood
                 )
+            }
+
+            {
+                addNeighbourhood ?
+                    <AdminAddNeighbourhood 
+                        addStateBoroughNeighbourhood={addStateBoroughNeighbourhood}
+                        boroughId={boroughId}
+                        boroughName={boroughName}
+                        setAddNeighbourhood={setAddNeighbourhood}
+                        setAllNeighbourhoods={setAllNeighbourhoods}
+                        allNeighbourhoods={allNeighbourhoods}
+                    />
+                    :
+                    null
             }
         </div>
     )
