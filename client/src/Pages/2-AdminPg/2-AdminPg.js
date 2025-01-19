@@ -312,6 +312,7 @@ export default function AdminPg(){
                     boroughInfo={boroughInfo}
                     setBoroughInfo={setBoroughInfo}
                     setNeighbourhoodId={setNeighbourhoodId}
+                    addStateBoroughNeighbourhood={addStateBoroughNeighbourhood}
                 />
                 :
                 null

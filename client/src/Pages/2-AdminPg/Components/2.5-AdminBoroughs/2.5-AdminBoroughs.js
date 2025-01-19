@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import AdminAddBorough from "./2.51-AdminAddBorough";
 
 export default function AdminBoroughs({
     appData,
@@ -10,7 +11,8 @@ export default function AdminBoroughs({
     setBoroughId,
     boroughInfo,
     setBoroughInfo,
-    setNeighbourhoodId
+    setNeighbourhoodId,
+    addStateBoroughNeighbourhood
 }){
     const [sortBoroughs, setSortBoroughs] = useState()
     const [hoveredBoroughId, setHoveredBoroughId] = useState()
@@ -50,6 +52,20 @@ export default function AdminBoroughs({
                     setHoveredBoroughId, hoveredBoroughId, setBoroughId, boroughId, setBoroughInfo,
                     boroughInfo, setAddBorough, setNeighbourhoodId
                 )
+            }
+
+            {
+                addBorough ?
+                    <AdminAddBorough 
+                        addStateBoroughNeighbourhood={addStateBoroughNeighbourhood}
+                        citiesId={citiesId}
+                        cityName={cityName}
+                        setAddBorough={setAddBorough}
+                        setAllBoroughs={setAllBoroughs}
+                        allBoroughs={allBoroughs}
+                    />
+                    :
+                    null
             }
         </div>
     )

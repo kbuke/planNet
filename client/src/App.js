@@ -288,10 +288,13 @@ function App() {
           setAllStates: setAllStates,
 
           allCities: allCities,
+          setAllCities: setAllCities,
 
           allBoroughs: allBoroughs,
+          setAllBoroughs: setAllBoroughs,
 
           allNeighbourhoods: allNeighbourhoods,
+          setAllNeighbourhoods: setAllNeighbourhoods,
 
           allTravelers: allTravelers,
           setAllTravelers: setAllTravelers,

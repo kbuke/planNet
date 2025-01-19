@@ -180,6 +180,21 @@ class AllBoroughs(Resource):
             "-users",
         )) for borough in Boroughs.query.all()]
         return boroughs, 200 
+    
+    def post(self):
+        json=request.get_json()
+        try:
+            new_borough = Boroughs(
+                name=json.get("locationName"),
+                image=json.get("locationImg"),
+                intro=json.get("locationIntro"),
+                cities_id=json.get("relationId")
+            )
+            db.session.add(new_borough)
+            db.session.commit()
+            return new_borough.to_dict(), 201 
+        except ValueError as e:
+            return{"error": [str(e)]}, 400
 
 class AllNeighbourhoods(Resource):
     def get(self):
