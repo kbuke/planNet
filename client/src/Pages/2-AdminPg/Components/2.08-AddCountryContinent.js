@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 
+import "./2.08-AddCountryContinent.css"
+
 export default function AddCountryContinent({
     appData,
     setAddCountryPg
@@ -13,6 +15,8 @@ export default function AddCountryContinent({
 
     const [countriesContinent, setCountriesContinent] = useState()
     const [newCountryId, setNewCountryId] = useState()
+    const [twoContinents, setTwoContinents] = useState(false)
+    const [secondContinentId, setSecondContinentId] = useState()
 
     //Find most recent country added
     useEffect(() => {
@@ -22,18 +26,14 @@ export default function AddCountryContinent({
         }
     })
 
-    console.log(`The most recent country is ${newCountryId}`)
-
-    const handleContinentNewCountry = (e) => {
-        e.preventDefault()
-
-        console.log(`Adding country ${newCountryId} and ${countriesContinent}`)
-
+    const handleContinentNewCountry = (continentId) => {
+        console.log(`Adding country ${newCountryId} and ${continentId}`);
+    
         const jsonData = {
             newCountryId,
-            countriesContinent
-        }
-
+            countriesContinent: continentId
+        };
+    
         fetch("/continentscountries", {
             method: "POST",
             headers: {
@@ -43,9 +43,50 @@ export default function AddCountryContinent({
         })
             .then((r) => r.json())
             .then((continentNewCountry) => {
-                setContinentsCountries([...continentsCountries, continentNewCountry])
-                setAddCountryPg(false)
-            })
+                setContinentsCountries([...continentsCountries, continentNewCountry]);
+            });
+    };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    
+        if (countriesContinent) {
+            handleContinentNewCountry(countriesContinent); // Add for the first continent
+        }
+    
+        if (twoContinents && secondContinentId) {
+            handleContinentNewCountry(secondContinentId); // Add for the second continent
+        }
+    
+        // Close the form after handling the request(s)
+        setAddCountryPg(false);
+    };
+    
+
+    const selectOptions = (variable, setVariable) => {
+        return(
+            <select
+                value={variable}
+                onChange={(e) => setVariable(e.target.value)}
+                className="newCountrySafety"
+                style={{marginTop: "60px"}}
+            >
+                <option 
+                    value="" disabled
+                >
+                    Please select the Continent 
+                </option>
+
+                {allContinents.map((option, index) => (
+                    <option
+                        key={index}
+                        value={option.id}
+                    >
+                        {option.name}
+                    </option>
+                ))}
+            </select>
+        )
     }
 
     return(
@@ -54,34 +95,45 @@ export default function AddCountryContinent({
         >
             <form
                 id="addNewCountry"
-                onSubmit={(e) => handleContinentNewCountry(e)}
+                onSubmit={(e) => handleSubmit(e)}
             >
-                <select
-                    value={countriesContinent}
-                    onChange={(e) => setCountriesContinent(e.target.value)}
-                    className="newCountrySafety"
-                >
-                    <option
-                        value="" disabled
+                {selectOptions(countriesContinent, setCountriesContinent)}
+
+                {twoContinents ?
+                    selectOptions(secondContinentId, setSecondContinentId)
+                    :
+                    <div
+                        id="secondContinentQuery"
                     >
-                        Please select the continent the country is based
-                    </option>
-
-                    {allContinents.map((option, index) => (
-                        <option
-                            key={index}
-                            value={option.id}
+                        <label>Does this country belong in two continents?</label>
+                        <button
+                            id="secondContinentButton"onClick={() => setTwoContinents(true)}
                         >
-                            {option.name}
-                        </option>
-                    ))}
-                </select>
+                            Link 2nd continent
+                        </button>
+                    </div>
+                }
 
-                <button
-                    type="submit"
-                >
-                    Create New Country
-                </button>
+                <div>
+                    <button
+                        type="submit"
+                        className="linkContinentButton"
+                    >
+                        Create New Country
+                    </button>
+
+                    {twoContinents ?
+                        <button
+                            onClick={() => setTwoContinents(false)}
+                            className="linkContinentButton"
+                            style={{backgroundColor: "red"}}
+                        >
+                            Cancel Second Continent
+                        </button>
+                        :
+                        null
+                    }
+                </div>
             </form>
         </div>
     )

@@ -50,14 +50,16 @@
     margin-top: 5px;
 }
 
-#adminCountrySafetyContainer{
+#adminCountrySafetyContainer,
+#adminCountryContinents{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 4px
 }
 
-#adminCountrySafetyHeader{
+#adminCountrySafetyHeader,
+#adminCountryContinentsHeader{
     font-weight: bolder;
     margin-left: 5px;
 }

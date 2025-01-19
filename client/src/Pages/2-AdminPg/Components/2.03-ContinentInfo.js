@@ -5,10 +5,11 @@ import "./2.03-ContinentInfo.css";
 import EditContinent from "./2.04-EditContinent";
 
 export default function ContinentInfo({
-    selectContinentId,
-    setSelectContinentId,
+    continentId,
+    setContinentId,
     allContinents,
-    setAllContinents
+    setAllContinents,
+    setContinentInfo
 }) {
     const [selectedContinent, setSelectedContinent] = useState();
     const [continentName, setContinentName] = useState("")
@@ -18,11 +19,11 @@ export default function ContinentInfo({
 
     // Update selected continent and its properties
     useEffect(() => {
-        setSelectedContinent(allContinents.find(continent => continent.id === selectContinentId))
+        setSelectedContinent(allContinents.find(continent => continent.id === continentId))
         setContinentName(selectedContinent?.name)
         setContinentImg(selectedContinent?.image)
         setContinentIntro(selectedContinent?.intro)
-    }, [selectContinentId, selectedContinent])
+    }, [continentId, selectedContinent])
 
     console.log(continentName)
 
@@ -45,7 +46,7 @@ export default function ContinentInfo({
                             continentIntro={continentIntro}
                             setContinentIntro={setContinentIntro}
                             setEditContinent={setEditContinent}
-                            selectContinentId={selectContinentId}
+                            selectContinentId={continentId}
                             allContinents={allContinents}
                             setAllContinents={setAllContinents}
                         />
@@ -80,7 +81,7 @@ export default function ContinentInfo({
                                     </button>
 
                                     <button
-                                        onClick={() => setSelectContinentId()}
+                                        onClick={() => {setContinentId(); setContinentInfo(false)}}
                                         className="adminEditLocationButton"
                                         style={{backgroundColor: "red"}}
                                     >

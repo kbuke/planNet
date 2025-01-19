@@ -19,7 +19,7 @@
     border-radius: 50%;
 }
 
-#specificAdminContinentContainer {
+/* #specificAdminContinentContainer {
     flex: 0 0 auto; 
     display: grid;
     grid-template-rows: 80% 20%;
@@ -59,9 +59,9 @@
     cursor: pointer;
     background-color: white;
     color: black;
-}
+} */
 
-.continentNameContainer {
+/* .continentNameContainer {
     background-color: rgba(1, 1, 1, 0.8);
     color: white;
     display: flex;
@@ -69,5 +69,5 @@
     justify-content: center;
     width: 300px;
     border-radius: 24px;
-}
+} */
 

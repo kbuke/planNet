@@ -2,23 +2,19 @@
 import { useState } from "react"
 import "./2.10-EditCountry.css"
 
+import EditCountryContinents from "./2.11-EditCountryContinents"
+
 export default function EditCountry({
-    countryId,
-    allCountries,
-    setAllCountries,
+    countryId, appData,
+    allCountries, setAllCountries,
     setEditCountry,
-    countryName,
-    setCountryName,
-    countryImg,
-    setCountryImg,
-    countryInfo,
-    setCountryInfo,
-    countryFlag,
-    setCountryFlag,
-    countryPassportStamp,
-    setCountryPassportStamp,
-    countrySafety,
-    setCountrySafety
+    countryName, setCountryName,
+    countryImg, setCountryImg,
+    countryInfo, setCountryInfo,
+    countryFlag, setCountryFlag,
+    countryPassportStamp, setCountryPassportStamp,
+    countrySafety, setCountrySafety,
+    countryContinents, setCountryContinents
 }){
     const [editCountriesContinent, setEditCountriesContinent] = useState(false)
 
@@ -53,6 +49,7 @@ export default function EditCountry({
                 ))
             }
         })
+        .then(setEditCountriesContinent(true))
     }
 
     const countryInputs = (labelText, setVariable, variable) => {
@@ -78,79 +75,87 @@ export default function EditCountry({
     const safetyLevels = ["Safe", "Use Caution", "Not Safe"]
 
     return(
-        <div>
-            <h2>Edit {countryName}</h2>
+        editCountriesContinent ?
+            <EditCountryContinents 
+                appData={appData}
+                countryId={countryId}
+                setEditCountry={setEditCountry}
+                countryContinents={countryContinents}
+            />
+            :
+            <div>
+                <h2>Edit {countryName}</h2>
 
-            {countryInputs("Edit Countries Name", setCountryName, countryName)}
-            {countryInputs("Edit Countries Flag", setCountryFlag, countryFlag)}
-            {countryInputs("Edit Countries Image", setCountryImg, countryImg)}
-            {countryInputs("Edit Countries Passport Stamp", setCountryPassportStamp, countryPassportStamp)}
+                {countryInputs("Edit Countries Name", setCountryName, countryName)}
+                {countryInputs("Edit Countries Flag", setCountryFlag, countryFlag)}
+                {countryInputs("Edit Countries Image", setCountryImg, countryImg)}
+                {countryInputs("Edit Countries Passport Stamp", setCountryPassportStamp, countryPassportStamp)}
 
-            <div
-                id="editCountryInputContainer"
-            >
-                <label
-                    className="editCountryInputTitle"
+                <div
+                    id="editCountryInputContainer"
                 >
-                    Please Select Country's Safety Level
-                </label>
-
-                <select
-                    value={countrySafety}
-                    onChange={(e) => setCountrySafety(e.target.value)}
-                    style={{marginRight: "5px"}}
-                >
-                    <option
-                        value="" disabled
+                    <label
+                        className="editCountryInputTitle"
                     >
-                        Please Select
-                    </option>
+                        Please Select Country's Safety Level
+                    </label>
 
-                    {safetyLevels.map((level, index) => (
+                    <select
+                        value={countrySafety}
+                        onChange={(e) => setCountrySafety(e.target.value)}
+                        style={{marginRight: "5px"}}
+                    >
                         <option
-                            key={index}
-                            value={level}
+                            value="" disabled
                         >
-                            {level}
+                            Please Select
                         </option>
-                    ))}
-                </select>
-            </div>
 
-            <div
-                id="editCountryInputContainer"
-            >
-                <label
-                    className="editCountryInputTitle"
+                        {safetyLevels.map((level, index) => (
+                            <option
+                                key={index}
+                                value={level}
+                            >
+                                {level}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div
+                    id="editCountryInputContainer"
                 >
-                    Edit Country's Info
-                </label>
+                    <label
+                        className="editCountryInputTitle"
+                    >
+                        Edit Country's Info
+                    </label>
 
-                <textarea 
-                    onChange={(e) => setCountryInfo(e.target.value)}
-                    value={countryInfo}
-                    className="editCountryInfoText"
-                />
-            </div>
+                    <textarea 
+                        onChange={(e) => setCountryInfo(e.target.value)}
+                        value={countryInfo}
+                        className="editCountryInfoText"
+                    />
+                </div>
 
-            <div
-                id="adminEditLocationButtonContainer"
-            >
-                <button
-                    className="adminEditLocationButton"
-                    onClick={(e) => handleEditCountry(e)}
+                <div
+                    id="adminEditLocationButtonContainer"
                 >
-                    Make Changes
-                </button>
+                    <button
+                        className="adminEditLocationButton"
+                        onClick={(e) => handleEditCountry(e)}
+                    >
+                        Make Changes
+                    </button>
 
-                <button
-                    onClick={() => setEditCountry(false)}
-                    className="adminEditLocationButton"
-                    style={{backgroundColor: "red"}}
-                >
-                    Cancel Edit
-                </button>
+                    <button
+                        onClick={() => setEditCountry(false)}
+                        className="adminEditLocationButton"
+                        style={{backgroundColor: "red"}}
+                    >
+                        Cancel Edit
+                    </button>
+                </div>
             </div>
-        </div>
     )
 }

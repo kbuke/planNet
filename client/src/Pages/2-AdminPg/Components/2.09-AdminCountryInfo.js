@@ -8,30 +8,37 @@ export default function AdminCountryInfo({
     countryId,
     allCountries,
     setAllCountries,
-    setCountryId
+    setCountryId,
+    appData,
+    countryInfo,
+    setCountryInfo
 }){
     const [editCountry, setEditCountry] = useState(false)
     const [filterCountry, setFilterCountry] = useState()
     const [countryName, setCountryName] = useState("")
     const [countryImg, setCountryImg] = useState("")
-    const [countryInfo, setCountryInfo] = useState("")
+    // const [countryInfo, setCountryInfo] = useState("")
     const [countryFlag, setCountryFlag] = useState("")
     const [countryPassportStamp, setCountryPassportStamp] = useState("")
     const [countrySafety, setCountrySafety] = useState("")
+    const [countryContinents, setCountryContinents] = useState([])
 
     console.log(allCountries)
 
     useEffect(() => {
-        setFilterCountry(allCountries.find(country => country.id === countryId))
-        setCountryName(filterCountry?.name)
-        setCountryImg(filterCountry?.image)
-        setCountryInfo(filterCountry?.intro)
-        setCountryFlag(filterCountry?.flag)
-        setCountryPassportStamp(filterCountry?.passport_stamp)
-        setCountrySafety(filterCountry?.safety_level)
-    }, [countryId, filterCountry])
+        const selectedCountry = allCountries.find(country => country.id === countryId);
+        setFilterCountry(selectedCountry);
+        setCountryName(selectedCountry?.name || "");
+        setCountryImg(selectedCountry?.image || "");
+        setCountryInfo(selectedCountry?.intro || ""); // Ensure intro defaults to an empty string
+        setCountryFlag(selectedCountry?.flag || "");
+        setCountryPassportStamp(selectedCountry?.passport_stamp || "");
+        setCountrySafety(selectedCountry?.safety_level || "");
+        setCountryContinents(selectedCountry?.continents || []);
+    }, [countryId, allCountries]);
+    
 
-    console.log(countryName)
+    console.log(countryContinents)
 
     return(
         <div
@@ -68,6 +75,9 @@ export default function AdminCountryInfo({
                         setCountryPassportStamp={setCountryPassportStamp}
                         countrySafety={countrySafety}
                         setCountrySafety={setCountrySafety}
+                        countryContinents={countryContinents}
+                        setCountryContinents={setCountryContinents}
+                        appData={appData}
                     />
                     :
                     <div
@@ -94,17 +104,30 @@ export default function AdminCountryInfo({
                             <p>{countrySafety}</p>
                         </div>
 
-                        {countryInfo ? (
+                        <div id="adminCountryContinents">
+                            <label id="adminCountryContinentsHeader">
+                                Continents:
+                            </label>
+                            <p>
+                                {countryContinents && countryContinents.length > 0? 
+                                    countryContinents.map(country => country.continent.name).join(" and ")
+                                    : 
+                                    "No continents available"
+                                }
+                            </p>
+                        </div>
+
+
+                        {typeof countryInfo === "string" && countryInfo ? (
                             countryInfo.split("\n").map((line, index) => (
-                                <p
-                                    key={index}
-                                >
+                                <p key={index}>
                                     {line}
                                 </p>
                             ))
                         ) : (
                             <p>Loading Intro...</p>
                         )}
+
 
                         <div
                             id="adminEditLocationButtonContainer"
@@ -119,7 +142,7 @@ export default function AdminCountryInfo({
                             <button
                                 className="adminEditLocationButton"
                                 style={{backgroundColor: "red"}}
-                                onClick={() => setCountryId()}
+                                onClick={() => {setCountryId(); setCountryInfo(false)}}
                             >
                                 Close {countryName} Page
                             </button>

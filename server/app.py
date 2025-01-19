@@ -146,17 +146,39 @@ class AllContinentsCountries(Resource):
 
 class AllStates(Resource):
     def get(self):
-        states = [state.to_dict() for state in States.query.all()]
+        states = [state.to_dict(rules=(
+            "-users", "-cities.users", "-country.visited_users",
+        )) for state in States.query.all()]
         return states, 200
+    
+    def post(self):
+        json=request.get_json()
+        # breakpoint()
+        try:
+            new_state = States(
+                name=json.get("locationName"),
+                image=json.get("locationImg"),
+                intro=json.get("locationIntro"),
+                country_id=json.get("relationId")
+            )
+            db.session.add(new_state)
+            db.session.commit()
+            return new_state.to_dict(), 201 
+        except ValueError as e:
+            return{"error": [str(e)]}, 400
 
 class AllCities(Resource):
     def get(self):
-        cities=[city.to_dict() for city in Cities.query.all()]
+        cities=[city.to_dict(rules=(
+            "-users",
+        )) for city in Cities.query.all()]
         return cities, 200
 
 class AllBoroughs(Resource):
     def get(self):
-        boroughs = [borough.to_dict() for borough in Boroughs.query.all()]
+        boroughs = [borough.to_dict(rules=(
+            "-users",
+        )) for borough in Boroughs.query.all()]
         return boroughs, 200 
 
 class AllNeighbourhoods(Resource):

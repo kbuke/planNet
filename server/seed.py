@@ -52,7 +52,27 @@ if __name__ == "__main__":
             image="https://img.static-kl.com/images/media/5A8A006F-0618-4245-BBC88553D651B6E2",
             intro="Home of the Renaisance and Industrial revolution."
         )
-        db.session.add_all([asia, europe])
+        africa=Continents(
+            name="Africa",
+            image="https://www.nationalgeographic.com/content/dam/expeditions/destinations/africa/hero-africa-elephants.jpg",
+            intro="The continent with the best wildlife and most countries."
+        )
+        north_america=Continents(
+            name="North America",
+            image="https://about-the-usa.com/images/about-usa.jpg",
+            intro="America hell yeah"
+        )
+        south_america=Continents(
+            name="South America",
+            image="https://www.andbeyond.com/wp-content/uploads/sites/5/Lama-and-Machu-Picchu-in-Peru-in-South-America.jpg",
+            intro="Good food, great people"
+        )
+        australia_continent=Continents(
+            name="Australia",
+            image="https://www.explore.com/img/gallery/this-stunning-australian-beach-is-the-top-ranked-beach-in-the-world/l-intro-1697463911.jpg",
+            intro="Smallest continent"
+        )
+        db.session.add_all([asia, europe, africa, north_america, south_america, australia_continent])
         db.session.commit()
 
         print("Start seeding Countries")
@@ -360,6 +380,10 @@ if __name__ == "__main__":
             country_id=6,
             continent_id=2
         )
+        argentinaSouthAmerica=CountriesContinent(
+            country_id=7,
+            continent_id=5
+        )
         chinaAsia=CountriesContinent(
             country_id=8,
             continent_id=1
@@ -368,9 +392,111 @@ if __name__ == "__main__":
             country_id=9,
             continent_id=1
         )
+        australiaAustralis=CountriesContinent(
+            country_id=10,
+            continent_id=6
+        )
+        botswanaAfrica=CountriesContinent(
+            country_id=11,
+            continent_id=3
+        )
+        brazilSouthAmerica=CountriesContinent(
+            country_id=12,
+            continent_id=5
+        )
+        columbiaSouthAmerica=CountriesContinent(
+            country_id=13,
+            continent_id=5
+        )
+        denmarkEurope=CountriesContinent(
+            country_id=14,
+            continent_id=2
+        )
+        egyptAfrica=CountriesContinent(
+            country_id=15,
+            continent_id=3
+        )
+        franceEurope=CountriesContinent(
+            country_id=16,
+            continent_id=2
+        )
+        germanyEurope=CountriesContinent(
+            country_id=17,
+            continent_id=2
+        )
+        hungaryEurope=CountriesContinent(
+            country_id=18,
+            continent_id=2
+        )
+        indiaAsia=CountriesContinent(
+            country_id=19,
+            continent_id=1
+        )
+        indonesiaAsia=CountriesContinent(
+            country_id=20,
+            continent_id=1
+        )
+        irelandEurope=CountriesContinent(
+            country_id=21,
+            continent_id=2
+        )
+        kenyaAfrica=CountriesContinent(
+            country_id=22,
+            continent_id=3
+        )
+        mongoliaAsia=CountriesContinent(
+            country_id=23,
+            continent_id=1
+        )
+        newZealandAustralia=CountriesContinent(
+            country_id=24,
+            continent_id=6
+        )
+        peruSouthAmerica=CountriesContinent(
+            country_id=25,
+            continent_id=5
+        )
+        polandEurope=CountriesContinent(
+            country_id=26,
+            continent_id=2
+        )
+        southAfricaAfrica=CountriesContinent(
+            country_id=27,
+            continent_id=3
+        )
+        spainEurope=CountriesContinent(
+            country_id=28,
+            continent_id=2
+        )
+        tanzaniaAfrica=CountriesContinent(
+            country_id=29,
+            continent_id=3
+        )
+        thailandAsia=CountriesContinent(
+            country_id=30,
+            continent_id=1
+        )
+        ugandaAfrica=CountriesContinent(
+            country_id=31,
+            continent_id=3
+        )
+        usaNorthAmerica=CountriesContinent(
+            country_id=32,
+            continent_id=4
+        )
+        vietnamAsia=CountriesContinent(
+            country_id=33,
+            continent_id=1
+        )
         db.session.add_all([
             japanAsia, turkeyAsia, turkeyEurope, ukEurope, italyEurope,
-            netherlandsEurope, macedoniaEurope, chinaAsia, koreaAsia
+            netherlandsEurope, macedoniaEurope, argentinaSouthAmerica, chinaAsia, koreaAsia,
+            australiaAustralis, botswanaAfrica, brazilSouthAmerica, columbiaSouthAmerica,
+            denmarkEurope, egyptAfrica, franceEurope, germanyEurope, 
+            hungaryEurope, indiaAsia, indonesiaAsia, irelandEurope, kenyaAfrica,
+            mongoliaAsia, newZealandAustralia, peruSouthAmerica, polandEurope,
+            southAfricaAfrica, spainEurope, tanzaniaAfrica, thailandAsia,
+            ugandaAfrica, usaNorthAmerica, vietnamAsia
         ])
         db.session.commit()
 

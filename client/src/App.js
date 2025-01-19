@@ -285,6 +285,7 @@ function App() {
           setContinentsCountries: setContinentsCountries,
 
           allStates: allStates,
+          setAllStates: setAllStates,
 
           allCities: allCities,
 

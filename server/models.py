@@ -79,8 +79,17 @@ class Country(db.Model, SerializerMixin):
     user_wishlist=db.relationship("UserWishListCountry", backref="country")
 
     serialize_rules=(
-        "-continents.country",
-        "-continents.continent",
+        "-continents.country.continents",
+        "-continents.country.flag",
+        "-continents.country.id",
+        "-continents.country.image",
+        "-continents.country.intro",
+        "-continents.country.passport_stamp",
+        "-continents.country.safety_level",
+        "-continents.country.states",
+        "-continents.country.user_wishlist",
+        "-continents.country.visited_users",
+        "-continents.continent.countries",
         "-continents.country_id",
 
         "-states.country",
