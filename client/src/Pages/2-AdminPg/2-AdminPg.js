@@ -248,6 +248,233 @@ export default function AdminPg(){
             </form>
         )
     }
+
+    //Set up locations info container
+    const infoContainer = (
+        locationName, setLocationName, locationImg, setLocationImg, 
+        locationIntro, setLocationIntro, editLocation,
+        setEditLocation, setLocationInfo, editLink, allLocations, setAllLocations, 
+        setLocationId, passportStamp, setPassportStamp, countrySafety,
+        setCountrySafety, countryCapital, stateCapital, countriesContinents
+    ) => {
+
+        const handleLocationEdit = (e, link) => {
+            e.preventDefault()
+            fetch(link, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: locationName,
+                    image: locationImg,
+                    intro: locationIntro,
+                    ...(passportStamp && {passport_stamp: passportStamp}),
+                    ...(countrySafety && {safety_level: countrySafety}),
+                    ...(countryCapital && {country_capital: countryCapital}),
+                    ...(stateCapital && {state_capital: stateCapital})  
+                })
+            })
+            .then((r) => {
+                if(r.ok){
+                    return r.json()
+                } else {
+                    console.error("Failed to update location")
+                    return null
+                }
+            })
+            .then((newLocationInfo) => {
+                if(newLocationInfo){
+                    setAllLocations(allLocations.map(oldLocations => 
+                        oldLocations.id === newLocationInfo.id ? newLocationInfo : oldLocations
+                    ))
+                }
+            })
+            .then(setEditLocation(false))
+        }
+
+        const editLocationInputs = (
+            placeholderText, editLocation, setEditLocation
+        ) => (
+            <div
+                id="adminEdirLocationTextContainer"
+            >
+                <p
+                    id="adminEditLocationText"
+                >
+                    {placeholderText}
+                </p>
+
+                <input 
+                    onChange={(e) => setEditLocation(e.target.value)}
+                    value={editLocation}
+                    className="editLocationText"
+                />
+            </div>
+        )
+
+        return(
+            <div
+                id="adminLocationInfoContainer"
+            >
+                {
+                    editLocation ?
+                        <h1>Edit {locationName}</h1>
+                        :
+                        <h1>{locationName}</h1>
+                }
+
+                <div
+                    id="adminLocationInfoContainerGrid"
+                >
+                    <div
+                        id="adminLocationImgContainer"
+                        style={{backgroundImage: `url(${locationImg})`}}
+                    >
+                        {passportStamp ?
+                            <img 
+                                src={passportStamp}
+                                id="adminCountryPassportStamp"
+                                alt={`${locationName} Stamp`}
+                            />
+                            :
+                            null
+                        }
+                    </div>
+
+                    <div
+                        id="adminLocationInfoTextContainer"
+                    >
+                        {editLocation?
+                            <form
+                                onSubmit={(e) => handleLocationEdit(e, editLink)}
+                            >
+                                {editLocationInputs("Please edit the name", locationName, setLocationName)}
+                                {editLocationInputs("Please edit location image", locationImg, setLocationImg)}
+                                {passportStamp ?
+                                    editLocationInputs("Please edit countries passport stamp", passportStamp, setPassportStamp)
+                                    :
+                                    null
+                                }
+                                <div
+                                    id="adminEdirLocationTextContainer"
+                                >
+                                    <p
+                                        id="adminEditLocationText"
+                                    >Edit Location Intro</p>
+                                    <textarea 
+                                        onChange={(e) => setLocationIntro(e.target.value)}
+                                        value={locationIntro}
+                                        id="adminLocationIntroTextArea"
+                                    /> 
+                                </div>
+
+                                <div
+                                    className="adminAddLocationButtonContainer"
+                                >
+                                    <button
+                                        className="adminAddLocationButtons"
+                                        type="submit"
+                                    >
+                                        Make Edits
+                                    </button>
+
+                                    <button
+                                        className="adminAddLocationButtons"
+                                        style={{backgroundColor: "red"}}
+                                        onClick={() => setEditLocation(false)}
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                            :
+                            <>
+                                {/*Set up countries continents*/}
+                                {countriesContinents ?
+                            <div>
+                                <label>
+                                    Continents:
+                                </label>
+
+                                <p>
+                                    {countriesContinents && countriesContinents.length > 0 ?
+                                        countriesContinents.map(country => country.continent.name).join("and")
+                                        :
+                                        "No continents available"
+                                    }
+                                </p>
+                            </div>
+                            :
+                            null
+                        }
+
+                        {/* Set up location Safety Level */}
+                        {countrySafety ?
+                            <div
+                                id="adminLocationSafetyContainer"
+                            >
+                                <label
+                                    id="adminLocationSafetyHeader"
+                                >
+                                    Safety Level: 
+                                </label>
+
+                                <p>{countrySafety}</p>
+                            </div>
+                            :
+                            null
+                        }
+
+                        {/* Set up location Capital  */}
+                        {countryCapital ?
+                            <p>Capital City</p>
+                            :
+                            null
+                        }
+
+                        {/* Set up location State Capital */}
+                        {stateCapital ?
+                            <p>State Capital</p>
+                            :
+                            null
+                        }
+
+                        {/* Set up location intro */}
+                        {locationIntro ? (
+                            locationIntro.split("\n").map((line, index) => (
+                                <p
+                                key={index}
+                                >
+                                    {line}
+                                </p>
+                            ))
+                        ) : (
+                            <p>Loading intro...</p>
+                        )}
+
+                        <div>
+                            <button
+                                onClick={() => setEditLocation(true)}
+                            >
+                                Edit {locationName}
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    setLocationInfo(false); setEditLocation(false); setLocationId()
+                                }}
+                            >
+                                Close Info
+                            </button>
+                        </div>
+                        </>
+                        }
+                    </div>
+                </div>
+            </div>
+        )
+    }
     
     return(
         <div
@@ -290,6 +517,7 @@ export default function AdminPg(){
                     setStateInfo={setStateInfo}
                     setCitiesId={setCitiesId}
                     addStateBoroughNeighbourhood={addStateBoroughNeighbourhood}
+                    infoContainer={infoContainer}
                 />
                 :
                 null

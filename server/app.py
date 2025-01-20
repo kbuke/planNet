@@ -167,6 +167,31 @@ class AllStates(Resource):
         except ValueError as e:
             return{"error": [str(e)]}, 400
 
+class StateId(Resource):
+    def get(self, id):
+        state = States.query.filter(States.id==id).first()
+        if state:
+            return make_response(state.to_dict(), 201)
+        return {"error": "State not found"}
+    
+    def patch(self, id):
+        data=request.get_json()
+        state_info=States.query.filter(States.id==id).first()
+        if state_info:
+            try:
+                for attr in data:
+                    setattr(state_info, attr, data[attr])
+                db.session.add(state_info)
+                db.session.commit()
+                return make_response(state_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation error"]
+                }, 400 
+        return {
+            "error": "Continent not found"
+        }, 404
+
 class AllCities(Resource):
     def get(self):
         cities=[city.to_dict(rules=(
@@ -572,6 +597,7 @@ api.add_resource(CountriesId, '/countries/<int:id>')
 api.add_resource(AllContinentsCountries, '/continentscountries')
 
 api.add_resource(AllStates, '/states')
+api.add_resource(StateId, '/states/<int:id>')
 
 api.add_resource(AllCities, '/cities')
 

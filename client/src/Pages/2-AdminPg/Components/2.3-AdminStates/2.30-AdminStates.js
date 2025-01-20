@@ -4,6 +4,7 @@ import { CiCirclePlus } from "react-icons/ci";
 
 import "./2.30-AdminStates.css"
 import AdminAddState from "./2.31-AdminAddState";
+import AdminStateInfo from "./2.32-AdminStateInfo";
 
 export default function AdminStates({
     appData,
@@ -15,12 +16,12 @@ export default function AdminStates({
     stateInfo,
     setStateInfo,
     setCitiesId,
-    addStateBoroughNeighbourhood
+    addStateBoroughNeighbourhood,
+    infoContainer
 }){
     const [sortStates, setSortStates] = useState([])
     const [hoverStateId, setHoverStateId] = useState()
     const [addState, setAddState] = useState(false)
-    const [stateName, setStateName] = useState()
     const [filterStates, setFilterStates] = useState()
     const [searchStates, setSearchStates] = useState("")
     const [countryName, setCountryName] = useState("")
@@ -65,6 +66,21 @@ export default function AdminStates({
                         setAddState={setAddState}
                         setAllStates={setAllStates}
                         allStates={allStates}
+                    />
+                    :
+                    null
+            }
+
+            {
+                stateInfo ?
+                    <AdminStateInfo 
+                        setStateInfo={setStateInfo}
+                        infoContainer={infoContainer}
+                        sortStates={sortStates}
+                        stateId={stateId}
+                        setStateId={setStateId}
+                        allStates={allStates}
+                        setAllStates={setAllStates}
                     />
                     :
                     null
