@@ -30,7 +30,7 @@ export default function AdminStates({
     const allStates = appData.allStates
     const setAllStates = appData.setAllStates
 
-    console.log(setAllStates)
+    console.log(allStates)
 
     useEffect(() => {
         const filterCountryStates = allStates.filter(state => state.country_id === countryId)

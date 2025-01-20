@@ -239,6 +239,31 @@ class AllBoroughs(Resource):
         except ValueError as e:
             return{"error": [str(e)]}, 400
 
+class BoroughId(Resource):
+    def get(self, id):
+        borough = Boroughs.query.filter(Boroughs.id==id).first()
+        if borough:
+            return make_response(borough.to_dict(), 201)
+        return {"error": "Borough not found"}
+
+    def patch(self, id):
+        data=request.get_json()
+        borough_info=Boroughs.query.filter(Boroughs.id==id).first()
+        if borough_info:
+            try:
+                for attr in data:
+                    setattr(borough_info, attr, data[attr])
+                db.session.add(borough_info)
+                db.session.commit()
+                return make_response(borough_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation error"]
+                }, 400 
+        return{
+            "error": "Borough not found"
+        }, 404
+
 class AllNeighbourhoods(Resource):
     def get(self):
         neighbourhoods = [neighbourhood.to_dict() for neighbourhood in Neighbourhoods.query.all()]
@@ -258,6 +283,31 @@ class AllNeighbourhoods(Resource):
             return new_neighbourhood.to_dict(), 201 
         except ValueError as e:
             return {"error": [str(e)]}, 400
+
+class NeighbourhoodId(Resource):
+    def get(self, id):
+        neighbourhood = Neighbourhoods.query.filter(Neighbourhoods.id==id).first()
+        if neighbourhood:
+            return make_response(neighbourhood.to_dict(), 201)
+        return {"error": "Borough not found"}
+    
+    def patch(self, id):
+        data=request.get_json()
+        neighbourhood_info=Neighbourhoods.query.filter(Neighbourhoods.id==id).first()
+        if neighbourhood_info:
+            try:
+                for attr in data:
+                    setattr(neighbourhood_info, attr, data[attr])
+                db.session.add(neighbourhood_info)
+                db.session.commit()
+                return make_response(neighbourhood_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation error"]
+                }, 400 
+        return {
+            "error": "Borough not found"
+        }, 404
 
 class AllUsers(Resource):
     def get(self):
@@ -602,8 +652,10 @@ api.add_resource(StateId, '/states/<int:id>')
 api.add_resource(AllCities, '/cities')
 
 api.add_resource(AllBoroughs, '/boroughs')
+api.add_resource(BoroughId, '/boroughs/<int:id>')
 
 api.add_resource(AllNeighbourhoods, '/neighbourhoods')
+api.add_resource(NeighbourhoodId, '/neighbourhoods/<int:id>')
 
 api.add_resource(AllUsers, '/users')
 api.add_resource(AllUserId, '/users/<int:id>')

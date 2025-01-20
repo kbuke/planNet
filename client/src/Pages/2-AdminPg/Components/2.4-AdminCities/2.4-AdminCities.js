@@ -27,7 +27,7 @@ export default function AdminCities({
 
     useEffect(() => {
         const filterStatesCities = allCities.filter(city => city.states_id === stateId)
-        const sortedCities = filterStatesCities.sort((a, b) => a.name.localeCompaer(b.name))
+        const sortedCities = filterStatesCities.sort((a, b) => a.name.localeCompare(b.name))
         setSortCities(sortedCities)
     }, [allCities, stateId, countryId])
 
