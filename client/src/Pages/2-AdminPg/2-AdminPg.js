@@ -569,6 +569,7 @@ export default function AdminPg(){
                     neighbourhoodInfo={neighbourhoodInfo}
                     setNeighbourhoodInfo={setNeighbourhoodInfo}
                     addStateBoroughNeighbourhood={addStateBoroughNeighbourhood}
+                    infoContainer={infoContainer}
                 />
                 :
                 null

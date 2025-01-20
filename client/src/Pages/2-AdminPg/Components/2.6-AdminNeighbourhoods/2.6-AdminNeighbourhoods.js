@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import AdminAddNeighbourhood from "./2.61-AdminAddNeighbourhood";
+import EditNeighbourhoodInfo from "./2.62-EditNeighbourhoodInfo";
 
 export default function AdminNeighbourhoods({
     appData,
@@ -11,7 +12,8 @@ export default function AdminNeighbourhoods({
     setNeighbourhoodId,
     neighbourhoodInfo,
     setNeighbourhoodInfo,
-    addStateBoroughNeighbourhood
+    addStateBoroughNeighbourhood,
+    infoContainer
 }){
     const [sortNeighbourhoods, setSortNeighbourhoods] = useState()
     const [hoveredNeighbourhoodId, setHoveredNeighbourhoodId] = useState()
@@ -41,16 +43,19 @@ export default function AdminNeighbourhoods({
         setBoroughName(borough[0].name)
     }, [boroughId])
 
-    console.log(`I am looking at the boroug of ${boroughName}`)
+    console.log(`I am looking at the boroug of ${neighbourhoodInfo}`)
 
     return(
         <div>
             {
                 locationReelContainer(
                     `Neighbourhoods in ${boroughName}`, `Search Neighbourhoods in ${boroughName}`,
-                    setSearchNeighbourhood, renderLocationContainers, sortNeighbourhoods,
-                    setHoveredNeighbourhoodId, hoveredNeighbourhoodId, setNeighbourhoodId, neighbourhoodId, setNeighbourhoodId, 
-                    neighbourhoodInfo, setAddNeighbourhood
+                    setSearchNeighbourhood, renderLocationContainers, 
+                    sortNeighbourhoods, setHoveredNeighbourhoodId, 
+                    hoveredNeighbourhoodId, setNeighbourhoodId, 
+                    neighbourhoodId, setNeighbourhoodInfo, 
+                    neighbourhoodInfo, setAddNeighbourhood,
+                    setNeighbourhoodId
                 )
             }
 
@@ -63,6 +68,21 @@ export default function AdminNeighbourhoods({
                         setAddNeighbourhood={setAddNeighbourhood}
                         setAllNeighbourhoods={setAllNeighbourhoods}
                         allNeighbourhoods={allNeighbourhoods}
+                    />
+                    :
+                    null
+            }
+
+            {
+                neighbourhoodInfo ?
+                    <EditNeighbourhoodInfo 
+                        setNeighbourhoodInfo={setNeighbourhoodInfo}
+                        infoContainer={infoContainer}
+                        sortNeighbourhoods={sortNeighbourhoods}
+                        neighbourhoodId={neighbourhoodId}
+                        setNeighbourhoodId={setNeighbourhoodId}
+                        allNeighbourhoods={allNeighbourhoods}
+                        setAllNeighbourhoods={setAllNeighbourhoods}
                     />
                     :
                     null
