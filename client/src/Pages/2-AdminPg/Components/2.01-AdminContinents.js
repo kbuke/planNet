@@ -11,7 +11,8 @@ export default function AdminContinents({
     allContinents,
     setAllContinents,
     renderLocationContainers,
-    locationReelContainer
+    locationReelContainer,
+    infoContainer
 }){
     const [sortContinents, setSortContinents] = useState([])
     const [hoveredContinent, setHoveredContinent] = useState()
@@ -48,6 +49,7 @@ export default function AdminContinents({
                     allContinents={allContinents}
                     setAllContinents={setAllContinents}
                     setContinentInfo={setContinentInfo}
+                    infoContainer={infoContainer}
                 />
                 :
                 null

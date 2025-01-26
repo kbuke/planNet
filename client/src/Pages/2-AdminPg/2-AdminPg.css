@@ -159,6 +159,7 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    display: flex;
 }
 
 #adminEdirLocationTextContainer{
@@ -178,4 +179,15 @@
 #adminLocationIntroTextArea{
     height: 100px;
     margin-bottom: 20px;
+}
+
+#adminCountryPassportStamp{
+    height: 140px;
+    justify-self: flex-start;
+    align-self: flex-start;
+}
+
+#adminEditCountrySafety{
+    margin-bottom: 20px;
+    width: 80%;
 }

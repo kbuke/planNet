@@ -33,8 +33,7 @@ export default function EditNeighbourhoodInfo({
             setNeighbourhoodImg("");
             setNeighbourhoodIntro("");
         }
-    }, [neighbourhoodId, sortNeighbourhoods]);
-    
+    }, [neighbourhoodId, sortNeighbourhoods]);    
 
     console.log(`I am looking at the neighbourhood of ${neighbourhoodName}`)
 

@@ -18,7 +18,8 @@ export default function AdminCountry({
     setCountryInfo,
     renderLocationContainers, 
     locationReelContainer,
-    setStateId
+    setStateId,
+    infoContainer
 }){
     const [sortCountries, setSortCountries] = useState()
     const [hoverCountryId, setHoverCountryId] = useState()
@@ -101,6 +102,7 @@ export default function AdminCountry({
                     appData={appData}
                     countryInfo={countryInfo}
                     setCountryInfo={setCountryInfo}
+                    infoContainer={infoContainer}
                 />
                 :
                 null

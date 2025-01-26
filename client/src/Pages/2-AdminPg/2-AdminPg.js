@@ -8,6 +8,7 @@ import AdminStates from "./Components/2.3-AdminStates/2.30-AdminStates"
 import AdminCities from "./Components/2.4-AdminCities/2.4-AdminCities"
 import AdminBoroughs from "./Components/2.5-AdminBoroughs/2.5-AdminBoroughs"
 import AdminNeighbourhoods from "./Components/2.6-AdminNeighbourhoods/2.6-AdminNeighbourhoods"
+import AdminUsers from "./Components/2.7-AdminUsers/2.7-AdminUsers"
 
 import { useState } from "react"
 
@@ -255,7 +256,8 @@ export default function AdminPg(){
         locationIntro, setLocationIntro, editLocation,
         setEditLocation, setLocationInfo, editLink, allLocations, setAllLocations, 
         setLocationId, passportStamp, setPassportStamp, countrySafety,
-        setCountrySafety, countryCapital, stateCapital, countriesContinents
+        setCountrySafety, countryCapital, stateCapital, countriesContinents,
+        countriesEditPg, setCountriesEditPg
     ) => {
 
         const handleLocationEdit = (e, link) => {
@@ -290,7 +292,12 @@ export default function AdminPg(){
                     ))
                 }
             })
-            .then(setEditLocation(false))
+            .then(
+                countriesEditPg === 1 ?
+                    setCountriesEditPg(countriesEditPg + 1)
+                    :
+                    setEditLocation(false)
+            )
         }
 
         const editLocationInputs = (
@@ -312,6 +319,8 @@ export default function AdminPg(){
                 />
             </div>
         )
+
+        const safetyLevels = ["Safe", "Use Caution", "Not Safe"]
 
         return(
             <div
@@ -367,6 +376,32 @@ export default function AdminPg(){
                                         value={locationIntro}
                                         id="adminLocationIntroTextArea"
                                     /> 
+                                </div>
+                                
+                                <div
+                                    style={{width: "100%"}}
+                                    id="adminEdirLocationTextContainer"
+                                >
+                                    <p
+                                        id="adminEditLocationText"
+                                    >
+                                        Choose Countries Safety Level
+                                    </p>
+                                    <select
+                                        id="adminEditCountrySafety"
+                                        onChange={(e) => setCountrySafety(e.target.value)}
+                                        value={countrySafety}
+                                    >
+                                        {safetyLevels.map((safetyLevel, index) => (
+                                            <option
+                                                key={index}
+                                                id="adminEditCountrySafety"
+                                                value={safetyLevel}
+                                            >
+                                                {safetyLevel}
+                                            </option>
+                                        ))}                                   
+                                    </select>
                                 </div>
 
                                 <div
@@ -453,9 +488,12 @@ export default function AdminPg(){
                             <p>Loading intro...</p>
                         )}
 
-                        <div>
+                        <div
+                            className="adminAddLocationButtonContainer"
+                        >
                             <button
                                 onClick={() => setEditLocation(true)}
+                                className="adminAddLocationButtons"
                             >
                                 Edit {locationName}
                             </button>
@@ -464,6 +502,8 @@ export default function AdminPg(){
                                 onClick={() => {
                                     setLocationInfo(false); setEditLocation(false); setLocationId()
                                 }}
+                                className="adminAddLocationButtons"
+                                style={{backgroundColor: "red"}}
                             >
                                 Close Info
                             </button>
@@ -485,12 +525,17 @@ export default function AdminPg(){
         >
             <h1>Admin Page</h1>
 
+            <AdminUsers 
+                appData={appData}
+            />
+
             <AdminContinents 
                 appData={appData}
                 continentId={continentId} setContinentId={setContinentId}
                 allContinents={allContinents} setAllContinents={setAllContinents}
                 renderLocationContainers={renderLocationContainers}
                 locationReelContainer={locationReelContainer}
+                infoContainer={infoContainer}
             />
 
             <AdminCountry 
@@ -503,6 +548,7 @@ export default function AdminPg(){
                 locationReelContainer={locationReelContainer}
                 setStateId={setStateId}
                 setCitiesId={setCitiesId}
+                infoContainer={infoContainer}
             />
 
             {countryId && !countryInfo ?

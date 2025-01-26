@@ -1,0 +1,36 @@
+#adminUserCard{
+    height: 400px;
+    width: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: solid;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#adminHoveredUserCard{
+    height: 92%;
+    width: 92%;
+
+    border-radius: 20px;
+    background-color: rgba(1, 1, 1, 0.7);
+
+    color: white;
+
+    justify-self: center;
+    align-self: center;
+}
+
+.adminUserAdminIcon{
+    border: solid;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: red;
+    cursor: pointer;
+}
+
+#adminIcon{
+    background-color: rgb(9, 118, 9);
+}

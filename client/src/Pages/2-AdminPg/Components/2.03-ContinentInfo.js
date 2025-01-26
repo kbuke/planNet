@@ -9,7 +9,8 @@ export default function ContinentInfo({
     setContinentId,
     allContinents,
     setAllContinents,
-    setContinentInfo
+    setContinentInfo,
+    infoContainer
 }) {
     const [selectedContinent, setSelectedContinent] = useState();
     const [continentName, setContinentName] = useState("")
@@ -29,72 +30,14 @@ export default function ContinentInfo({
 
     return (
         <div id="popUpBackground">
-            {selectedContinent ? (
-                <div id="adminEditLocationContainer">
-                    {editContinent ?
-                        <h1>Edit the Continent of {continentName}</h1>
-                        :
-                        <h1>{continentName}</h1>
-                    }
-
-                    {editContinent ?
-                        <EditContinent 
-                            continentName={continentName}
-                            setContinentName={setContinentName}
-                            continentImg={continentImg}
-                            setContinentImg={setContinentImg}
-                            continentIntro={continentIntro}
-                            setContinentIntro={setContinentIntro}
-                            setEditContinent={setEditContinent}
-                            selectContinentId={continentId}
-                            allContinents={allContinents}
-                            setAllContinents={setAllContinents}
-                        />
-                        :
-                        <div id="editLocationInfoGrid">
-                            <div
-                                className="editedLocationImgContainer"
-                            >
-                                <img 
-                                    className="editedLocationImg"
-                                    src={continentImg}
-                                />
-                            </div>
-
-                            <div>
-                                {continentIntro ? (
-                                    continentIntro.split("\n").map((line, index) => (
-                                        <p key={index}>{line}</p>
-                                    ))
-                                ) : (
-                                    <p>Loading intro...</p>
-                                )}
-
-                                <div
-                                    id="adminEditLocationButtonContainer"
-                                >
-                                    <button
-                                        className="adminEditLocationButton"
-                                        onClick={() => setEditContinent(true)}
-                                    >
-                                        Edit Info on {continentName}
-                                    </button>
-
-                                    <button
-                                        onClick={() => {setContinentId(); setContinentInfo(false)}}
-                                        className="adminEditLocationButton"
-                                        style={{backgroundColor: "red"}}
-                                    >
-                                        Close {continentName} Page
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            ) : (
-                <p>Loading continent details...</p>
-            )}
+            {
+                infoContainer(
+                    continentName, setContinentName, continentImg, setContinentImg,
+                    continentIntro, setContinentIntro, editContinent,
+                    setEditContinent, setContinentInfo, `/continents/${continentId}`,
+                    allContinents, setAllContinents, setContinentId
+                )
+            }
         </div>
     );
 }

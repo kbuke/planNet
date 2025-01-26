@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import "./2.09-AdminCountryInfo.css"
 
 import EditCountry from "./2.10-EditCountry"
+import EditCountryContinents from "./2.11-EditCountryContinents"
 
 export default function AdminCountryInfo({
     countryId,
@@ -11,17 +12,20 @@ export default function AdminCountryInfo({
     setCountryId,
     appData,
     countryInfo,
-    setCountryInfo
+    setCountryInfo,
+    infoContainer
 }){
     const [editCountry, setEditCountry] = useState(false)
     const [filterCountry, setFilterCountry] = useState()
     const [countryName, setCountryName] = useState("")
     const [countryImg, setCountryImg] = useState("")
-    // const [countryInfo, setCountryInfo] = useState("")
+    const [countryIntro, setCountryIntro] = useState("")
     const [countryFlag, setCountryFlag] = useState("")
     const [countryPassportStamp, setCountryPassportStamp] = useState("")
     const [countrySafety, setCountrySafety] = useState("")
     const [countryContinents, setCountryContinents] = useState([])
+    const [editCountryPg, setEditCountryPg] = useState(1)
+    
 
     console.log(allCountries)
 
@@ -30,7 +34,7 @@ export default function AdminCountryInfo({
         setFilterCountry(selectedCountry);
         setCountryName(selectedCountry?.name || "");
         setCountryImg(selectedCountry?.image || "");
-        setCountryInfo(selectedCountry?.intro || ""); // Ensure intro defaults to an empty string
+        setCountryIntro(selectedCountry?.intro || ""); // Ensure intro defaults to an empty string
         setCountryFlag(selectedCountry?.flag || "");
         setCountryPassportStamp(selectedCountry?.passport_stamp || "");
         setCountrySafety(selectedCountry?.safety_level || "");
@@ -44,112 +48,20 @@ export default function AdminCountryInfo({
         <div
             id="popUpBackground"
         >
-            <div
-                id="adminEditCountryContainer"
-            >
-                <div
-                    id="adminCountryImgContainer"
-                    style={{backgroundImage: `url(${countryImg})`}}
-                >
-                    <img 
-                        src={countryPassportStamp}
-                        className="adminCountryPassportStamp"
-                    />
-                </div>
-
-                {editCountry ?
-                    <EditCountry 
-                        countryId={countryId}
-                        allCountries={allCountries}
-                        setAllCountries={setAllCountries}
-                        setEditCountry={setEditCountry}
-                        countryName={countryName}
-                        setCountryName={setCountryName}
-                        countryImg={countryImg}
-                        setCountryImg={setCountryImg}
-                        countryInfo={countryInfo}
-                        setCountryInfo={setCountryInfo}
-                        countryFlag={countryFlag}
-                        setCountryFlag={setCountryFlag}
-                        countryPassportStamp={countryPassportStamp}
-                        setCountryPassportStamp={setCountryPassportStamp}
-                        countrySafety={countrySafety}
-                        setCountrySafety={setCountrySafety}
-                        countryContinents={countryContinents}
-                        setCountryContinents={setCountryContinents}
-                        appData={appData}
-                    />
+            {
+                editCountryPg === 1 ?
+                    infoContainer
+                        (
+                            countryName, setCountryName, countryImg, setCountryImg,
+                            countryIntro, setCountryIntro, editCountry, 
+                            setEditCountry, setCountryInfo, `countries/${countryId}`, allCountries, setAllCountries, 
+                            setCountryId, countryPassportStamp, setCountryPassportStamp, countrySafety,
+                            setCountrySafety, null, null, countryContinents,
+                            editCountryPg, setEditCountryPg
+                        )
                     :
-                    <div
-                        id="adminSpecificCountryInfo"
-                    >
-                        <div
-                            id="adminCountryFlag"
-                        >
-                            <h2>{countryName}</h2>
-                            <img 
-                                src={countryFlag}
-                                className="adminCountryFlag"
-                            />
-                        </div>
-
-                        <div
-                            id="adminCountrySafetyContainer"
-                        >
-                            <label
-                                id="adminCountrySafetyHeader"
-                            >
-                                Safety Level:
-                            </label>
-                            <p>{countrySafety}</p>
-                        </div>
-
-                        <div id="adminCountryContinents">
-                            <label id="adminCountryContinentsHeader">
-                                Continents:
-                            </label>
-                            <p>
-                                {countryContinents && countryContinents.length > 0? 
-                                    countryContinents.map(country => country.continent.name).join(" and ")
-                                    : 
-                                    "No continents available"
-                                }
-                            </p>
-                        </div>
-
-
-                        {typeof countryInfo === "string" && countryInfo ? (
-                            countryInfo.split("\n").map((line, index) => (
-                                <p key={index}>
-                                    {line}
-                                </p>
-                            ))
-                        ) : (
-                            <p>Loading Intro...</p>
-                        )}
-
-
-                        <div
-                            id="adminEditLocationButtonContainer"
-                        >
-                            <button
-                                className="adminEditLocationButton"
-                                onClick={() => setEditCountry(true)}
-                            >
-                                Edit {countryName} Info
-                            </button>
-
-                            <button
-                                className="adminEditLocationButton"
-                                style={{backgroundColor: "red"}}
-                                onClick={() => {setCountryId(); setCountryInfo(false)}}
-                            >
-                                Close {countryName} Page
-                            </button>
-                        </div>
-                    </div>
-                }
-            </div>
+                    <EditCountryContinents />
+            }
         </div>
     )
 }

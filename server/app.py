@@ -153,7 +153,7 @@ class AllStates(Resource):
     
     def post(self):
         json=request.get_json()
-        # breakpoint()
+        breakpoint()
         try:
             new_state = States(
                 name=json.get("locationName"),

@@ -6,20 +6,20 @@ export default function EditCountryContinents({
     setEditCountry,
     countryContinents
 }){
-    console.log(countryContinents)
+    // console.log(countryContinents)
 
-    const continentsCountries = appData.continentsCountries
-    const setContinentsCountries = appData.setContinentsCountries
+    // const continentsCountries = appData.continentsCountries
+    // const setContinentsCountries = appData.setContinentsCountries
 
-    const handleClose = () => (
-        setEditCountry(false)
-    ) 
+    // const handleClose = () => (
+    //     setEditCountry(false)
+    // ) 
 
     return(
         <div>
             <h2>Edit Continents</h2>
 
-            <div
+            {/* <div
                 id="adminEditLocationButtonContainer"
             >
                 <button
@@ -35,7 +35,7 @@ export default function EditCountryContinents({
                 >
                     Cancel
                 </button>
-            </div>
+            </div> */}
         </div>
     )
 }
