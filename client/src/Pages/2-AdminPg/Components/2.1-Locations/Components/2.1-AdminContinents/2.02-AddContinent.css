@@ -1,0 +1,38 @@
+#addNewContinentContainer{
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+#newContinentInputContainers{
+    display: flex;
+    flex-direction: column;
+}
+
+.newContinentInput{
+    border: none;
+    border-bottom: solid;
+    margin-bottom: 20px;
+}
+
+#newContinentButtonContainer{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.newContinentButtons{
+    width: 150px;
+    background-color: rgb(4, 118, 17);
+    color: white;
+    border: none;
+    height: 30px;
+    border-radius: 15px;
+    cursor: pointer;
+}

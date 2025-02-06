@@ -1,36 +1,59 @@
-#adminUserCard{
+#adminUserCard {
     height: 400px;
     width: 250px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    border: solid;
     border-radius: 20px;
     overflow: hidden;
-}
-
-#adminHoveredUserCard{
-    height: 92%;
-    width: 92%;
-
-    border-radius: 20px;
-    background-color: rgba(1, 1, 1, 0.7);
-
+    margin-top: 20px;
     color: white;
 
-    justify-self: center;
-    align-self: center;
+    display: flex;
+    flex-direction: column; /* Stacks children vertically */
+    justify-content: space-between; /* Pushes elements to the top and bottom */
+    position: relative; /* Ensures positioning control for internal elements */
 }
 
-.adminUserAdminIcon{
+.adminUserAdminIcon {
     border: solid;
     height: 40px;
     width: 40px;
     border-radius: 50%;
     background-color: red;
     cursor: pointer;
+    margin: 10px 0 0 4px; /* Keeps it at the top with some spacing */
 }
 
-#adminIcon{
+#adminIcon {
     background-color: rgb(9, 118, 9);
 }
+
+#adminUserCardNameContainer {
+    background-color: rgba(1, 1, 1, 0.6);
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+#adminUserPgContainer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Exactly 5 columns */
+    gap: 20px; /* Ensures even spacing between cards */
+    justify-content: center; /* Centers the grid */
+    align-items: center;
+    padding: 20px; /* Adds spacing around */
+    max-width: calc(5 * 250px + 4 * 20px); /* Keeps total width balanced */
+    margin: 0 auto; /* Centers the entire grid */
+}
+
+.adminAddInterestButton{
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    color: black;
+    background-color: white;
+    border-radius: 50%;
+}
+
+

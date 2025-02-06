@@ -1,0 +1,24 @@
+#adminCountriesOverallContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.adminCountryTitle{
+    justify-self: flex-start;
+    align-self: flex-start;
+    margin-left: 20px;
+    font-size: 200%;
+    font-weight: 350;
+    text-decoration: underline;
+    margin-bottom: 0px;
+    color: white;
+}
+
+#adminAddNewCountry{
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+    margin-bottom: 0px;
+    background-color: white;
+    border-radius: 50%;
+}

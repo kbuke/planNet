@@ -1,0 +1,62 @@
+#interestContainer{
+    height: 450px;
+    width: 370px;
+
+    display: grid;
+    grid-template-rows: 70% 30%;
+    overflow: hidden;
+    background-color: white;
+    color: red;
+    padding: 15px;
+
+    box-shadow: 5px 5px 15px rgba(23, 22, 22, 0.8);
+}
+
+.interestImg{
+    height: 100%;
+    width: 100%;
+}
+
+
+
+#adminInterestImgContainer{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#adminInterestImgTitle{
+    background-color: rgba(1, 1, 1, 0.8);
+    width: auto;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+#adminInterestGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ensures 2 cards per row */
+    gap: 100px; /* Adjust spacing between grid items */
+    justify-content: center; /* Centers the grid items horizontally */
+    align-items: center; /* Aligns items in the center */
+    width: fit-content; /* Shrinks the grid width to fit its content */
+    margin: 0 auto; /* Centers the grid container */
+    padding: 20px;
+}
+
+#adminAddInterestsOption{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    background-color: rgba(1, 1, 1, 0.6);
+    color: white;
+    gap: 20px;
+    border-radius: 20px;
+}

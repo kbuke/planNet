@@ -10,7 +10,8 @@ export default function TravelerVisitedCountries({
     setAllVisitedCountries,
     userId,
     hoverCountryId,
-    setHoverCountryId
+    setHoverCountryId,
+    specificLoggedUser
 }){
     
 

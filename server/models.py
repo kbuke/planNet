@@ -48,7 +48,7 @@ class Continents(db.Model, SerializerMixin):
 
     serialize_rules=(
         "-countries.continent",
-        "-countries.country",
+        "-countries.country.",
     )
 
 #Countries Model - countries belong to a continent
@@ -74,6 +74,7 @@ class Country(db.Model, SerializerMixin):
     #Set up relations
     continents = db.relationship("CountriesContinent", backref="country")
     states = db.relationship("States", backref="country")
+    cities = db.relationship("Cities", backref="country")
     users=db.relationship("Users", backref="country")
     visited_users=db.relationship("UserVisitedCountry", backref="country")
     user_wishlist=db.relationship("UserWishListCountry", backref="country")
@@ -96,6 +97,9 @@ class Country(db.Model, SerializerMixin):
         "-states.businesses",
         "-states.cities",
         "-states.users",
+
+        "-cities.state",
+        "-cities.country",
 
         "-users",
 
@@ -164,6 +168,7 @@ class Cities(db.Model, SerializerMixin):
 
     #Set up relations
     states_id=db.Column(db.Integer, db.ForeignKey("states.id"))
+    countries_id=db.Column(db.Integer, db.ForeignKey("countries.id"))
     boroughs = db.relationship("Boroughs", backref="city")
     # businesses=db.relationship("Businesses", backref="cities")
     users=db.relationship("Users", backref="cities")
@@ -301,6 +306,9 @@ class Users(db.Model, SerializerMixin):
         "-visited_states.state",
 
         "-profile_picture.user",
+
+        "-interests.traveler",
+        "-interests.interest.travelers",
     )
 
     #Password hasing and authentication
@@ -378,6 +386,9 @@ class Travelers(Users):
     last_name=db.Column(db.String, nullable=True)
     dob=db.Column(db.DateTime, nullable=True)
 
+    #Set up relations
+    interests=db.relationship("TravelerInterests", backref="traveler")
+
     __mapper_args__={
         "polymorphic_identity": "Travelers"
     }
@@ -439,6 +450,26 @@ class Businesses(Users):
         if closing_time >= self.opening_time:
             return closing_time 
         raise ValueError("Closing time can not be before opening time")
+
+#Set up model for (traveler) interests
+class Interests(db.Model, SerializerMixin):
+    __tablename__="interests"
+
+    id=db.Column(db.Integer, primary_key=True)
+    interest=db.Column(db.String, nullable=False, unique=True)
+    image=db.Column(db.String, nullable=False, unique=True)
+
+    #Set up relationship
+    travelers=db.relationship("TravelerInterests", backref="interest")
+
+#Set up model for traveler interests
+class TravelerInterests(db.Model, SerializerMixin):
+    __tablename__="traveler_interests"
+
+    id=db.Column(db.Integer, primary_key=True)
+    traveler_id=db.Column(db.Integer, db.ForeignKey("travelers.id"))
+    interest_id=db.Column(db.Integer, db.ForeignKey("interests.id"))
+
 
 
 #Set up model for industries

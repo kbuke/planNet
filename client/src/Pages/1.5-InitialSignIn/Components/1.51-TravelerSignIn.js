@@ -15,7 +15,8 @@ export default function TravelerSignIn({
     loggedUser,
     travelerButtons,
     travelerPg, 
-    setTravelerPg
+    setTravelerPg,
+    specificLoggedUser
 }){
     // const [travelerPg, setTravelerPg] = useState(0)
     const [sortCountries, setSortCountries] = useState([])
@@ -24,6 +25,7 @@ export default function TravelerSignIn({
 
     //Get userId
     const userId = loggedUser.id
+    // const userId = specificLoggedUser.id
 
     return(
         <div
@@ -41,6 +43,7 @@ export default function TravelerSignIn({
                     userId={userId}
                     hoverCountryId={hoverCountryId}
                     setHoverCountryId={setHoverCountryId}
+                    specificLoggedUser={specificLoggedUser}
                 />
             :
             travelerPg === 1 ?

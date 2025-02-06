@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 from flask import url_for, send_from_directory
 
-from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry, UserVisitedState, UserWishListCountry, ProfilePictures
+from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Users, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry, UserVisitedState, UserWishListCountry, ProfilePictures, Interests
 
 from datetime import datetime
 
@@ -153,7 +153,6 @@ class AllStates(Resource):
     
     def post(self):
         json=request.get_json()
-        breakpoint()
         try:
             new_state = States(
                 name=json.get("locationName"),
@@ -201,7 +200,6 @@ class AllCities(Resource):
     
     def post(self):
         json=request.get_json()
-        breakpoint()
         try:
             new_city = Cities(
                 name=json.get("cityName"),
@@ -209,7 +207,8 @@ class AllCities(Resource):
                 intro=json.get("cityIntro"),
                 country_capital=json.get("countryCapital"),
                 state_capital=json.get("stateCapital"),
-                states_id=json.get("stateId")
+                states_id=json.get("stateId"),
+                countries_id=json.get("countryId")
             )
             db.session.add(new_city)
             db.session.commit()
@@ -378,7 +377,11 @@ class CheckSession(Resource):
 
 class AllTravelers(Resource):
     def get(self):
-        travelers=[traveler.to_dict() for traveler in Travelers.query.all()]
+        travelers=[traveler.to_dict(rules=(
+            "-_password_hash",
+            "-interests.traveler",
+            "-interests.interest.travelers",
+        )) for traveler in Travelers.query.all()]
         return travelers, 200
     
     def post(self):
@@ -400,7 +403,11 @@ class AllTravelers(Resource):
             new_traveler.password_hash = json.get("password")
             db.session.add(new_traveler)
             db.session.commit()
-            return new_traveler.to_dict(), 201
+            return new_traveler.to_dict(rules=(
+                "-_password_hash",
+                "-interests.traveler",
+                "-interests.interest.travelers",
+            )), 201
         except ValueError as e:
             return {"error": [str(e)]}, 400
 
@@ -629,6 +636,32 @@ class ProfilePicsId(Resource):
         else:
             return {"message": "File type not allowed"}, 400
 
+class AllInterests(Resource):
+    def get(self):
+        interests=[interest.to_dict(rules=(
+            "-travelers.interest",
+            "-travelers.traveler",
+        )) for interest in Interests.query.all()]
+        return interests, 200
+
+    def post(self):
+        json=request.get_json()
+        try:
+            new_interest = Interests(
+                interest = json.get("newInterest"),
+                image = json.get("newInterestImg")
+            )
+            db.session.add(new_interest)
+            db.session.commit()
+            return new_interest.to_dict(
+                rules=(
+                    "-travelers.interest",
+                    "-travelers.traveler",
+                )
+            ), 201
+        except ValueError as e:
+            return{"error": [str(e)]}, 400
+
 # Add the route to serve the uploaded files
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -686,6 +719,8 @@ api.add_resource(VisitedStatesId, '/visitedstates/<int:id>')
 
 api.add_resource(ProfilePics, '/profilepics')
 api.add_resource(ProfilePicsId, '/profilepics/<int:id>')
+
+api.add_resource(AllInterests, '/interests')
 
 if __name__ == "__main__":
     app.run(port=5555, debug=True)

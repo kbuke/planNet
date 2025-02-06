@@ -29,6 +29,8 @@ function App() {
 
   const [allProfilePictures, setAllProfilePictures] = useState([])
 
+  const [allInterests, setAllInterests] = useState([])
+
   //Fetch logged user
   useEffect(() => {
     fetch("/check_session")
@@ -250,6 +252,21 @@ function App() {
     })
   }, [])
 
+  //Fetch all interests
+  useEffect(() => {
+    fetch("/interests")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+        .then(interests => {
+          setAllInterests(interests)
+        })
+      }
+    })
+  }, [])
+
+  console.log(allInterests)
+
 
   return (
     <div className="App">
@@ -315,7 +332,10 @@ function App() {
           setCountriesWishlist: setCountriesWishlist,
 
           allProfilePictures: allProfilePictures,
-          setAllProfilePictures: setAllProfilePictures
+          setAllProfilePictures: setAllProfilePictures,
+
+          allInterests: allInterests,
+          setAllInterests: setAllInterests
         }}
       />
     </div>

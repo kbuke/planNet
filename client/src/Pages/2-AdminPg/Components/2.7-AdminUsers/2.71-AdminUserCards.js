@@ -1,62 +1,55 @@
 
-import { useReducer, useState } from "react"
+import { useState } from "react"
 import "./2.71-AdminUserCards.css"
 
 import { RiAdminLine } from "react-icons/ri";
 
-import EditAdminStatus from "./2.72-EditAdminStatus";
+import EditAdminStatus from "../2.2-UserInterests/2.72-EditAdminStatus";
 
 export default function AdminUserCards({
     allUsers,
     setAllUsers,
     filteredTravelers,
+    loggedUser,
+    setLoggedUser
 }){
     const [userId, setUserId] = useState()
     const [userPosition, setUserPosition] = useState()
     const [editPosition, setEditPosition] = useState(false)
-    console.log(filteredTravelers)
-
-    console.log(`I am hovering user ${userId} who is a ${userPosition}`)
+    const [userName, setUserName] = useState("")
 
     const renderUserCard = filteredTravelers.map((user, index) => {
-        console.log(`I am hovering on user ${userId}`)
         return(
             <div
                 key={index}
                 style={{backgroundImage: `url(${user.profile_picture.picture_route})`}}
                 id="adminUserCard"
-                onMouseEnter={() => setUserId(user.id)}
-                onMouseLeave={() => {editPosition ? setUserId(user.id) : setUserId(null)}}
             >
-                {
-                    userId === user.id ?
-                        <div
-                            id="adminHoveredUserCard"
-                        >
-                            <h2>
-                                {user.first_name} {user.last_name}
-                            </h2>
+                <RiAdminLine 
+                    className="adminUserAdminIcon"
+                    id={user.account_type === "Admin" ? "adminIcon" : "noAdminIcon"}
+                    onClick={() => {
+                        setEditPosition(true);
+                        setUserPosition(user.account_type);
+                        setUserId(user.id)
+                        setUserName(`${user.first_name} ${user.last_name}`)
+                    }}
+                />
 
-                            <RiAdminLine 
-                                className="adminUserAdminIcon"
-                                id={user.account_type === "Admin" ? "adminIcon" : "noAdminIcon"}
-                                onClick={() => {
-                                    setEditPosition(true);
-                                    setUserPosition(user.account_type);
-                                    setUserId(user.id)
-                                }}
-                            />
-                        </div>
-                        :
-                        null
-                }
+                <div
+                    id="adminUserCardNameContainer"
+                >
+                    <h2>
+                        {user.first_name} {user.last_name}
+                    </h2>
+                </div>
             </div>
         )
     })
 
     return(
         <div
-            id="adminLocationReel"
+            id="adminUserPgContainer"
         >
             {filteredTravelers.length === 0 ?
                 <h1>No Users Found</h1>
@@ -74,6 +67,9 @@ export default function AdminUserCards({
                         allUsers={allUsers}
                         setAllUsers={setAllUsers}
                         setEditPosition={setEditPosition}
+                        userName={userName}
+                        loggedUser={loggedUser}
+                        setLoggedUser={setLoggedUser}
                     />
                     :
                     null

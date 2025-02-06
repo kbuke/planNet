@@ -8,7 +8,7 @@ import BusinessSignIn from "./Components/BusinessSignIn/1.6-BusinessSignIn"
 import { FaArrowCircleRight } from "react-icons/fa";
 import { FaArrowCircleLeft } from "react-icons/fa";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function InitialSignIn({
     loggedUser
@@ -16,7 +16,14 @@ export default function InitialSignIn({
     console.log(loggedUser)
     const appData = useOutletContext()
 
+    const allUsers = appData.allUsers
+
     const [travelerPg, setTravelerPg] = useState(0)
+    const [specificLoggedUser, setSpecificLoggedUser] = useState([])
+
+    useEffect(() => {
+        setSpecificLoggedUser(allUsers.filter(user => user.id === loggedUser.id))
+    }, [allUsers, loggedUser])
 
     const travelerButtons = (maxDepth) => {
         return(
@@ -57,6 +64,7 @@ export default function InitialSignIn({
                     travelerButtons={travelerButtons}
                     travelerPg={travelerPg}
                     setTravelerPg={setTravelerPg}
+                    specificLoggedUser={specificLoggedUser}
                 />
                 :
                 <BusinessSignIn 

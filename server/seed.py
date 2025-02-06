@@ -6,7 +6,7 @@ from datetime import time
 
 import os 
 
-from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry
+from models import SignUpContainer, SignUpContainerPolaroid, Continents, Country, CountriesContinent, States, Cities, Boroughs, Neighbourhoods, Travelers, Businesses, Industry, BusinessesIndustries, UserVisitedCountry, Interests, TravelerInterests
 
 from dotenv import load_dotenv 
 load_dotenv()
@@ -531,6 +531,7 @@ if __name__ == "__main__":
             country_capital=True,
             state_capital=True,
             states_id=2,
+            countries_id=3,
             intro="The capital of England"
         )
         db.session.add_all([tokyo_cities, london])
@@ -636,6 +637,26 @@ if __name__ == "__main__":
             country_id=2
         )
         db.session.add_all([user1_japan, user1_turkey])
+        db.session.commit()
+
+        print("Seeing available interests")
+        history_interest=Interests(
+            interest="History",
+            image="https://imageio.forbes.com/specials-images/imageserve/63f364967464b1728c978c64/An-ancient-Greek-statue-of-four-women-in-a-column-/960x0.jpg?format=jpg&width=960"
+        )
+        beach_interest=Interests(
+            interest="Beach",
+            image="https://media.istockphoto.com/id/672425798/photo/couple-in-loungers-on-beach-at-maldives.jpg?s=612x612&w=0&k=20&c=EtdtcJ6qsCiEmPB0IUsNfefSArqe7J3MBDGwEqt_WA8="
+        )
+        db.session.add_all([history_interest, beach_interest])
+        db.session.add_all
+
+        print("Seeding users interests")
+        kaan_history=TravelerInterests(
+            traveler_id=1,
+            interest_id=1
+        )
+        db.session.add_all([kaan_history])
         db.session.commit()
 
         print("Finished seeding")

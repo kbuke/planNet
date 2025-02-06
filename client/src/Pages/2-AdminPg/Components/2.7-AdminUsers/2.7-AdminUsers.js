@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 import AdminUserCards from "./2.71-AdminUserCards";
-import EditAdminStatus from "./2.72-EditAdminStatus";
+import EditAdminStatus from "../2.2-UserInterests/2.72-EditAdminStatus";
 
 export default function AdminUsers({ appData }) {
     const [travelers, setTravelers] = useState([]); // Stores the original list of travelers
@@ -10,6 +10,9 @@ export default function AdminUsers({ appData }) {
 
     const allUsers = appData.allUsers;
     const setAllUsers = appData.setAllUsers
+
+    const loggedUser = appData.loggedUser
+    const setLoggedUser = appData.setLoggedUser
 
     useEffect(() => {
         // Initialize travelers with the data from appData when the component mounts
@@ -46,6 +49,8 @@ export default function AdminUsers({ appData }) {
                 allUsers={allUsers}
                 setAllUsers={setAllUsers}
                 filteredTravelers={filteredTravelers}
+                loggedUser={loggedUser}
+                setLoggedUser={setLoggedUser}
             />
             
         </div>
