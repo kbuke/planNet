@@ -19,6 +19,8 @@ import AdminNeighbourhoods from "./Components/2.6-AdminNeighbourhoods/2.6-AdminN
 export default function Locations({
     appData
 }){
+    const [filterLocations, setFilterLocations] = useState("")
+
     const allContinents = appData.allContinents
     const setAllContinents = appData.setAllContinents
 
@@ -91,10 +93,15 @@ export default function Locations({
             </button>
         ))
 
-        const sortDependantArray = dependantLocationArray?.sort((a, b) => a.name.localeCompare(b.name))
+        const sortDependantArray = dependancyType ? dependantLocationArray?.sort((a,b) => a[dependancyType].name.localeCompare(b[dependancyType].name)) : dependantLocationArray?.sort((a, b) => a.name.localeCompare(b.name))
+
+        const filterSpecificLocations = sortDependantArray?.filter(location => {
+            const locationName = dependancyType ? location[dependancyType].name : location.name
+            return locationName?.toLowerCase().includes(filterLocations.toLowerCase())
+        })
 
         //Create a link to specific country page
-        const renderDependantLocations = sortDependantArray?.map((location, index) => (
+        const renderDependantLocations = filterSpecificLocations?.map((location, index) => (
             <div
                 id={
                     dependancyType ?
@@ -174,7 +181,9 @@ export default function Locations({
                         </div>
 
                         {dependantLocationArray ?
-                            <div>
+                            <div
+                                style={{display: "flex", flexDirection: "column"}}
+                            >
                                 <div
                                     id="adminAddLocationButtonContainer"
                                     onClick={() => setAddDependantLocation(true)}
@@ -182,7 +191,7 @@ export default function Locations({
                                     <CiCirclePlus 
                                         id="createLocationButton"
                                     />
-                                    <h3>Add {selectedOption}</h3>
+                                    <h4>Add {selectedOption}</h4>
                                 </div>
 
                                 {dependantLocationArray.length > 0 ?
@@ -192,6 +201,7 @@ export default function Locations({
                                         <input 
                                             id="filterDependantLocation"
                                             placeholder={`Filter ${selectedOption}`}
+                                            onChange={(e) => setFilterLocations(e.target.value)}
                                         />
                                         <div
                                             id="adminLocationDependantLocationsGrid"
@@ -211,6 +221,8 @@ export default function Locations({
 
                         <button
                             onClick={() => {setLocationId(); setLocationInfo(false)}}
+                            className="adminAddLocationsButton"
+                            style={{backgroundColor: "red"}}
                         >
                             Close
                         </button>
