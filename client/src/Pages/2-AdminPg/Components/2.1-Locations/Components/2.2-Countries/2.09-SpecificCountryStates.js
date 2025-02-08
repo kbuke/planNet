@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 import AddCountryState from "./2.12-AddCountryState"
+import States from "../2.3-States/2.3-States"
 
 
 export default function SpecificCountryStates({
@@ -14,6 +15,8 @@ export default function SpecificCountryStates({
     console.log(countryStates)
     const [hoveredState, setHoveredState] = useState("")
     const [addState, setAddState] = useState(false)
+    const [selectedState, setSelectedState] = useState()
+    const [stateInfo, setStateInfo] = useState(false)
 
     const locationInfoContainer = universalCountryImports.locationInfoContainer
     const countryImg = universalCountryImports.countryImg
@@ -39,6 +42,17 @@ export default function SpecificCountryStates({
                 handleNewLocation={handleNewLocation}
             />
         :
+        selectedState ?
+            <States 
+                selectedState={selectedState}
+                setSelectedState={setSelectedState}
+                stateInfo={stateInfo}
+                setStateInfo={setStateInfo}
+                locationInfoContainer={locationInfoContainer}
+                handleNewLocation={handleNewLocation}
+                handleNewLocationInputs={handleNewLocationInputs}
+            />
+        :
             locationInfoContainer(
                 setCountryId, setCountryInfo,
                 countryImg, passportStamp,
@@ -46,8 +60,8 @@ export default function SpecificCountryStates({
                 selectedOption, setSelectedOption,
                 setCountryInfo, countryStates,
                 null, hoveredState,
-                setHoveredState, null,
-                null, setAddState,
+                setHoveredState, setSelectedState,
+                setStateInfo, setAddState,
                 addState 
             )
     )

@@ -9,7 +9,11 @@ export default function AdminContinents({
     allContinents,
     setAllContinents,
     countinentAndCountryPolaroid,
-    locationInfoContainer
+    locationInfoContainer,
+    handleNewLocation,
+    handleNewLocationInputs,
+    allStates,
+    setAllStates
 }){
     console.log(allContinents)
 
@@ -48,6 +52,10 @@ export default function AdminContinents({
                     continentInfo={continentInfo}
                     setContinentInfo={setContinentInfo}
                     locationInfoContainer={locationInfoContainer}
+                    handleNewLocation={handleNewLocation}
+                    handleNewLocationInputs={handleNewLocationInputs}
+                    allStates={allStates}
+                    setAllStates={setAllStates}
                 />
                 :
                 null

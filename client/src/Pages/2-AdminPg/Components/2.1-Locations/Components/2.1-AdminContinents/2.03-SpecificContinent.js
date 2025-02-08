@@ -12,7 +12,11 @@ export default function SpecificContinent({
     setContinentId,
     continentInfo,
     setContinentInfo,
-    locationInfoContainer
+    locationInfoContainer,
+    handleNewLocation,
+    handleNewLocationInputs,
+    allStates={allStates},
+    setAllStates={setAllStates}
 }) {
     const [specificContinent, setSpecificContinent] = useState()
     const [selectedOption, setSelectedOption] = useState("Info")
@@ -67,6 +71,10 @@ export default function SpecificContinent({
                         continentsCountries={continentsCountries}
                         setContinentInfo={setContinentInfo}
                         setContinentId={setContinentId}
+                        handleNewLocation={handleNewLocation}
+                        handleNewLocationInputs={handleNewLocationInputs}
+                        allStates={allStates}
+                        setAllStates={setAllStates}
                     />
                 :
                 null

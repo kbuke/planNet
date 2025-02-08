@@ -91,8 +91,10 @@ export default function Locations({
             </button>
         ))
 
+        const sortDependantArray = dependantLocationArray?.sort((a, b) => a.name.localeCompare(b.name))
+
         //Create a link to specific country page
-        const renderDependantLocations = dependantLocationArray?.map((location, index) => (
+        const renderDependantLocations = sortDependantArray?.map((location, index) => (
             <div
                 id={
                     dependancyType ?
@@ -185,14 +187,22 @@ export default function Locations({
 
                                 {dependantLocationArray.length > 0 ?
                                     <div
-                                        id="adminLocationDependantLocationsGrid"
+                                        className="filterDependantLocationGrid"
                                     >
-                                        {renderDependantLocations}
+                                        <input 
+                                            id="filterDependantLocation"
+                                            placeholder={`Filter ${selectedOption}`}
+                                        />
+                                        <div
+                                            id="adminLocationDependantLocationsGrid"
+                                        >
+                                            {renderDependantLocations}
+                                        </div>
                                     </div>
-                                :
-                                    <div>
-                                        <h1>No {selectedOption} Registered in {locationName}</h1>
-                                    </div>
+                                    :
+                                        <div>
+                                            <h1>No {selectedOption} Registered in {locationName}</h1>
+                                        </div>
                                 }
                             </div>
                         :
@@ -262,6 +272,10 @@ export default function Locations({
                 setAllContinents={setAllContinents}
                 countinentAndCountryPolaroid={countinentAndCountryPolaroid}
                 locationInfoContainer={locationInfoContainer}
+                handleNewLocation={handleNewLocation}
+                handleNewLocationInputs={handleNewLocationInputs}
+                allStates={allStates}
+                setAllStates={setAllStates}
             />
 
             <AdminCountry 

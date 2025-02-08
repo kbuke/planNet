@@ -80,12 +80,34 @@
     align-items: center;
 }
 
+.filterDependantLocationGrid{
+    border: solid;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+#filterDependantLocation{
+    justify-self: flex-start;
+    width: 60%;
+    background-color: rgb(96, 87, 87);
+    border: none;
+    border-bottom: solid;
+    margin-left: 10px;
+    margin-top: 10px;
+    color: white;
+    font-weight: 900;
+}
+
 #adminLocationDependantLocationsGrid{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     align-items: center;
     margin-left: 6px;
+    overflow-y: auto;
 }
 
 #adminLocationDependantLocations,
