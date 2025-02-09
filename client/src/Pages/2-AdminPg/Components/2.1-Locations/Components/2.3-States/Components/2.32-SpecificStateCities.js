@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 import AddCity from "./2.33-AddCity"
+import Cities from "../../2.4-Cities/2.4-Cities"
 
 export default function SpecificStateCities({
     universalStateImports,
@@ -39,6 +40,17 @@ export default function SpecificStateCities({
                 setAllCities={setAllCities}
                 stateId={stateId}
                 stateCountryId={stateCountryId}
+                handleNewLocation={handleNewLocation}
+                handleNewLocationInputs={handleNewLocationInputs}
+            />
+        :
+        cityInfo ?
+            <Cities 
+                cityInfo={cityInfo}
+                setCityInfo={setCityInfo}
+                cityId={cityId}
+                setCityId={setCityId}
+                locationInfoContainer={locationInfoContainer}
                 handleNewLocation={handleNewLocation}
                 handleNewLocationInputs={handleNewLocationInputs}
             />

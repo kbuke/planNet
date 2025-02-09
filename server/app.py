@@ -188,7 +188,7 @@ class StateId(Resource):
                     "error": ["Validation error"]
                 }, 400 
         return {
-            "error": "Continent not found"
+            "error": "State not found"
         }, 404
 
 class AllCities(Resource):
@@ -215,6 +215,31 @@ class AllCities(Resource):
             return new_city.to_dict(), 201 
         except ValueError as e:
             return {"error": [str(e)]}, 400
+
+class CitiesId(Resource):
+    def get(self, id):
+        city = Cities.query.filter(Cities.id==id).first()
+        if city:
+            return make_response(city.to_dict(), 201)
+        return {"error": "City not found"}
+    
+    def patch(self, id):
+        data=request.get_json()
+        city_info=Cities.query.filter(Cities.id==id).first()
+        if city_info:
+            try:
+                for attr in data:
+                    setattr(city_info, attr, data[attr])
+                db.session.add(city_info)
+                db.session.commit()
+                return make_response(city_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation Error"]
+                }, 400
+        return {
+            "error": "City not found"
+        }, 404
 
 class AllBoroughs(Resource):
     def get(self):
@@ -683,6 +708,7 @@ api.add_resource(AllStates, '/states')
 api.add_resource(StateId, '/states/<int:id>')
 
 api.add_resource(AllCities, '/cities')
+api.add_resource(CitiesId, '/cities/<int:id>')
 
 api.add_resource(AllBoroughs, '/boroughs')
 api.add_resource(BoroughId, '/boroughs/<int:id>')

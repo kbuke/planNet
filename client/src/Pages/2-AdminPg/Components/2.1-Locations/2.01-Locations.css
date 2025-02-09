@@ -78,6 +78,18 @@
 #adminLocationOptionButtonContainer{
     display: flex;
     align-items: center;
+    margin-left: 10px;
+}
+
+#adminSpecificLocationInfoContainer{
+    border-top: solid;
+    border-bottom: solid;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+
+    height: 400px;
+    overflow-y: auto;
 }
 
 .filterDependantLocationGrid{

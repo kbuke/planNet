@@ -216,7 +216,11 @@ export default function Locations({
                                 }
                             </div>
                         :
-                            null
+                            <div id="adminSpecificLocationInfoContainer">
+                                {locationInfo?.split("\n").map((paragraph, index) => (
+                                    <p key={index}>{paragraph}</p>
+                                ))}
+                            </div>
                         }
 
                         <button
