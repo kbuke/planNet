@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SpecificCountryInfo from "./2.08-SpecificCountryInfo";
 import SpecificCountryStates from "./2.09-SpecificCountryStates";
 import SpecificCountryCities from "./2.10-SpecificCountryCities";
+import { useOutletContext } from "react-router-dom";
 
 export default function SpecificCountry({
     countryId,
@@ -15,6 +16,11 @@ export default function SpecificCountry({
     allStates,
     setAllStates
 }){
+    const appData = useOutletContext()
+
+    const allCities = appData.allCities
+    const setAllCities = appData.setAllCities
+
     const [specificCountry, setSpecificCountry] = useState()
     const [selectedOption, setSelectedOption] = useState("Info")
 
@@ -31,7 +37,7 @@ export default function SpecificCountry({
                 })
             }
         })
-    }, [countryId, countryInfo, allStates])
+    }, [countryId, countryInfo, allStates, allCities])
 
     console.log(specificCountry)
 
@@ -87,6 +93,11 @@ export default function SpecificCountry({
                     <SpecificCountryCities 
                         universalCountryImports={universalCountryImports}
                         countryCities={countryCities}
+                        allCities={allCities}
+                        setAllCities={setAllCities}
+                        specificCountry={specificCountry}
+                        handleNewLocation={handleNewLocation}
+                        handleNewLocationInputs={handleNewLocationInputs}
                     />
                 :
                 null
