@@ -30,12 +30,16 @@ export default function AddCountryCity({
     const setSelectedCountryOption = universalCountryImports.setSelectedCountryOption
     const locationInfoContainer = universalCountryImports.locationInfoContainer
 
+    //Find selected state id
     useEffect(() => {
         const chosenState = countryStates.filter(state => state.name === selectedStateName)
+        console.log(chosenState)
         return(
-            setSelectedStateId(chosenState.id)
+            setSelectedStateId(chosenState[0]?.id)
         )
     }, [selectedStateName])
+
+    console.log(`I have selected state: ${selectedStateName}, id no. ${selectedStateId}`)
 
     const cityCapitalOptions = (
         labelHeading, variable, setVariable
@@ -100,6 +104,40 @@ export default function AddCountryCity({
                         "Enter new city name",
                         setCityName
                     )
+                }
+
+                {
+                    countryStates !== 0 ?
+                        <div
+                            id="adminAddLocationsInputContainer"
+                        >
+                            <label>
+                                Select State that {cityName} belongs to
+                            </label>
+
+                            <select
+                                value={selectedStateName}
+                                onChange={(e) => setSelectedStateName(e.target.value)}
+                                id="addLocationIntroSelect"
+                                style={{marginLeft: "10px", marginRight: "10px"}}
+                            >
+                                <option
+                                    value="" default
+                                >
+                                    Select State that {cityName} belongs to
+                                </option>
+
+                                {countryStates.map((city, index) => (
+                                    <option
+                                        key={index}
+                                    >
+                                        {city.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    :
+                        null
                 }
 
                 {
