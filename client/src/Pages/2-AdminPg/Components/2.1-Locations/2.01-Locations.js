@@ -8,6 +8,7 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { CiCircleChevDown } from "react-icons/ci";
 import { CiCircleChevUp } from "react-icons/ci";
 import { CiCirclePlus } from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
 
 import AdminContinents from "./Components/2.1-AdminContinents/2.01-AdminContinents";
 import AdminCountry from "./Components/2.2-Countries/2.06-AdminCountry";
@@ -80,7 +81,8 @@ export default function Locations({
         dependancyType, hoveredDependancy,
         setHoveredDependancy, setDependancyId,
         setDependancyInfo, setAddDependantLocation,
-        addDependantLocation, newDependantLocationInputs
+        addDependantLocation, newDependantLocationInputs,
+        setLocationIdInfoArray, setEditLocation
     ) => {
 
         const renderOptions = locationOptionsArray.map((options, index) => (
@@ -220,11 +222,19 @@ export default function Locations({
                                 {locationInfo?.split("\n").map((paragraph, index) => (
                                     <p key={index}>{paragraph}</p>
                                 ))}
+
+                                <CiEdit 
+                                    style={{backgroundColor: "white", height: "50px", width: "50px", borderRadius: "50%", color: "black", cursor: "pointer"}}
+                                    onClick={() => setEditLocation(true)}
+                                />
                             </div>
                         }
 
                         <button
-                            onClick={() => {setLocationId(); setLocationInfo(false)}}
+                            // onClick={() => {setLocationId(); setLocationInfo(false)}}
+                            onClick={() => (
+                                setLocationIdInfoArray.map(setSpecificInfoId => setSpecificInfoId())
+                            )}
                             className="adminAddLocationsButton"
                             style={{backgroundColor: "red"}}
                         >
@@ -259,10 +269,43 @@ export default function Locations({
         .then(setAddLocation(false))
     } 
 
+    //Handle editing locations
+    const handleEditLocation = (
+        e, locationObjectInfo,
+        locationEndpoint, setAllLocations,
+        allLocations, setEditLocation
+    ) => {
+        e.preventDefault()
+        fetch(locationEndpoint, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(locationObjectInfo)
+        })
+        .then((r) => {
+            if(r.ok){
+                return r.json()
+            } else {
+                console.error("Failed to update location")
+                return null
+            }
+        })
+        .then((editedInfo) => {
+            if(editedInfo){
+                setAllLocations(allLocations.map(oldLocation => 
+                    oldLocation.id === editedInfo.id ? editedInfo : oldLocation
+                ))
+            }
+        })
+        .then(setEditLocation(false))
+    }
+
     //Handle adding new location inout
     const handleNewLocationInputs = (
         labelHeader, 
-        setLocationText
+        setLocationText,
+        textVariable
     ) => {
         return(
             <div
@@ -275,6 +318,7 @@ export default function Locations({
                 <input 
                     onChange={(e) => setLocationText(e.target.value)}
                     id="adminAddLocationInputs"
+                    value={textVariable ? textVariable : null}
                 />
             </div>
         )
@@ -292,6 +336,7 @@ export default function Locations({
                 handleNewLocationInputs={handleNewLocationInputs}
                 allStates={allStates}
                 setAllStates={setAllStates}
+                handleEditLocation={handleEditLocation}
             />
 
             <AdminCountry 

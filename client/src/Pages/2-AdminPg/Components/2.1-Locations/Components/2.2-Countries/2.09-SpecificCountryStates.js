@@ -10,7 +10,9 @@ export default function SpecificCountryStates({
     handleNewLocation,
     handleNewLocationInputs,
     allStates,
-    setAllStates
+    setAllStates,
+    setContinentId,
+    setContinentInfo
 }){
     console.log(countryStates)
     const [hoveredState, setHoveredState] = useState("")
@@ -62,7 +64,8 @@ export default function SpecificCountryStates({
                 null, hoveredState,
                 setHoveredState, setSelectedState,
                 setStateInfo, setAddState,
-                addState 
+                addState, null,
+                [setCountryId, setCountryInfo, setContinentId, setContinentInfo] 
             )
     )
 }

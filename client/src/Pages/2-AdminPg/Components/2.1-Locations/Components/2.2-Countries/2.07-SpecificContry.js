@@ -14,7 +14,9 @@ export default function SpecificCountry({
     handleNewLocation,
     handleNewLocationInputs,
     allStates,
-    setAllStates
+    setAllStates,
+    setContinentId,
+    setContinentInfo
 }){
     const appData = useOutletContext()
 
@@ -77,6 +79,8 @@ export default function SpecificCountry({
                         countrySafety={countrySafety}
                         countryContinents={countryContinents}
                         universalCountryImports={universalCountryImports}
+                        setContinentId={setContinentId}
+                        setContinentInfo={setContinentInfo}
                     />
                 :
                 selectedOption==="States"?
@@ -87,6 +91,8 @@ export default function SpecificCountry({
                         handleNewLocationInputs={handleNewLocationInputs}
                         allStates={allStates}
                         setAllStates={setAllStates}
+                        setContinentId={setContinentId}
+                        setContinentInfo={setContinentInfo}
                     />
                 :
                 selectedOption==="Cities"?

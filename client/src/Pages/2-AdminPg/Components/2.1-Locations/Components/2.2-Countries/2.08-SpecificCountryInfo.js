@@ -4,7 +4,9 @@
 export default function SpecificCountryInfo({
     countrySafety,
     countryContinents,
-    universalCountryImports
+    universalCountryImports,
+    setContinentInfo,
+    setContinentId,
 }){
     const locationInfoContainer = universalCountryImports.locationInfoContainer
     const countryImg = universalCountryImports.countryImg
@@ -17,15 +19,27 @@ export default function SpecificCountryInfo({
     const setCountryId = universalCountryImports.setCountryId
     const countryOptions = universalCountryImports.countryOptions
 
-    return(
-        locationInfoContainer(
-            setCountryId, setCountryInfo,
-            countryImg, passportStamp,
-            countryName, countryOptions,
-            selectedOption, setSelectedOption,
-            null, null,
-            null, null, 
-            null
-        )
+    // Filter out null values from the function array
+    const functionArray = [
+        setCountryId, 
+        setCountryInfo, 
+        setContinentId || null, 
+        setContinentInfo || null
+    ].filter(func => func !== null);  // This will remove nulls
+
+return (
+    locationInfoContainer(
+        setCountryId, setCountryInfo,
+        countryImg, passportStamp,
+        countryName, countryOptions,
+        selectedOption, setSelectedOption,
+        null, null,
+        null, null, 
+        null, null,
+        null, null,
+        null, null,
+        functionArray // Pass the valid function array
     )
+);
+
 }

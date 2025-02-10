@@ -32,7 +32,9 @@ export default function AdminContinentCountries({
                 null, continentsCountries, 
                 "country", hoveredCountry,
                 setHoveredCountry, setSelectedCountryId,
-                setCountryInfo
+                setCountryInfo, null, 
+                null, null,
+                [setContinentId, setContinentInfo]
             )
         :
            <SpecificCountry 
@@ -45,6 +47,8 @@ export default function AdminContinentCountries({
                 handleNewLocationInputs={handleNewLocationInputs}
                 allStates={allStates}
                 setAllStates={setAllStates}
+                setContinentId={setContinentId}
+                setContinentInfo={setContinentInfo}
            /> 
     )
 }
