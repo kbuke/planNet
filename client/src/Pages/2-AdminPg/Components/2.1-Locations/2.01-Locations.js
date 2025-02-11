@@ -337,6 +337,8 @@ export default function Locations({
                 allStates={allStates}
                 setAllStates={setAllStates}
                 handleEditLocation={handleEditLocation}
+                allCountries={allCountries}
+                setAllCountries={setAllCountries}
             />
 
             <AdminCountry 
@@ -349,6 +351,7 @@ export default function Locations({
                 handleNewLocationInputs={handleNewLocationInputs}
                 allStates={allStates}
                 setAllStates={setAllStates}
+                handleEditLocation={handleEditLocation}
             />
         </div>
     )

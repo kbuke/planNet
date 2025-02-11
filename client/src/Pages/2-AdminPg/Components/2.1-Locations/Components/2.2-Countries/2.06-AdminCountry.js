@@ -18,7 +18,8 @@ export default function AdminCountry({
     handleNewLocation,
     handleNewLocationInputs,
     allStates,
-    setAllStates
+    setAllStates,
+    handleEditLocation
 }){
     const [countryId, setCountryId] = useState()
     const [countryInfo, setCountryInfo] = useState(false)
@@ -61,6 +62,9 @@ export default function AdminCountry({
                         handleNewLocationInputs={handleNewLocationInputs}
                         allStates={allStates}
                         setAllStates={setAllStates}
+                        handleEditLocation={handleEditLocation}
+                        allCountries={allCountries}
+                        setAllCountries={setAllCountries}
                     />
                 :
                     null

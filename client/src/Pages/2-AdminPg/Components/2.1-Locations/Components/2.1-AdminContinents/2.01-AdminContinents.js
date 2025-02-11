@@ -14,7 +14,9 @@ export default function AdminContinents({
     handleNewLocationInputs,
     allStates,
     setAllStates,
-    handleEditLocation
+    handleEditLocation,
+    allCountries,
+    setAllCountries
 }){
     console.log(allContinents)
 
@@ -60,6 +62,8 @@ export default function AdminContinents({
                     handleEditLocation={handleEditLocation}
                     setAllContinents={setAllContinents}
                     allContinents={allContinents}
+                    allCountries={allCountries}
+                    setAllCountries={setAllCountries}
                 />
                 :
                 null

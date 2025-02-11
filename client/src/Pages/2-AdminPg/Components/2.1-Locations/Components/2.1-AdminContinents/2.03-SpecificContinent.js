@@ -19,7 +19,9 @@ export default function SpecificContinent({
     setAllStates,
     handleEditLocation,
     allContinents,
-    setAllContinents
+    setAllContinents,
+    allCountries,
+    setAllCountries
 }) {
     const [specificContinent, setSpecificContinent] = useState()
     const [selectedOption, setSelectedOption] = useState("Info")
@@ -84,6 +86,9 @@ export default function SpecificContinent({
                         handleNewLocationInputs={handleNewLocationInputs}
                         allStates={allStates}
                         setAllStates={setAllStates}
+                        handleEditLocation={handleEditLocation}
+                        allCountries={allCountries}
+                        setAllCountries={setAllCountries}
                     />
                 :
                 null

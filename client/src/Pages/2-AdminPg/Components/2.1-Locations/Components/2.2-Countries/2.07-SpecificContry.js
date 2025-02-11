@@ -16,7 +16,10 @@ export default function SpecificCountry({
     allStates,
     setAllStates,
     setContinentId,
-    setContinentInfo
+    setContinentInfo,
+    handleEditLocation,
+    allCountries,
+    setAllCountries
 }){
     const appData = useOutletContext()
 
@@ -39,7 +42,7 @@ export default function SpecificCountry({
                 })
             }
         })
-    }, [countryId, countryInfo, allStates, allCities])
+    }, [countryId, countryInfo, allStates, allCities, allCountries])
 
     console.log(specificCountry)
 
@@ -48,6 +51,7 @@ export default function SpecificCountry({
     const passportStamp = specificCountry?.passport_stamp 
     const countrySafety = specificCountry?.safety_level
     const countryFlag = specificCountry?.flag
+    const countryIntro = specificCountry?.intro
 
     const countryContinents = specificCountry?.continents 
     const countryStates = specificCountry?.states 
@@ -81,6 +85,11 @@ export default function SpecificCountry({
                         universalCountryImports={universalCountryImports}
                         setContinentId={setContinentId}
                         setContinentInfo={setContinentInfo}
+                        handleEditLocation={handleEditLocation}
+                        handleNewLocationInputs={handleNewLocationInputs}
+                        allCountries={allCountries}
+                        setAllCountries={setAllCountries}
+                        countryIntro={countryIntro}
                     />
                 :
                 selectedOption==="States"?

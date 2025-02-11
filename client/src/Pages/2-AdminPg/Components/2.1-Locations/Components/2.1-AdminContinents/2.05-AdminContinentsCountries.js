@@ -14,7 +14,10 @@ export default function AdminContinentCountries({
     handleNewLocation,
     handleNewLocationInputs,
     allStates,
-    setAllStates
+    setAllStates,
+    allCountries,
+    setAllCountries,
+    handleEditLocation
 }){
     const [hoveredCountry, setHoveredCountry] = useState("")
     const [selectedCountryId, setSelectedCountryId] = useState()
@@ -49,6 +52,9 @@ export default function AdminContinentCountries({
                 setAllStates={setAllStates}
                 setContinentId={setContinentId}
                 setContinentInfo={setContinentInfo}
+                handleEditLocation={handleEditLocation}
+                allCountries={allCountries}
+                setAllCountries={setAllCountries}
            /> 
     )
 }
