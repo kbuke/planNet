@@ -199,3 +199,30 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+#hoveredAdminOriginLocationContainer,
+#unhoveredAdminOriginLocationContainer{
+    height: 40px;
+    width: auto;
+    overflow: hidden;
+    margin-top: 10px;
+    border-radius: 20px;
+
+    display: flex;
+    gap: 20px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+#hoveredAdminOriginLocationContainer{
+    background-color: rgb(142, 138, 138);
+    cursor: pointer;
+}
+
+.adminOriginLocationImg{
+    display: flex;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}

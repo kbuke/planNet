@@ -26,6 +26,8 @@ export default function AdminCountry({
 
     const sortCountries = allCountries.sort((a, b) => a.name.localeCompare(b.name))
 
+    console.log(handleEditLocation)
+
     return(
         <div>
             <div

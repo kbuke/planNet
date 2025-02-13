@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-
-
 export default function EditSpecificCountry({
     locationInfoContainer,
     universalCountryImports,
@@ -12,8 +10,10 @@ export default function EditSpecificCountry({
     allCountries,
     setAllCountries,
     countryIntro,
-    countrySafety
+    countrySafety,
 }){
+
+    console.log(allCountries)
     
     const countryId = universalCountryImports.countryId
     const setCountryId = universalCountryImports.setCountryId
@@ -43,6 +43,8 @@ export default function EditSpecificCountry({
         flag: editedCountryFlag,
         passport_stamp: editedPassportStamp
     }
+
+    console.log(allCountries)
 
     const editCountryForm = () => {
         return(

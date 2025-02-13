@@ -8,12 +8,16 @@ export default function States({
     selectedState, setSelectedState,
     stateInfo, setStateInfo,
     locationInfoContainer,
-    handleNewLocation, handleNewLocationInputs
+    handleNewLocation, handleNewLocationInputs,
+    handleEditLocation
 }){
     console.log(`I have chosen state ${selectedState}`)
 
     const appData = useOutletContext()
     console.log(appData)
+
+    const allCountries = appData.allCountries
+    const setAllCountries = appData.setAllCountries
 
     const allStates = appData.allStates 
     const setAllStates = appData.setAllStates
@@ -35,7 +39,7 @@ export default function States({
                 })
             }
         })
-    }, [selectedState, stateInfo, allStates, allCities])
+    }, [selectedState, stateInfo, allStates, allCities, allStates])
 
     console.log(specificState)
 
@@ -43,11 +47,19 @@ export default function States({
     const stateIntro = specificState?.intro
     const stateImg = specificState?.image
     const stateCities = specificState?.cities
-    const stateCountryId = specificState?.country.id
+
+    const stateCountry = specificState?.country
+    const stateCountryId = stateCountry?.id
+    const stateCountryName = stateCountry?.name 
+    const stateCountryImg = stateCountry?.image
+
+    console.log(stateCountry)
 
     const stateOptions = ["Info", "Cities"]
 
     const universalStateImports = {
+        stateId: selectedState,
+        setStateId: setSelectedState,
         stateName: stateName,
         stateImg: stateImg,
         stateOptions: stateOptions,
@@ -63,6 +75,16 @@ export default function States({
             <SpecificStateInfo 
                 stateIntro={stateIntro}
                 universalStateImports={universalStateImports}
+                stateCountryName={stateCountryName}
+                stateCountryImg={stateCountryImg}
+                stateCountryId={stateCountryId}
+                handleNewLocation={handleNewLocation}
+                handleNewLocationInputs={handleNewLocationInputs}
+                allStates={allStates}
+                setAllStates={setAllStates}
+                allCountries={allCountries}
+                setAllCountries={setAllCountries}
+                handleEditLocation={handleEditLocation}
             />
         :
             <SpecificStateCities 

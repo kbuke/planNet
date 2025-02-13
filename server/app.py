@@ -110,6 +110,7 @@ class CountriesId(Resource):
     
     def patch(self, id):
         data = request.get_json()
+        # breakpoint()
         country_info = Country.query.filter(Country.id==id).first()
         if country_info:
             try:

@@ -21,6 +21,7 @@ export default function Locations({
     appData
 }){
     const [filterLocations, setFilterLocations] = useState("")
+    const [hoveredOriginLocation, setHoveredOriginLocation] = useState(false)
 
     const allContinents = appData.allContinents
     const setAllContinents = appData.setAllContinents
@@ -82,7 +83,9 @@ export default function Locations({
         setHoveredDependancy, setDependancyId,
         setDependancyInfo, setAddDependantLocation,
         addDependantLocation, newDependantLocationInputs,
-        setLocationIdInfoArray, setEditLocation
+        setLocationIdInfoArray, setEditLocation,
+        originLocation, originLocationImg,
+        originLocationName, setViewOrignLocation
     ) => {
 
         const renderOptions = locationOptionsArray.map((options, index) => (
@@ -130,6 +133,8 @@ export default function Locations({
                     if (dependancyType) {
                         setDependancyId(location[dependancyType].id);
                         setDependancyInfo(true);
+                        // setLocationId()
+                        // setLocationInfo(false)
                     } else {
                         setDependancyId(location.id);
                         setDependancyInfo(true);
@@ -166,8 +171,6 @@ export default function Locations({
                             null
                     }
                 </div>
-
-                {/*Am I adding a state */}
                 {addDependantLocation ?
                     <div>
                         {newDependantLocationInputs()}
@@ -219,6 +222,28 @@ export default function Locations({
                             </div>
                         :
                             <div id="adminSpecificLocationInfoContainer">
+                                {/*Add where location is from*/}
+                                {originLocation ?
+                                    <div
+                                        onMouseEnter={() => setHoveredOriginLocation(true)}
+                                        onMouseLeave={() => setHoveredOriginLocation(false)}
+                                        id={hoveredOriginLocation ? "hoveredAdminOriginLocationContainer" : "unhoveredAdminOriginLocationContainer"}
+                                        onClick={() => setViewOrignLocation(true)}
+                                    >
+                                        <img 
+                                            src={originLocationImg}
+                                            alt={`${originLocationName} Image`}
+                                            className="adminOriginLocationImg"
+                                        />
+
+                                        <h4>
+                                            {originLocationName}
+                                        </h4>
+                                    </div>
+                                    :
+                                    null
+                                }
+
                                 {locationInfo?.split("\n").map((paragraph, index) => (
                                     <p key={index}>{paragraph}</p>
                                 ))}

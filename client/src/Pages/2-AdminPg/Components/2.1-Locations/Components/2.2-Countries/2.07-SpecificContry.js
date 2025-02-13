@@ -29,7 +29,7 @@ export default function SpecificCountry({
     const [specificCountry, setSpecificCountry] = useState()
     const [selectedOption, setSelectedOption] = useState("Info")
 
-    console.log(`The specific country chosens id is ${countryId}`)
+    console.log(handleNewLocationInputs)
 
     //Fetch specific country details
     useEffect(() => {
@@ -85,8 +85,8 @@ export default function SpecificCountry({
                         universalCountryImports={universalCountryImports}
                         setContinentId={setContinentId}
                         setContinentInfo={setContinentInfo}
-                        handleEditLocation={handleEditLocation}
                         handleNewLocationInputs={handleNewLocationInputs}
+                        handleEditLocation={handleEditLocation}
                         allCountries={allCountries}
                         setAllCountries={setAllCountries}
                         countryIntro={countryIntro}
@@ -102,6 +102,7 @@ export default function SpecificCountry({
                         setAllStates={setAllStates}
                         setContinentId={setContinentId}
                         setContinentInfo={setContinentInfo}
+                        handleEditLocation={handleEditLocation}
                     />
                 :
                 selectedOption==="Cities"?

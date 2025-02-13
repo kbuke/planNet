@@ -12,7 +12,7 @@ export default function SpecificCountryInfo({
     handleNewLocationInputs,
     allCountries,
     setAllCountries,
-    countryIntro
+    countryIntro,
 }){
     const [editCountry, setEditCountry] = useState(false)
 
@@ -27,6 +27,10 @@ export default function SpecificCountryInfo({
     const setCountryId = universalCountryImports.setCountryId
     const countryOptions = universalCountryImports.countryOptions
 
+    console.log(countryIntro)
+
+    console.log(handleNewLocationInputs)
+
     // Filter out null values from the function array
     const functionArray = [
         setCountryId, 
@@ -35,33 +39,33 @@ export default function SpecificCountryInfo({
         setContinentInfo || null
     ].filter(func => func !== null);  // This will remove nulls
 
-return (
-    editCountry ?
-        <EditSpecificCountry 
-            locationInfoContainer={locationInfoContainer}
-            universalCountryImports={universalCountryImports}
-            setEditCountry={setEditCountry} 
-            editCountry={editCountry} 
-            handleEditLocation={handleEditLocation}
-            handleNewLocationInputs={handleNewLocationInputs}
-            allCountries={allCountries}
-            setAllCountries={setAllCountries}
-            countryIntro={countryIntro}
-            countrySafety={countrySafety}
-        />
-    :
-        locationInfoContainer(
-            setCountryId, setCountryInfo,
-            countryImg, passportStamp,
-            countryName, countryOptions,
-            selectedOption, setSelectedOption,
-            countryIntro, null,
-            null, null, 
-            null, null,
-            null, null,
-            null, null,
-            functionArray, setEditCountry
-        )
-);
+    return (
+        editCountry ?
+            <EditSpecificCountry 
+                locationInfoContainer={locationInfoContainer}
+                universalCountryImports={universalCountryImports}
+                setEditCountry={setEditCountry} 
+                editCountry={editCountry} 
+                handleEditLocation={handleEditLocation}
+                handleNewLocationInputs={handleNewLocationInputs}
+                allCountries={allCountries}
+                setAllCountries={setAllCountries}
+                countryIntro={countryIntro}
+                countrySafety={countrySafety}
+            />
+        :
+            locationInfoContainer(
+                setCountryId, setCountryInfo,
+                countryImg, passportStamp,
+                countryName, countryOptions,
+                selectedOption, setSelectedOption,
+                countryIntro, null,
+                null, null, 
+                null, null,
+                null, null,
+                null, null,
+                functionArray, setEditCountry
+            )
+    );
 
 }
