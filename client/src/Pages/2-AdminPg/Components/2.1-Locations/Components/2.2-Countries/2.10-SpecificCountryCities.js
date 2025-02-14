@@ -10,7 +10,8 @@ export default function SpecificCountryCities({
     setAllCities,
     specificCountry,
     handleNewLocation,
-    handleNewLocationInputs
+    handleNewLocationInputs,
+    handleEditLocation
 }){
     const [hoveredCity, setHoveredCity] = useState("")
     const [cityId, setCityId] = useState()
@@ -56,6 +57,7 @@ export default function SpecificCountryCities({
                 locationInfoContainer={locationInfoContainer}
                 handleNewLocation={handleNewLocation}
                 handleNewLocationInputs={handleNewLocationInputs}
+                handleEditLocation={handleEditLocation}
             />
         :
             locationInfoContainer(

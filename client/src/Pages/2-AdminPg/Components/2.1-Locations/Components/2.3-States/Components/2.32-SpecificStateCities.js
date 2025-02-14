@@ -11,7 +11,8 @@ export default function SpecificStateCities({
     stateId,
     stateCountryId,
     handleNewLocation,
-    handleNewLocationInputs
+    handleNewLocationInputs,
+    handleEditLocation
 }){
     const [hoveredCity, setHoveredCity] = useState()
     const [cityId, setCityId] = useState()
@@ -53,6 +54,7 @@ export default function SpecificStateCities({
                 locationInfoContainer={locationInfoContainer}
                 handleNewLocation={handleNewLocation}
                 handleNewLocationInputs={handleNewLocationInputs}
+                handleEditLocation={handleEditLocation}
             />
         :
             locationInfoContainer(

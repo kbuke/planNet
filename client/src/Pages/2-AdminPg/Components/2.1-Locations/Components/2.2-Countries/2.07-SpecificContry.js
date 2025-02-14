@@ -114,6 +114,7 @@ export default function SpecificCountry({
                         specificCountry={specificCountry}
                         handleNewLocation={handleNewLocation}
                         handleNewLocationInputs={handleNewLocationInputs}
+                        handleEditLocation={handleEditLocation}
                     />
                 :
                 null

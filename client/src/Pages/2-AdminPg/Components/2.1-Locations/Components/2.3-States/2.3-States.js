@@ -96,6 +96,7 @@ export default function States({
                 stateCountryId={stateCountryId}
                 handleNewLocation={handleNewLocation}
                 handleNewLocationInputs={handleNewLocationInputs}
+                handleEditLocation={handleEditLocation}
             />
     )
 }

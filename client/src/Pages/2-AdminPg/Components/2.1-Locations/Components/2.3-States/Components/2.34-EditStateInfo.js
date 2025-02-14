@@ -14,28 +14,20 @@ export default function EditStateInfo({
     stateIntro
 }){
     const stateId = universalStateImports.stateId
-    console.log(`state id: ${stateId}`)
 
     const setStateId = universalStateImports.setStateId
-    console.log(`set state id: ${setStateId}`)
 
     const stateName = universalStateImports.stateName
-    console.log(`state name: ${stateName}`)
 
     const stateOptions = universalStateImports.stateOptions
-    console.log(stateOptions)
 
     const setStateInfo = universalStateImports.setStateInfo
-    console.log(setStateInfo)
 
     const stateImg = universalStateImports.stateImg
-    console.log(stateImg)
 
     const selectedOption = universalStateImports.selectedStateOption
-    console.log(selectedOption)
 
     const setSelectedOption = universalStateImports.setSelectedStateOption
-    console.log(setSelectedOption)
 
     const [editStateName, setEditStateName] = useState(stateName)
     const [editedStateImg, setEditedStateImg] = useState(stateImg)
@@ -47,7 +39,6 @@ export default function EditStateInfo({
         intro: editedStateIntro
     }
 
-    console.log(handleEditLocation)
 
     const editStateForm = () => {
         return(

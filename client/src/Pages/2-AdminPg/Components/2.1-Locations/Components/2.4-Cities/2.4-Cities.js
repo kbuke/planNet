@@ -12,7 +12,8 @@ export default function Cities({
     setCityId,
     locationInfoContainer,
     handleNewLocation,
-    handleNewLocationInputs
+    handleNewLocationInputs,
+    handleEditLocation
 }){
     const appData = useOutletContext()
 
@@ -41,12 +42,16 @@ export default function Cities({
                 })
             }
         })
-    }, [cityId, allBoroughs])
+    }, [cityId, allBoroughs, allCities])
+    console.log(specificCity)
 
     const cityName = specificCity?.name 
     const cityImg = specificCity?.image
     const cityIntro = specificCity?.intro 
     const cityBoroughs = specificCity?.boroughs
+    const countryCapital = specificCity?.country_capital 
+    const stateCapital = specificCity?.state_capital
+    const cityState = specificCity?.state
 
     const cityOptions = ["Info", "Boroughs", "Neighbourhoods"]
 
@@ -59,6 +64,7 @@ export default function Cities({
         locationInfoContainer: locationInfoContainer,
         selectedCityOption: selectedCityOption,
         setSelectedCityOption: setSelectedCityOption,
+        cityId: cityId,
         setCityId: setCityId,
         setCityInfo: setCityInfo
     }
@@ -66,8 +72,15 @@ export default function Cities({
     return(
         selectedCityOption==="Info"?
             <CityInfo 
-                cityIntro={cityIntro}
                 universalCityInfo={universalCityInfo}
+                handleEditLocation={handleEditLocation}
+                handleNewLocationInputs={handleNewLocationInputs}
+                allCities={allCities}
+                setAllCities={setAllCities}
+                cityIntro={cityIntro}
+                countryCapital={countryCapital}
+                stateCapital={stateCapital}
+                cityState={cityState}
             />
         :
         selectedCityOption==="Boroughs"?
